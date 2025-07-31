@@ -186,7 +186,7 @@ export function LoginForm() {
                 {text.auth.signingIn}
               </>
             ) : (
-              text.auth.buttons.signIn
+              text.auth.buttons.login
             )}
           </Button>
 
@@ -199,7 +199,7 @@ export function LoginForm() {
               className="text-primary hover:text-primary/80 font-medium transition-colors ml-2"
               disabled={isLoading}
             >
-              {text.auth.buttons.signUp}
+              {text.auth.buttons.register}
             </button>
           </p>
         </form>

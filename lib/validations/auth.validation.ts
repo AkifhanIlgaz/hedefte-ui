@@ -2,19 +2,22 @@ import { z } from "zod";
 
 export const passwordSchema = z
   .string()
-  .regex(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&_])[A-Za-z\d$@$!%*?&_]{8,}$/,
-    {
-      message:
-        "Password to be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character (which can be any of the following: @$!%*?&_ )",
-    }
-  );
+  .min(8, "Şifre en az 8 karakterli olmalı");
 
 export const registerSchema = z
   .object({
-    email: z.email().max(255),
+    firstName: z.string().min(1, "İsim zorunludur").max(50),
+    lastName: z.string().min(1, "Soyad zorunludur").max(50),
+    email: z.email("Lütfen geçerli bir e-posta giriniz").max(255),
     password: passwordSchema,
+    confirmPassword: z.string(),
+    agreeToTerms: z.literal(true, "Kullanım şartlarını kabul etmelisiniz"),
   })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Şifreler eşleşmiyor",
+    path: ["confirmPassword"],
+  })
+
   .strict();
 
 export const loginSchema = z
