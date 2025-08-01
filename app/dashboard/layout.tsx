@@ -15,6 +15,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import { routes } from "@/lib/routes";
 import {
   BarChart,
   BookOpen,
@@ -24,39 +25,76 @@ import {
   Target,
   TrendingUp,
 } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
-interface DashboardLayoutProps {
-  children: ReactNode;
-}
+const sidebarGroups = [
+  {
+    title: "Genel",
+    items: [
+      {
+        id: "overview",
+        label: "Ana Sayfa",
+        icon: Home,
+        href: routes.dashboard.home,
+      },
+    ],
+  },
+  {
+    title: "Çalışma & Takip",
+    items: [
+      {
+        id: "tyt-study",
+        label: "TYT Çalışma",
+        icon: GraduationCap,
+        href: routes.dashboard.study.tyt,
+      },
+      {
+        id: "ayt-study",
+        label: "AYT Çalışma",
+        icon: BookOpen,
+        href: routes.dashboard.study.ayt,
+      },
+      {
+        id: "schedule",
+        label: "Haftalık Program",
+        icon: Calendar,
+        href: routes.dashboard.study.schedule,
+      },
+      {
+        id: "daily-questions",
+        label: "Günlük Sorular",
+        icon: Target,
+        href: routes.dashboard.study.tracker,
+      },
+    ],
+  },
+  {
+    title: "Analiz & Raporlar", // ANALYSIS_REPORTS_GROUP
+    items: [
+      {
+        id: "tyt-analysis",
+        label: "TYT Analizi",
+        icon: BarChart,
+        href: routes.dashboard.analysis.tyt,
+      },
+      {
+        id: "ayt-analysis",
+        label: "AYT Analizi",
+        icon: TrendingUp,
+        href: routes.dashboard.analysis.ayt,
+      },
+    ],
+  },
+];
 
 export default function AuthenticatedLayout({
   children,
-}: DashboardLayoutProps) {
-  const sidebarGroups = [
-    {
-      title: "Genel", // GENERAL_GROUP
-      items: [
-        { id: "overview", label: "Ana Sayfa", icon: Home }, // OVERVIEW_ITEM
-      ],
-    },
-    {
-      title: "Çalışma & Takip", // STUDY_TRACKING_GROUP
-      items: [
-        { id: "tyt-study", label: "TYT Çalışma", icon: GraduationCap }, // TYT_STUDY_ITEM
-        { id: "ayt-study", label: "AYT Çalışma", icon: BookOpen }, // AYT_STUDY_ITEM
-        { id: "schedule", label: "Haftalık Program", icon: Calendar }, // SCHEDULE_ITEM
-        { id: "daily-questions", label: "Günlük Sorular", icon: Target }, // DAILY_QUESTIONS_ITEM
-      ],
-    },
-    {
-      title: "Analiz & Raporlar", // ANALYSIS_REPORTS_GROUP
-      items: [
-        { id: "tyt-analysis", label: "TYT Analizi", icon: BarChart }, // TYT_ANALYSIS_ITEM
-        { id: "ayt-analysis", label: "AYT Analizi", icon: TrendingUp }, // AYT_ANALYSIS_ITEM
-      ],
-    },
-  ];
+}: {
+  children: ReactNode;
+}) {
+  const router = useRouter();
+  const path = usePathname();
 
   return (
     <SidebarProvider>
@@ -83,8 +121,8 @@ export default function AuthenticatedLayout({
                   {group.items.map((item) => (
                     <SidebarMenuItem key={item.id}>
                       <SidebarMenuButton
-                        // isActive={currentSection === item.id}
-                        // onClick={() => onSectionChange(item.id)}
+                        isActive={path === item.href}
+                        onClick={() => router.push(item.href!)}
                         tooltip={item.label}
                       >
                         <item.icon className="w-4 h-4 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5" />
