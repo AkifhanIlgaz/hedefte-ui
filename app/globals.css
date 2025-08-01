@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-size: 14px;
+  --font-size: 16px;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -25,8 +25,10 @@
   --input: transparent;
   --input-background: #f3f3f5;
   --switch-background: #cbced4;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
   --font-weight-medium: 500;
-  --font-weight-normal: 400;
+  --font-weight-normal: 450;
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -212,19 +214,19 @@
   :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
     h1 {
       font-size: 1.875rem;
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-bold);
       line-height: 1.4;
     }
 
     h2 {
       font-size: 1.5rem;
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-semibold);
       line-height: 1.4;
     }
 
     h3 {
       font-size: 1.25rem;
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-semibold);
       line-height: 1.4;
     }
 
@@ -240,15 +242,29 @@
       line-height: 1.5;
     }
 
+    h5 {
+      font-size: 0.875rem;
+      font-weight: var(--font-weight-semibold);
+      line-height: 1.4;
+    }
+
+    h6 {
+      font-size: 0.75rem;
+      font-weight: var(--font-weight-semibold);
+      line-height: 1.4;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     label {
       font-size: 0.875rem;
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-semibold);
       line-height: 1.4;
     }
 
     button {
       font-size: 0.875rem;
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-semibold);
       line-height: 1.4;
     }
 
