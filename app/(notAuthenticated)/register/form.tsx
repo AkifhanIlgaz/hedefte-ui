@@ -413,23 +413,23 @@ export function SignupForm() {
             {isLoading ? (
               <>
                 <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                Hesap oluşturuluyor... {/* CREATING_ACCOUNT_TEXT */}
+                Hesap oluşturuluyor...
               </>
             ) : (
-              text.auth.buttons.register // CREATE_ACCOUNT_BUTTON
+              text.auth.buttons.register
             )}
           </Button>
 
           {/* Sign In Link */}
           <p className="text-center text-sm text-default-500">
-            {text.auth.alreadyHaveAccount} {/* ALREADY_MEMBER_TEXT */}
+            {text.auth.alreadyHaveAccount}
             <button
               type="button"
               onClick={() => router.push(routes.login)}
-              className="text-primary hover:text-primary/80 font-medium transition-colors"
+              className="text-primary ml-2 hover:text-primary/80 font-medium transition-colors cursor-pointer"
               disabled={isLoading}
             >
-              {text.auth.buttons.login} {/* SIGN_IN_LINK_TEXT */}
+              {text.auth.buttons.login}
             </button>
           </p>
         </form>

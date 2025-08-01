@@ -196,7 +196,7 @@ export function LoginForm() {
             <button
               type="button"
               onClick={() => router.push(routes.register)}
-              className="text-primary hover:text-primary/80 font-medium transition-colors ml-2"
+              className="text-primary hover:text-primary/80 font-medium transition-colors ml-2 cursor-pointer"
               disabled={isLoading}
             >
               {text.auth.buttons.register}

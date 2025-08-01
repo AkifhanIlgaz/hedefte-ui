@@ -4,14 +4,22 @@ const authTexts = {
   dontHaveAccount: "Henüz üye değil misin ?",
   alreadyHaveAccount: "Zaten üye misin ?",
   withEmail: "veya e-posta ile devam et",
+  forgotPassword: "Şifreni mi unuttun ?",
+  enterEmail:
+    "Sorun değil! E-posta adresini gir, sana bir sıfırlama bağlantısı gönderelim.",
+  checkEmail: "E-postanı kontrol et",
+  checkSpam: `E-postayı almadın mı? Spam klasörünü kontrol et veya birkaç dakika sonra tekrar dene.`,
   signInSubtitle: "Devam etmek için giriş yapın",
   registerTitle: "Hesap Oluştur",
   registerSubtitle: "Bize katıl ve yolculuğuna başla",
   signingIn: "Giriş yapılıyor...",
+  sendingLink: "Bağlantı gönderiliyor...",
   creatingAccount: "Hesap oluşturuluyor...",
   buttons: {
     login: "Giriş Yap",
     register: "Hesap oluştur",
+    sendResetLink: "Sıfırlama bağlantısını gönder",
+    returnLogin: "Giriş ekranına dön",
   },
   labels: {
     firstName: "Ad",

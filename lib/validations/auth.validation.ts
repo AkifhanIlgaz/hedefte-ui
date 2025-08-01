@@ -4,6 +4,10 @@ export const passwordSchema = z
   .string()
   .min(8, "Şifre en az 8 karakterli olmalı");
 
+export const forgotPasswordSchema = z.object({
+  email: z.email().max(255),
+});
+
 export const registerSchema = z
   .object({
     firstName: z.string().min(1, "İsim zorunludur").max(50),
@@ -29,3 +33,4 @@ export const loginSchema = z
 
 export type RegisterRequest = z.infer<typeof registerSchema>;
 export type LoginRequest = z.infer<typeof loginSchema>;
+export type ForgotPasswordRequest = z.infer<typeof forgotPasswordSchema>;
