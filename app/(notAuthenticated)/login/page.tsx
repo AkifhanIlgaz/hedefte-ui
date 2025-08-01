@@ -34,7 +34,7 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (req: LoginRequest) => {
-    const { error } = await supabase.auth.signInWithPassword(req);
+    const {  error } = await supabase.auth.signInWithPassword(req);
     if (error) {
       form.setError("email", {
         type: "manual",
@@ -42,6 +42,7 @@ export default function LoginPage() {
       });
       return;
     }
+    
 
     console.log("basarili");
   };

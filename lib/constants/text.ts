@@ -5,6 +5,12 @@ const authTexts = {
   alreadyHaveAccount: "Zaten üye misin ?",
   withEmail: "veya e-posta ile devam et",
   forgotPassword: "Şifreni mi unuttun ?",
+  createNewPassword: "Yeni şifre oluştur",
+  passwordUpdated: "Şifre güncellendi!",
+  passwordUpdatedSubtitle:
+    "Şifren başarıyla güncellendi. Artık yeni şifrenle giriş yapabilirsin.",
+  createNewPasswordSubtitle:
+    "Yeni şifren, eski şifrelerinden farklı olmalıdır.",
   enterEmail:
     "Sorun değil! E-posta adresini gir, sana bir sıfırlama bağlantısı gönderelim.",
   checkEmail: "E-postanı kontrol et",
@@ -12,6 +18,7 @@ const authTexts = {
   signInSubtitle: "Devam etmek için giriş yapın",
   registerTitle: "Hesap Oluştur",
   registerSubtitle: "Bize katıl ve yolculuğuna başla",
+  updatingPassword: "Şifre güncelleniyor...",
   signingIn: "Giriş yapılıyor...",
   sendingLink: "Bağlantı gönderiliyor...",
   creatingAccount: "Hesap oluşturuluyor...",
@@ -20,6 +27,7 @@ const authTexts = {
     register: "Hesap oluştur",
     sendResetLink: "Sıfırlama bağlantısını gönder",
     returnLogin: "Giriş ekranına dön",
+    updatePassword: "Şifreyi güncelle",
   },
   labels: {
     firstName: "Ad",

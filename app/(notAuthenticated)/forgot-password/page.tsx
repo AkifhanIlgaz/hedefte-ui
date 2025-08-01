@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { text } from "@/lib/constants/text";
+import { supabase } from "@/lib/supabase/actions";
 import {
   ForgotPasswordRequest,
   forgotPasswordSchema,
@@ -34,7 +35,17 @@ export default function ForgotPasswordPage() {
   });
 
   const onSubmit = async (req: ForgotPasswordRequest) => {
-    // TODO: Implement flow
+    setIsLoading(true);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(req.email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    if (error) {
+      alert(error);
+    }
+
+    setIsLoading(false);
     setIsSubmitted(true);
   };
 
@@ -117,7 +128,7 @@ export default function ForgotPasswordPage() {
           </div>
 
           <div className="space-y-4">
-            <Button type="submit" className="w-full h-11" disabled={isLoading}>
+            <Button type="submit" className="w-full h-11">
               {isLoading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
@@ -133,7 +144,6 @@ export default function ForgotPasswordPage() {
               variant="ghost"
               className="w-full h-11"
               onClick={() => router.back()}
-              disabled={isLoading}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               {text.auth.buttons.returnLogin}
