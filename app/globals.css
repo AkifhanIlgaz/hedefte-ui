@@ -439,3 +439,9 @@ html {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+.pacifico-regular {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+}

@@ -101,10 +101,11 @@ export default function AuthenticatedLayout({
       <Sidebar collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <span className="text-sm font-bold">H</span> {/* HEDEFTE_LOGO */}
+            <div className="h-8 w-8 items-center justify-center rounded-lg  hidden group-data-[collapsible=icon]:flex">
+              <span className="text-sm pacifico-regular">H</span>{" "}
+              {/* HEDEFTE_LOGO */}
             </div>
-            <span className="font-semibold text-lg group-data-[collapsible=icon]:hidden">
+            <span className="font-semibold  text-lg text-center pacifico-regular group-data-[collapsible=icon]:hidden">
               Hedefte
             </span>{" "}
             {/* BRAND_NAME */}
@@ -124,6 +125,7 @@ export default function AuthenticatedLayout({
                         isActive={path === item.href}
                         onClick={() => router.push(item.href!)}
                         tooltip={item.label}
+                        className="cursor-pointer"
                       >
                         <item.icon className="w-4 h-4 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5" />
                         <span>{item.label}</span>
