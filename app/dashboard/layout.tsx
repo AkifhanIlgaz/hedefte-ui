@@ -127,7 +127,7 @@ export default function AuthenticatedLayout({
                         tooltip={item.label}
                         className="cursor-pointer"
                       >
-                        <item.icon className="w-4 h-4 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5" />
+                        <item.icon className="w-4 h-4 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5 text-amber-700 dark:text-amber-300" />
                         <span>{item.label}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
