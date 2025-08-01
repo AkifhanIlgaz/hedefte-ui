@@ -1,5 +1,6 @@
 "use client";
 
+import { PasswordStrength } from "@/components/app/PasswordStrength";
 import {
   Form,
   FormControl,
@@ -11,7 +12,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { text } from "@/lib/constants/text";
 import { routes } from "@/lib/routes";
-import { supabase } from "@/lib/supabase/actions";
+import { createClient } from "@/lib/supabase/client";
 import {
   RegisterRequest,
   registerSchema,
@@ -19,16 +20,13 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 import { IconBrandGoogle } from "@tabler/icons-react";
-import { Check, Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "../../../components/ui/button";
 import { Checkbox } from "../../../components/ui/checkbox";
 import { Input } from "../../../components/ui/input";
-import { PasswordStrength } from "@/components/app/PasswordStrength";
-
-
 
 export default function SignupForm() {
   const router = useRouter();
@@ -61,7 +59,7 @@ export default function SignupForm() {
       },
     };
 
-    const { error } = await supabase.auth.signUp(credentials);
+    const { error } = await createClient().auth.signUp(credentials);
     if (error) {
       form.setError("email", {
         type: "manual",
@@ -91,7 +89,7 @@ export default function SignupForm() {
           variant="outline"
           className="w-full h-11 bg-background border-default-200 hover:bg-default-50"
           onClick={() => {
-            supabase.auth.signInWithOAuth({
+            createClient().auth.signInWithOAuth({
               provider: "google",
             });
           }}

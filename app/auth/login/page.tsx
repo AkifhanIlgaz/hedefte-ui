@@ -2,7 +2,7 @@
 
 import { text } from "@/lib/constants/text";
 import { routes } from "@/lib/routes";
-import { supabase } from "@/lib/supabase/actions";
+import { createClient } from "@/lib/supabase/client";
 import { LoginRequest, loginSchema } from "@/lib/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconBrandGoogle } from "@tabler/icons-react";
@@ -34,7 +34,7 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (req: LoginRequest) => {
-    const {  error } = await supabase.auth.signInWithPassword(req);
+    const { error } = await createClient().auth.signInWithPassword(req);
     if (error) {
       form.setError("email", {
         type: "manual",
@@ -42,7 +42,6 @@ export default function LoginPage() {
       });
       return;
     }
-    
 
     console.log("basarili");
   };
@@ -66,7 +65,7 @@ export default function LoginPage() {
           variant="outline"
           className="w-full h-11 bg-background border-default-200 hover:bg-default-50"
           onClick={() => {
-            supabase.auth.signInWithOAuth({
+            createClient().auth.signInWithOAuth({
               provider: "google",
             });
           }}

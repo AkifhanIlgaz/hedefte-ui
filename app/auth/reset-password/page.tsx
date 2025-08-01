@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { text } from "@/lib/constants/text";
 import { routes } from "@/lib/routes";
-import { supabase } from "@/lib/supabase/actions";
+import { createClient } from "@/lib/supabase/client";
 import {
   ResetPasswordRequest,
   resetPasswordSchema,
@@ -42,7 +42,7 @@ export default function ResetPasswordPage() {
   const onSubmit = async (req: ResetPasswordRequest) => {
     setIsLoading(true);
 
-    const { error } = await supabase.auth.updateUser({
+    const { error } = await createClient().auth.updateUser({
       password: req.password,
     });
 

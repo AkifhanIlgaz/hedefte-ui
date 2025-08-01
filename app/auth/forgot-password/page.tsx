@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { text } from "@/lib/constants/text";
-import { supabase } from "@/lib/supabase/actions";
+import { createClient } from "@/lib/supabase/client";
 import {
   ForgotPasswordRequest,
   forgotPasswordSchema,
@@ -37,9 +37,12 @@ export default function ForgotPasswordPage() {
   const onSubmit = async (req: ForgotPasswordRequest) => {
     setIsLoading(true);
 
-    const { error } = await supabase.auth.resetPasswordForEmail(req.email, {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
+    const { error } = await createClient().auth.resetPasswordForEmail(
+      req.email,
+      {
+        redirectTo: `${window.location.origin}/reset-password`,
+      }
+    );
 
     if (error) {
       alert(error);
