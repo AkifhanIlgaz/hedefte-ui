@@ -87,7 +87,7 @@ export default function AuthenticatedLayout({
                         // onClick={() => onSectionChange(item.id)}
                         tooltip={item.label}
                       >
-                        <item.icon className="h-4 w-4" />
+                        <item.icon className="w-4 h-4 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5" />
                         <span>{item.label}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
