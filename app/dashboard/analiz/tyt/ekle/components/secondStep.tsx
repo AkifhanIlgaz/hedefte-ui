@@ -50,7 +50,7 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
   return (
     <>
       {/* Step 2 Content - Title kaldırıldı */}
-      <Card className="w-full max-w-7xl shadow-lg border-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
+      <Card className="border border-sidebar-border shadow-sm bg-background dark:bg-background w-full  ">
         <CardContent className="p-8">
           <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold text-foreground mb-2">

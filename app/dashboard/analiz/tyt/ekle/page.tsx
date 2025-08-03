@@ -42,8 +42,7 @@ export default function AddTYTResultPage() {
   } = form;
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [topics, setTopics] = useState<string[]>([]);
-  const [val, setVal] = useState(0);
+  
 
   const onSubmit = async (req: TYTFormRequest) => {
     console.log(req);
@@ -68,7 +67,7 @@ export default function AddTYTResultPage() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8  flex flex-col items-center justify-center "
+            className="space-y-8 flex flex-col items-center justify-center "
           >
             <ProgressIndicator currentStep={currentStep} />
 
