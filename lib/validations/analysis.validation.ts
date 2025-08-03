@@ -63,6 +63,20 @@ export const subjectSchema = z
     message: "Toplam cevap sayısı soru sayısını geçemez",
     path: [],
   });
+// .refine(
+//   (data) => {
+//     const totalMistakes = data.empty + data.wrong;
+//     const completedMistakes =
+//       data.topicMistakes?.reduce((prev, curr) => prev + curr.mistakes, 0) ||
+//       0;
+
+//     return totalMistakes == completedMistakes;
+//   },
+//   {
+//     message: `Lütfen tüm soruların konularını girin.`,
+//     path: [],
+//   }
+// );
 
 export const tytFormSchema = z.object({
   date: z.date("Tarih zorunludur"),
@@ -74,4 +88,4 @@ export const tytFormSchema = z.object({
 });
 
 export type TYTFormRequest = z.infer<typeof tytFormSchema>;
-export type TopicMistake = z.infer<typeof  topicMistakesSchema>
+export type TopicMistake = z.infer<typeof topicMistakesSchema>;

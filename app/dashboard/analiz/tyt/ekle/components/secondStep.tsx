@@ -17,6 +17,10 @@ interface FirstStepProps {
 }
 
 export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
+  const {
+    formState: { errors },
+  } = form;
+
   const addTopicMistake = (
     subjectIndex: number,
     topic: string,
@@ -123,7 +127,7 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
                         </div>
 
                         {/* Progress Bar */}
-                        <div className="w-full">
+                        {/* <div className="w-full">
                           <div className="flex justify-between text-xs text-muted-foreground mb-1">
                             <span>İlerleme</span>
                             <span>{Math.round(progressPercentage)}%</span>
@@ -142,7 +146,7 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
                               }}
                             ></div>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="flex flex-col w-full gap-2">
                           {/* Action Button */}

@@ -16,6 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 import {
   TYTFormRequest,
   tytSubjects,
@@ -31,6 +32,10 @@ interface FirstStepProps {
 }
 
 export function FirstStep({ form, handleNextStep }: FirstStepProps) {
+  const {
+    formState: { errors },
+  } = form;
+
   return (
     <>
       <Card className=" shadow-lg border-0 bg-white/80 dark:bg-slate-800/80   backdrop-blur-sm pb-0">
@@ -110,7 +115,10 @@ export function FirstStep({ form, handleNextStep }: FirstStepProps) {
                 {subject.subFields.map((s) => (
                   <Card
                     key={s.name}
-                    className="  group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/30 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900"
+                    className={cn(
+                      "group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/30 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900",
+                      { "border-amber-800": errors.subjects?.[s.id]?.message }
+                    )}
                   >
                     <CardContent className="p-4 space-y-4">
                       <div className="flex items-center justify-between">
@@ -196,11 +204,11 @@ export function FirstStep({ form, handleNextStep }: FirstStepProps) {
                           )}
                         />
                       </div>
-                      {/* {errors[s.id] && (
-                                  <p className="text-xs text-destructive bg-destructive/10 p-2 rounded">
-                                    {errors[s.id].message}
-                                  </p>
-                                )} */}
+                      {errors.subjects?.[s.id] && (
+                        <p className="text-xs text-destructive bg-destructive/10 p-2 rounded">
+                          {errors.subjects[s.id]!.message}
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 ))}

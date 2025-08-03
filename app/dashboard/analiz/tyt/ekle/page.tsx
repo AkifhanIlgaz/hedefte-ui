@@ -59,8 +59,6 @@ export default function AddTYTResultPage() {
     setCurrentStep(1);
   };
 
-
-
   console.log(errors);
   console.log(form.getValues());
   return (
