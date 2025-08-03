@@ -44,23 +44,22 @@ export const tytQuestionMap = {
   biyoloji: 6,
 } as const;
 
-type TYTSubject = keyof typeof tytQuestionMap;
-
 export const topicMistakesSchema = z.object({
-  topic: z.string().min(1, "Konu seçimi gerekli").max(50),
+  topic: z.string("Konu seçimi gerekli").min(1, "Konu seçimi gerekli").max(50),
   mistakes: z.int().min(1, "Yanlış sayısı 1 veya üzeri olmalı"),
 });
 
 export const subjectSchema = z
   .object({
     name: z.string(),
+    id: z.int().nonnegative(),
     correct: z.number().min(0, "Doğru sayısı 0 veya üzeri olmalı"),
     wrong: z.number().min(0, "Yanlış sayısı 0 veya üzeri olmalı"),
     empty: z.number().min(0, "Boş sayısı 0 veya üzeri olmalı"),
     total: z.number(),
     topicMistakes: z.array(topicMistakesSchema).optional(),
   })
-  .refine((data) => data.correct + data.wrong + data.empty < data.total, {
+  .refine((data) => data.correct + data.wrong + data.empty <= data.total, {
     message: "Toplam cevap sayısı soru sayısını geçemez",
     path: [],
   });
@@ -75,3 +74,4 @@ export const tytFormSchema = z.object({
 });
 
 export type TYTFormRequest = z.infer<typeof tytFormSchema>;
+export type TopicMistake = z.infer<typeof  topicMistakesSchema>

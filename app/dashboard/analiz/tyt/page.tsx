@@ -1,7 +1,6 @@
 "use client";
 
 import AddTYTResultModal from "@/components/app/analiz/addModal";
-import { CircularProgress } from "@/components/app/CircularProgress";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -13,7 +12,6 @@ export default function Page() {
         <Button className="cursor-pointer">TYT Denemesi Ekle</Button>
       </Link>
       <AddTYTResultModal />
-      <CircularProgress value={90} />
     </div>
   );
 }
