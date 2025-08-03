@@ -52,9 +52,8 @@ export default function DetailsModal({
         <Button
           variant="default"
           size="sm"
-          className="w-full group-hover:shadow-md transition-all duration-300 bg-primary hover:bg-primary/90"
+          className="group-hover:shadow-md transition-all duration-300 bg-orange-600 hover:bg-orange-700 text-white dark:bg-orange-500 dark:hover:bg-orange-600"
         >
-          <Plus className="w-4 h-4 " />
           Ayrıntılar
         </Button>
       </DialogTrigger>

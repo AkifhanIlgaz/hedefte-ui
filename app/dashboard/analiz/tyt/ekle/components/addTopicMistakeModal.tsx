@@ -81,7 +81,6 @@ export default function AddTopicMistakeModal({
           size="sm"
           className="w-full group-hover:shadow-md transition-all duration-300 bg-primary hover:bg-primary/90"
         >
-          <Plus className="w-4 h-4 " />
           Konu Ekle
         </Button>
       </DialogTrigger>

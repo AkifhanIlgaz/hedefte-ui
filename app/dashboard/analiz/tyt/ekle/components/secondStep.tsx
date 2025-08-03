@@ -70,7 +70,7 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
                   ) || 0;
                 const progressPercentage =
                   totalMistakes > 0
-                    ? (completedMistakes / totalMistakes) * 100
+                    ? ((completedMistakes / totalMistakes) * 100) % 100.01
                     : 0;
 
                 return (
@@ -144,24 +144,25 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
                           </div>
                         </div>
 
-                        {/* Action Button */}
-                        <AddTopicMistakeModal
-                          subjectIndex={sub.id}
-                          addTopicMistake={addTopicMistake}
-                          topics={
-                            subjectTopics[
-                              sub.name as keyof typeof subjectTopics
-                            ]
-                          }
-                        />
-
-                        <DetailsModal
-                          topicMistakes={
-                            form.watch().subjects[sub.id].topicMistakes || []
-                          }
-                          subjectIndex={sub.id}
-                          updateTopicMistakes={updateTopicMistakes}
-                        />
+                        <div className="flex flex-col w-full gap-2">
+                          {/* Action Button */}
+                          <AddTopicMistakeModal
+                            subjectIndex={sub.id}
+                            addTopicMistake={addTopicMistake}
+                            topics={
+                              subjectTopics[
+                                sub.name as keyof typeof subjectTopics
+                              ]
+                            }
+                          />
+                          <DetailsModal
+                            topicMistakes={
+                              form.watch().subjects[sub.id].topicMistakes || []
+                            }
+                            subjectIndex={sub.id}
+                            updateTopicMistakes={updateTopicMistakes}
+                          />
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
