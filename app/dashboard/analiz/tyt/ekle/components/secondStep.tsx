@@ -61,7 +61,7 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 content-center  ">
             {form
               .watch("subjects")
               .filter((s) => s.empty + s.wrong > 0)
@@ -80,7 +80,7 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
                 return (
                   <Card
                     key={index}
-                    className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/30 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900"
+                    className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/30 "
                   >
                     <CardContent className="p-6">
                       <div className="flex flex-col items-center space-y-4">
@@ -193,12 +193,12 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
       </Card>
 
       {/* Action Buttons */}
-      <div className="flex justify-end items-center gap-4 w-full max-w-7xl">
+      <div className="flex justify-end items-center gap-4 w-full">
         <Button
           type="button"
           variant="outline"
           onClick={handlePreviousStep}
-          className="gap-2"
+          className="gap-2 border-sidebar-border hover:bg-sidebar-accent dark:hover:bg-sidebar-accent bg-transparent"
         >
           <ArrowLeft className="w-4 h-4" />
           Geri
@@ -206,12 +206,15 @@ export function SecondStep({ form, handlePreviousStep }: FirstStepProps) {
 
         <Button
           type="button"
-          variant="outline"
+          variant="destructive"
           onClick={() => window.history.back()}
         >
           İptal
         </Button>
-        <Button type="submit" className="gap-2 bg-green-600 hover:bg-green-700">
+        <Button
+          type="submit"
+          className="gap-2 bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white px-8"
+        >
           <Plus className="w-4 h-4" />
           Kaydet
         </Button>
