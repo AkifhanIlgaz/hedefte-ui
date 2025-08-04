@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { text } from "@/lib/constants/text";
 import { TopicMistake } from "@/lib/validations/analysis.validation";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -23,6 +24,7 @@ interface DetailsProps {
     topicMistakes: TopicMistake[]
   ) => void;
 }
+
 export default function DetailsModal({
   topicMistakes,
   subjectIndex,
@@ -54,15 +56,15 @@ export default function DetailsModal({
           size="sm"
           className="group-hover:shadow-md transition-all duration-300 bg-orange-600 hover:bg-orange-700 text-white dark:bg-orange-500 dark:hover:bg-orange-600"
         >
-          Ayrıntılar
+          {text.analysis.common.buttons.details}
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-lg  max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Konu Ekle</DialogTitle>
+          <DialogTitle>{text.analysis.modal.details.title}</DialogTitle>
           <DialogDescription>
-            Hangi konulardan kaç yanlış yaptığınızı belirtin.
+            {text.analysis.modal.details.description}
           </DialogDescription>
         </DialogHeader>
 
@@ -118,10 +120,9 @@ export default function DetailsModal({
         <DialogFooter>
           <DialogClose asChild>
             <Button
-              variant="outline"
-              className="bg-destructive text-destructive-foreground"
+              variant="destructive"
             >
-              İptal
+              {text.analysis.common.buttons.cancel}
             </Button>
           </DialogClose>
           <DialogClose asChild>
@@ -129,7 +130,7 @@ export default function DetailsModal({
               className="bg-primary text-primary-foreground"
               onClick={() => updateTopicMistakes!(subjectIndex, allMistakes)}
             >
-              Kaydet
+              {text.analysis.common.buttons.save}
             </Button>
           </DialogClose>
         </DialogFooter>

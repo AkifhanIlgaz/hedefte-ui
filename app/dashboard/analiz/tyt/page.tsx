@@ -1,6 +1,5 @@
 "use client";
 
-import AddTYTResultModal from "@/components/app/analiz/addModal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -11,7 +10,6 @@ export default function Page() {
       <Link href={"http://localhost:3000/dashboard/analiz/tyt/ekle"}>
         <Button className="cursor-pointer">TYT Denemesi Ekle</Button>
       </Link>
-      <AddTYTResultModal />
     </div>
   );
 }

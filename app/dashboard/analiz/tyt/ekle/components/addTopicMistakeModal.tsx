@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { text } from "@/lib/constants/text";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
@@ -81,15 +82,15 @@ export default function AddTopicMistakeModal({
           size="sm"
           className="w-full group-hover:shadow-md transition-all duration-300 bg-primary hover:bg-primary/90"
         >
-          Konu Ekle
+          {text.analysis.common.buttons.addTopic}
         </Button>
       </DialogTrigger>
       <Form {...form}>
-        <DialogContent className="max-w-lg  max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Konu Ekle</DialogTitle>
+            <DialogTitle>{text.analysis.modal.addTopic.title}</DialogTitle>
             <DialogDescription>
-              Hangi konulardan kaç yanlış yaptığınızı belirtin.
+              {text.analysis.modal.addTopic.description}
             </DialogDescription>
           </DialogHeader>
 
@@ -105,7 +106,11 @@ export default function AddTopicMistakeModal({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Yanlış yaptığınız konuyu seçin." />
+                        <SelectValue
+                          placeholder={
+                            text.analysis.modal.addTopic.selectPlaceholder
+                          }
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -127,7 +132,7 @@ export default function AddTopicMistakeModal({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <div className="flex  items-center justify-center gap-4">
+                    <div className="flex items-center justify-center gap-4">
                       <Button
                         size={"icon"}
                         variant={"outline"}
@@ -160,7 +165,6 @@ export default function AddTopicMistakeModal({
                       </Button>
                     </div>
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -169,16 +173,13 @@ export default function AddTopicMistakeModal({
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button
-                variant="outline"
-                className="bg-destructive text-destructive-foreground"
-              >
-                İptal
+              <Button variant="destructive">
+                {text.analysis.common.buttons.cancel}
               </Button>
             </DialogClose>
             <Button onClick={form.handleSubmit(onSubmit)} className="gap-2">
               <Plus className="w-4 h-4" />
-              Kaydet
+              {text.analysis.common.buttons.save}
             </Button>
           </DialogFooter>
         </DialogContent>

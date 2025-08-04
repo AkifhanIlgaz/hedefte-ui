@@ -78,7 +78,7 @@ export const subjectSchema = z
 //   }
 // );
 
-export const tytFormSchema = z.object({
+export const analysisFormSchema = z.object({
   date: z.date("Tarih zorunludur"),
   name: z
     .string("Deneme adi zorunludur")
@@ -87,5 +87,5 @@ export const tytFormSchema = z.object({
   notes: z.string().max(100).optional(),
 });
 
-export type TYTFormRequest = z.infer<typeof tytFormSchema>;
+export type AnalysisFormRequest = z.infer<typeof analysisFormSchema>;
 export type TopicMistake = z.infer<typeof topicMistakesSchema>;

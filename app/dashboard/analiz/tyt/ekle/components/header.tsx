@@ -1,17 +1,18 @@
+import { text } from "@/lib/constants/text";
+
 interface HeaderProps {
+  title: string;
   currentStep: number;
 }
 
-export function Header({ currentStep }: HeaderProps) {
+export function Header({ title, currentStep }: HeaderProps) {
   return (
     <div className="mb-8">
-      <h1 className="text-3xl font-bold text-foreground mb-2">
-        TYT Deneme Sonucu Ekle
-      </h1>
+      <h1 className="text-3xl font-bold text-foreground mb-2">{title}</h1>
       <p className="text-lg text-muted-foreground">
         {currentStep === 1
-          ? "Deneme sonuçlarınızı derse göre girin."
-          : "Hangi konulardan kaç yanlış yaptığınızı belirtin."}
+          ? text.analysis.firstStep.subtitle
+          : text.analysis.secondStep.subtitle}
       </p>
     </div>
   );

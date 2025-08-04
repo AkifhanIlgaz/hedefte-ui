@@ -18,7 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import {
-  TYTFormRequest,
+  AnalysisFormRequest,
   tytSubjects,
 } from "@/lib/validations/analysis.validation";
 import { format } from "date-fns";
@@ -33,7 +33,7 @@ import { tr } from "react-day-picker/locale";
 import { UseFormReturn } from "react-hook-form";
 
 interface FirstStepProps {
-  form: UseFormReturn<TYTFormRequest>;
+  form: UseFormReturn<AnalysisFormRequest>;
   handleNextStep: () => void;
 }
 

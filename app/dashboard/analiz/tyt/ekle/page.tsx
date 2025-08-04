@@ -1,9 +1,10 @@
 "use client";
 
 import { Form } from "@/components/ui/form";
+import { text } from "@/lib/constants/text";
 import {
-  TYTFormRequest,
-  tytFormSchema,
+  AnalysisFormRequest,
+  analysisFormSchema,
   tytSubjects,
 } from "@/lib/validations/analysis.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,8 +16,8 @@ import { ProgressIndicator } from "./components/progress";
 import { SecondStep } from "./components/secondStep";
 
 export default function AddTYTResultPage() {
-  const form = useForm<TYTFormRequest>({
-    resolver: zodResolver(tytFormSchema),
+  const form = useForm<AnalysisFormRequest>({
+    resolver: zodResolver(analysisFormSchema),
     defaultValues: {
       date: new Date(),
       name: "",
@@ -37,14 +38,9 @@ export default function AddTYTResultPage() {
     },
   });
 
-  const {
-    formState: { errors },
-  } = form;
-
   const [currentStep, setCurrentStep] = useState(1);
-  
 
-  const onSubmit = async (req: TYTFormRequest) => {
+  const onSubmit = async (req: AnalysisFormRequest) => {
     console.log(req);
   };
 
@@ -58,12 +54,10 @@ export default function AddTYTResultPage() {
     setCurrentStep(1);
   };
 
-  console.log(errors);
-  console.log(form.getValues());
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0 ">
       <div className="container mx-auto p-6 max-w-full">
-        <Header currentStep={currentStep} />
+        <Header title={text.analysis.tyt.title} currentStep={currentStep} />
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -74,7 +68,11 @@ export default function AddTYTResultPage() {
             {currentStep === 1 ? (
               <FirstStep form={form} handleNextStep={handleNextStep} />
             ) : (
-              <SecondStep form={form} handlePreviousStep={handlePreviousStep} />
+              <SecondStep
+                examType="TYT"
+                form={form}
+                handlePreviousStep={handlePreviousStep}
+              />
             )}
           </form>
         </Form>
