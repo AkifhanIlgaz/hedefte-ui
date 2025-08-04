@@ -9,6 +9,7 @@ import { text } from "@/lib/constants/text";
 import {
   AnalysisFormRequest,
   analysisFormSchema,
+  aytSubjects,
   tytSubjects,
 } from "@/lib/validations/analysis.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +23,7 @@ export default function AddTYTResultPage() {
       date: new Date(),
       name: "",
       notes: "",
-      subjects: tytSubjects
+      subjects: aytSubjects
         .map((s) =>
           s.subFields.map((sf) => ({
             name: sf.name,
@@ -57,7 +58,7 @@ export default function AddTYTResultPage() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0 ">
       <div className="container mx-auto p-6 max-w-full">
-        <Header title={text.analysis.tyt.title} currentStep={currentStep} />
+        <Header title={text.analysis.ayt.title} currentStep={currentStep} />
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -66,10 +67,14 @@ export default function AddTYTResultPage() {
             <ProgressIndicator currentStep={currentStep} />
 
             {currentStep === 1 ? (
-              <FirstStep examType="TYT" form={form} handleNextStep={handleNextStep} />
+              <FirstStep
+                examType="AYT"
+                form={form}
+                handleNextStep={handleNextStep}
+              />
             ) : (
               <SecondStep
-                examType="TYT"
+                examType="AYT"
                 form={form}
                 handlePreviousStep={handlePreviousStep}
               />

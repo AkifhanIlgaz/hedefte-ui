@@ -19,6 +19,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import {
   AnalysisFormRequest,
+  aytSubjects,
   tytSubjects,
 } from "@/lib/validations/analysis.validation";
 import { format } from "date-fns";
@@ -34,13 +35,16 @@ import { UseFormReturn } from "react-hook-form";
 
 interface FirstStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
+  examType: "TYT" | "AYT";
   handleNextStep: () => void;
 }
 
-export function FirstStep({ form, handleNextStep }: FirstStepProps) {
+export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
   const {
     formState: { errors },
   } = form;
+
+  const subjects = examType === "TYT" ? tytSubjects : aytSubjects;
 
   return (
     <>
@@ -117,8 +121,8 @@ export function FirstStep({ form, handleNextStep }: FirstStepProps) {
 
       <Card className="border border-sidebar-border shadow-sm bg-background dark:bg-background w-full">
         <CardContent className="p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-            {tytSubjects.map((subject) => (
+          <div className="flex  gap-6 justify-center">
+            {subjects.map((subject) => (
               <div key={subject.name} className="space-y-4">
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-primary mb-1">
