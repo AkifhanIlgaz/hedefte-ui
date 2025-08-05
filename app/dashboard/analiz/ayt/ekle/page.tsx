@@ -1,20 +1,20 @@
 "use client";
 
-import { FirstStep } from "@/components/app/analiz/firstStep";
-import { Header } from "@/components/app/analiz/header";
-import { ProgressIndicator } from "@/components/app/analiz/progress";
-import { SecondStep } from "@/components/app/analiz/secondStep";
+import { FirstStep } from "@/app/dashboard/analiz/_components/firstStep";
+import { Header } from "@/app/dashboard/analiz/_components/header";
+import { ProgressIndicator } from "@/app/dashboard/analiz/_components/progress";
 import { Form } from "@/components/ui/form";
 import { text } from "@/lib/constants/text";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { SecondStep } from "../../_components/secondStep";
 import {
   AnalysisFormRequest,
   analysisFormSchema,
   aytSubjects,
-  tytSubjects,
-} from "@/lib/validations/analysis.validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+} from "../../_schemas/schema";
 
 export default function AddTYTResultPage() {
   const form = useForm<AnalysisFormRequest>({
@@ -58,7 +58,14 @@ export default function AddTYTResultPage() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0 ">
       <div className="container mx-auto p-6 max-w-full">
-        <Header title={text.analysis.ayt.title} currentStep={currentStep} />
+        <Header
+          title={text.analysis.ayt.title}
+          subtitle={
+            currentStep === 1
+              ? text.analysis.firstStep.subtitle
+              : text.analysis.secondStep.subtitle
+          }
+        />
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

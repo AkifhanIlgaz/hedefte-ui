@@ -3,14 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { text } from "@/lib/constants/text";
 import { subjectTopics } from "@/lib/constants/topic";
-import {
-  AnalysisFormRequest,
-  TopicMistake,
-} from "@/lib/validations/analysis.validation";
+
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
-import AddTopicMistakeModal from "./addTopicMistakeModal";
-import DetailsModal from "./detailsModal";
+import { AnalysisFormRequest, TopicMistake } from "../_schemas/schema";
+import AddTopicMistakeModal from "./modals/addTopicMistakeModal";
+import DetailsModal from "./modals/detailsModal";
 
 interface SecondStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
@@ -23,10 +21,6 @@ export function SecondStep({
   handlePreviousStep,
   examType,
 }: SecondStepProps) {
-  const {
-    formState: { errors },
-  } = form;
-
   const addTopicMistake = (
     subjectIndex: number,
     topic: string,
@@ -55,7 +49,7 @@ export function SecondStep({
 
   return (
     <>
-      <Card className="border border-sidebar-border shadow-sm bg-background dark:bg-background w-full">
+      <Card>
         <CardContent className="p-8">
           <div className="mb-6 text-center">
             <h2 className="text-2xl font-bold text-foreground mb-2">
@@ -81,7 +75,7 @@ export function SecondStep({
                 return (
                   <Card
                     key={index}
-                    className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/30"
+                    className=" hover:shadow-lg transition-all duration-300 border-2  hover:border-primary/30"
                   >
                     <CardContent className="p-6">
                       <div className="flex flex-col items-center space-y-4">

@@ -17,11 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import {
-  AnalysisFormRequest,
-  aytSubjects,
-  tytSubjects,
-} from "@/lib/validations/analysis.validation";
+
 import { format } from "date-fns";
 import {
   ArrowRight,
@@ -32,6 +28,11 @@ import {
 } from "lucide-react";
 import { tr } from "react-day-picker/locale";
 import { UseFormReturn } from "react-hook-form";
+import {
+  AnalysisFormRequest,
+  aytSubjects,
+  tytSubjects,
+} from "../_schemas/schema";
 
 interface FirstStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
@@ -49,7 +50,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
   return (
     <>
       {/* Exam Info */}
-      <Card className="border border-sidebar-border shadow-sm bg-background dark:bg-background w-full ">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2  ">
             <CalendarIcon className="h-5 w-5 text-amber-600 dark:text-amber-400" />
@@ -119,7 +120,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
         </CardContent>
       </Card>
 
-      <Card className="border border-sidebar-border shadow-sm bg-background dark:bg-background w-full">
+      <Card>
         <CardContent className="p-6">
           <div className="flex  gap-6 justify-center">
             {subjects.map((subject) => (

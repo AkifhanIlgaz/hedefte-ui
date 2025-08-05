@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { text } from "@/lib/constants/text";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   title: string;
-  currentStep: number;
+  subtitle: string;
 }
 
-export function Header({ title, currentStep }: HeaderProps) {
+export function Header({ title, subtitle }: HeaderProps) {
   const router = useRouter();
 
   return (
@@ -25,11 +24,7 @@ export function Header({ title, currentStep }: HeaderProps) {
       </Button>
       <div className="flex flex-col space-y-0">
         <h1 className="text-3xl font-bold text-foreground mb-2">{title}</h1>
-        <p className="text-lg text-muted-foreground">
-          {currentStep === 1
-            ? text.analysis.firstStep.subtitle
-            : text.analysis.secondStep.subtitle}
-        </p>
+        <p className="text-lg text-muted-foreground">{subtitle}</p>
       </div>
     </div>
   );

@@ -1,19 +1,16 @@
 "use client";
 
-import { FirstStep } from "@/components/app/analiz/firstStep";
-import { Header } from "@/components/app/analiz/header";
-import { ProgressIndicator } from "@/components/app/analiz/progress";
-import { SecondStep } from "@/components/app/analiz/secondStep";
+import { FirstStep } from "@/app/dashboard/analiz/_components/firstStep";
+import { Header } from "@/app/dashboard/analiz/_components/header";
+import { ProgressIndicator } from "@/app/dashboard/analiz/_components/progress";
 import { Form } from "@/components/ui/form";
 import { text } from "@/lib/constants/text";
-import {
-  AnalysisFormRequest,
-  analysisFormSchema,
-  tytSubjects,
-} from "@/lib/validations/analysis.validation";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { SecondStep } from "../../_components/secondStep";
+import { AnalysisFormRequest, analysisFormSchema, tytSubjects } from "../../_schemas/schema";
 
 export default function AddTYTResultPage() {
   const form = useForm<AnalysisFormRequest>({
@@ -56,7 +53,14 @@ export default function AddTYTResultPage() {
 
   return (
     <>
-      <Header title={text.analysis.tyt.title} currentStep={currentStep} />
+      <Header
+        title={text.analysis.tyt.title}
+        subtitle={
+          currentStep === 1
+            ? text.analysis.firstStep.subtitle
+            : text.analysis.secondStep.subtitle
+        }
+      />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
