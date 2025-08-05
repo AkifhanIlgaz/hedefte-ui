@@ -45,7 +45,7 @@ export default function Page() {
         <AnalysisCard icon={Calendar} label={"Toplam Deneme"} value={2} />
       </div>
       {/* Tabs */}
-      <Tabs defaultValue="general" className="space-y-4">
+      <Tabs defaultValue="general" className="space-y-4" >
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="general">Genel Analiz</TabsTrigger>
           <TabsTrigger value="detailed">Detaylı Analiz</TabsTrigger>

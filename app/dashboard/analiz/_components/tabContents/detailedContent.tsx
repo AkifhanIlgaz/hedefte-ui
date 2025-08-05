@@ -1,15 +1,7 @@
 "use client";
 
 import { TabsContent } from "@/components/ui/tabs";
-import {
-  BookOpen,
-  Calculator,
-  FlaskConical,
-  Globe,
-  Minus,
-  TrendingDown,
-  TrendingUp,
-} from "lucide-react";
+import { BookOpen, Calculator, FlaskConical, Globe } from "lucide-react";
 import SubjectCard from "../cards/subjectCard";
 
 export const subjectPerformanceData = [
@@ -87,28 +79,6 @@ export const subjectPerformanceData = [
   },
 ];
 
-function getTrendIcon(trend: string) {
-  switch (trend) {
-    case "up":
-      return <TrendingUp className="w-4 h-4 text-green-500" />;
-    case "down":
-      return <TrendingDown className="w-4 h-4 text-red-500" />;
-    default:
-      return <Minus className="w-4 h-4 text-gray-500" />;
-  }
-}
-
-function getTrendColor(trend: string) {
-  switch (trend) {
-    case "up":
-      return "text-green-600";
-    case "down":
-      return "text-red-600";
-    default:
-      return "text-gray-600";
-  }
-}
-
 export default function DetailedContent() {
   return (
     <TabsContent value="detailed" className="space-y-6">
@@ -118,8 +88,8 @@ export default function DetailedContent() {
             <SubjectCard
               key={index}
               icon={subject.icon}
-              title={subject.subject}
-              stats={subject.stats}
+              subject={subject}
+      
             />
           );
         })}
