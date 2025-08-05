@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
+import { formatNumber } from "./utils";
 
 interface AnalysisCardProps {
   icon: LucideIcon;
@@ -52,7 +53,7 @@ export default function AnalysisCard({
         <div>
           <p className={`text-md ${styles.labelColor}`}>{label}</p>
           <p className={`text-xl font-semibold ${styles.valueColor}`}>
-            {value.toFixed(2)}
+            {formatNumber(value)}
           </p>
         </div>
       </CardContent>

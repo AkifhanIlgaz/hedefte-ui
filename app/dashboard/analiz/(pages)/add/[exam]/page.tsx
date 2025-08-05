@@ -65,7 +65,7 @@ export default function AddAnalysisPage({
   };
 
   return (
-    <>
+    <div className="space-y-8">
       <Header
         title={
           examType === "TYT" ? text.analysis.tyt.title : text.analysis.ayt.title
@@ -90,13 +90,10 @@ export default function AddAnalysisPage({
               handleNextStep={handleNextStep}
             />
           ) : (
-            <SecondStep
-              form={form}
-              handlePreviousStep={handlePreviousStep}
-            />
+            <SecondStep form={form} handlePreviousStep={handlePreviousStep} />
           )}
         </form>
       </Form>
-    </>
+    </div>
   );
 }
