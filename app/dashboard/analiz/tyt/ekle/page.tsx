@@ -55,28 +55,30 @@ export default function AddTYTResultPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0 ">
-      <div className="container mx-auto p-6 max-w-full">
-        <Header title={text.analysis.tyt.title} currentStep={currentStep} />
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 flex flex-col items-center justify-center "
-          >
-            <ProgressIndicator currentStep={currentStep} />
+    <>
+      <Header title={text.analysis.tyt.title} currentStep={currentStep} />
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 flex flex-col items-center justify-center "
+        >
+          <ProgressIndicator currentStep={currentStep} />
 
-            {currentStep === 1 ? (
-              <FirstStep examType="TYT" form={form} handleNextStep={handleNextStep} />
-            ) : (
-              <SecondStep
-                examType="TYT"
-                form={form}
-                handlePreviousStep={handlePreviousStep}
-              />
-            )}
-          </form>
-        </Form>
-      </div>
-    </div>
+          {currentStep === 1 ? (
+            <FirstStep
+              examType="TYT"
+              form={form}
+              handleNextStep={handleNextStep}
+            />
+          ) : (
+            <SecondStep
+              examType="TYT"
+              form={form}
+              handlePreviousStep={handlePreviousStep}
+            />
+          )}
+        </form>
+      </Form>
+    </>
   );
 }

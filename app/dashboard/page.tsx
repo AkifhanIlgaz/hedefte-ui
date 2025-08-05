@@ -1,3 +1,15 @@
+'use client'
+
+import {useAuth} from "@/hooks/useAuth";
+import {createClient} from "@/lib/supabase/client";
+
 export default function Page() {
+
+
+
+     createClient().auth.getSession().then(value => {
+         console.log(value.data.session)
+     })
+
   return <p>Dashboard protected</p>;
 }

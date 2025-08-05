@@ -27,12 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <style>
-          @import
-          url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
-        </style>
-      </head>
+      <head></head>
 
       <body className={`${inter.className} antialiased`}>
         <Providers

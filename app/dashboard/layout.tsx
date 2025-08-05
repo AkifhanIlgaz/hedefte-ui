@@ -98,7 +98,7 @@ export default function AuthenticatedLayout({
 
   return (
     <SidebarProvider>
-      <Sidebar collapsible="icon">
+      <Sidebar collapsible="icon" className="">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">
             <div className="h-8 w-8 items-center justify-center rounded-lg  hidden group-data-[collapsible=icon]:flex">
@@ -156,8 +156,10 @@ export default function AuthenticatedLayout({
       </Sidebar>
       <SidebarInset className="bg-sidebar">
         <Navbar />
-        <div className="flex flex-1 flex-col gap-4 p-4 min-h-screen  ">
-          {children}
+        <div className="flex flex-1 flex-col gap-8 p-8 min-h-screen ">
+          <div className="flex flex-1 flex-col ">
+            <div className="container mx-auto max-w-full">{children}</div>
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>

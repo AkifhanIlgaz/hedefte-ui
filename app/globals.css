@@ -1,10 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-size: 16px;
+  --font-size: 14px;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -69,7 +70,7 @@
 
   /* Sidebar colors - light mode */
   --sidebar-background: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-foreground: #757575;
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -115,8 +116,8 @@
   --divider: rgba(255, 255, 255, 0.15);
 
   /* Sidebar colors - dark mode */
-  --sidebar-background: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-background: #161a23;
+  --sidebar-foreground: #757575;
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
@@ -445,7 +446,6 @@ html {
   font-weight: 400;
   font-style: normal;
 }
-/* globals.css veya component.css dosyasına ekleyin */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
