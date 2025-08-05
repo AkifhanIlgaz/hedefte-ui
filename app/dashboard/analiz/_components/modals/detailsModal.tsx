@@ -12,9 +12,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { text } from "@/lib/constants/text";
-import { TopicMistake } from "@/lib/validations/analysis.validation";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { TopicMistake } from "../../_schemas/schema";
 
 interface DetailsProps {
   subjectIndex: number;
@@ -119,9 +119,7 @@ export default function DetailsModal({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button
-              variant="destructive"
-            >
+            <Button variant="destructive">
               {text.analysis.common.buttons.cancel}
             </Button>
           </DialogClose>

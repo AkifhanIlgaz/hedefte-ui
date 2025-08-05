@@ -5,11 +5,12 @@ import { BarChart3, Calendar, Plus, Target, TrendingUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AnalysisCard from "../_components/cards/analysisCard";
-import { Header } from "../_components/header";
-import AllExamsContent from "../_components/tabContents/allExamsContent";
-import DetailedContent from "../_components/tabContents/detailedContent";
-import GeneralContent from "../_components/tabContents/generalContent";
+import { text } from "@/lib/constants/text";
+import AnalysisCard from "../../_components/cards/analysisCard";
+import { Header } from "../../_components/header";
+import AllExamsContent from "../../_components/tabContents/allExamsContent";
+import DetailedContent from "../../_components/tabContents/detailedContent";
+import GeneralContent from "../../_components/tabContents/generalContent";
 
 export default function Page() {
   const router = useRouter();
@@ -19,18 +20,16 @@ export default function Page() {
       {/* Header */}
       <div className="flex sm:flex-row sm:items-center sm:justify-between">
         <Header
-          title={"TYT Deneme Analizi"}
-          subtitle={
-            "TYT deneme sonuçlarınızı takip edin ve gelişiminizi analiz edin."
-          }
+          title={text.analysis.ayt.analysis.title}
+          subtitle={text.analysis.ayt.analysis.subtitle}
         />
 
         <Button
-          onClick={() => router.push("/dashboard/analiz/tyt/ekle")}
+          onClick={() => router.push("/dashboard/analiz/add/ayt")}
           className="gap-2 bg-amber-600 hover:bg-amber-700 text-white cursor-pointer"
         >
           <Plus className="size-4" />
-          TYT Denemesi Ekle
+          {text.analysis.ayt.analysis.addButton}
         </Button>
       </div>
       {/* Analysis Cards */}

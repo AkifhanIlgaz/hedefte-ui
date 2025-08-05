@@ -13,14 +13,9 @@ import DetailsModal from "./modals/detailsModal";
 interface SecondStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
   handlePreviousStep: () => void;
-  examType: "TYT" | "AYT";
 }
 
-export function SecondStep({
-  form,
-  handlePreviousStep,
-  examType,
-}: SecondStepProps) {
+export function SecondStep({ form, handlePreviousStep }: SecondStepProps) {
   const addTopicMistake = (
     subjectIndex: number,
     topic: string,

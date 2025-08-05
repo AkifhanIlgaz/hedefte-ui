@@ -94,9 +94,21 @@ const analizTexts = {
   },
   tyt: {
     title: "TYT Deneme Sonucu Ekle",
+    analysis: {
+      title: "TYT Deneme Analizi",
+      subtitle:
+        "TYT deneme sonuçlarınızı takip edin ve gelişiminizi analiz edin.",
+      addButton: "TYT Denemesi Ekle",
+    },
   },
   ayt: {
     title: "AYT Deneme Sonucu Ekle",
+    analysis: {
+      title: "AYT Deneme Analizi",
+      subtitle:
+        "AYT deneme sonuçlarınızı takip edin ve gelişiminizi analiz edin.",
+      addButton: "AYT Denemesi Ekle",
+    },
   },
 };
 

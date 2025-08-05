@@ -7,19 +7,32 @@ import { Form } from "@/components/ui/form";
 import { text } from "@/lib/constants/text";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useForm } from "react-hook-form";
-import { SecondStep } from "../../_components/secondStep";
-import { AnalysisFormRequest, analysisFormSchema, tytSubjects } from "../../_schemas/schema";
+import { SecondStep } from "../../../_components/secondStep";
+import {
+  AnalysisFormRequest,
+  analysisFormSchema,
+  aytSubjects,
+  tytSubjects,
+} from "../../../_schemas/schema";
 
-export default function AddTYTResultPage() {
+export default function AddAnalysisPage({
+  params,
+}: {
+  params: Promise<{ exam: string }>;
+}) {
+  const { exam } = use(params);
+  const examType = exam.toUpperCase() as "TYT" | "AYT";
+  const subjects = examType === "TYT" ? tytSubjects : aytSubjects;
+
   const form = useForm<AnalysisFormRequest>({
     resolver: zodResolver(analysisFormSchema),
     defaultValues: {
       date: new Date(),
       name: "",
       notes: "",
-      subjects: tytSubjects
+      subjects: subjects
         .map((s) =>
           s.subFields.map((sf) => ({
             name: sf.name,
@@ -54,7 +67,9 @@ export default function AddTYTResultPage() {
   return (
     <>
       <Header
-        title={text.analysis.tyt.title}
+        title={
+          examType === "TYT" ? text.analysis.tyt.title : text.analysis.ayt.title
+        }
         subtitle={
           currentStep === 1
             ? text.analysis.firstStep.subtitle
@@ -70,13 +85,12 @@ export default function AddTYTResultPage() {
 
           {currentStep === 1 ? (
             <FirstStep
-              examType="TYT"
+              examType={examType}
               form={form}
               handleNextStep={handleNextStep}
             />
           ) : (
             <SecondStep
-              examType="TYT"
               form={form}
               handlePreviousStep={handlePreviousStep}
             />
