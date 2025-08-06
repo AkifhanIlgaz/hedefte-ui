@@ -3,8 +3,9 @@ import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
 import {
   CartesianGrid,
   Line,
@@ -13,24 +14,27 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { AnalysisFormRequest } from "../../_schemas/schema";
 
 interface GeneralContentProps {
-  chartData: Data[];
+  chartData: AnalysisFormRequest[];
 }
 
-type Data = {
-  date: string;
-  net: number;
-};
-
 const chartConfig = {
-  net: {
+  totalNet: {
     label: "Net",
     color: "#2563eb",
   },
 } satisfies ChartConfig;
 
 export default function NetChart({ chartData }: GeneralContentProps) {
+  // Date'leri formatla
+  const formattedData = chartData.map((item) => ({
+    ...item,
+    formattedDate: format(new Date(item.date), "dd MMM", { locale: tr }),
+    fullDate: format(new Date(item.date), "dd MMMM yyyy", { locale: tr }),
+  }));
+
   return (
     <Card>
       <CardHeader className="flex items-center justify-between mb-4">
@@ -43,7 +47,7 @@ export default function NetChart({ chartData }: GeneralContentProps) {
           <ChartContainer config={chartConfig}>
             <LineChart
               accessibilityLayer
-              data={chartData}
+              data={formattedData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid
@@ -51,26 +55,53 @@ export default function NetChart({ chartData }: GeneralContentProps) {
                 strokeDasharray="3 3"
                 stroke="#fcd34d"
                 opacity={0.4}
-              ></CartesianGrid>
+              />
               <XAxis
-                dataKey="month"
+                dataKey="formattedDate"
                 tickMargin={8}
                 tick={{ fontSize: 12, fill: "#b45309" }}
                 axisLine={{ stroke: "#d97706" }}
                 tickLine={{ stroke: "#d97706" }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
               />
               <YAxis
                 tick={{ fontSize: 12, fill: "#b45309" }}
                 axisLine={{ stroke: "#d97706" }}
                 tickLine={{ stroke: "#d97706" }}
                 domain={["dataMin - 2", "dataMax + 2"]}
+                label={{
+                  value: "Net",
+                  angle: -90,
+                  position: "insideLeft",
+                  style: { textAnchor: "middle", fill: "#b45309" },
+                }}
               />
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent hideLabel />}
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const data = payload[0].payload;
+                    return (
+                      <div className="bg-background border border-border rounded-lg p-3 shadow-lg">
+                        <p className="font-medium text-foreground">
+                          {data.name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {data.fullDate}
+                        </p>
+                        <p className="text-sm font-semibold text-amber-600">
+                          Net: {data.totalNet}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
               />
               <Line
-                dataKey="net"
+                dataKey="totalNet"
                 stroke="#d97706"
                 strokeWidth={3}
                 dot={{ fill: "#f59e0b", strokeWidth: 2, r: 5 }}

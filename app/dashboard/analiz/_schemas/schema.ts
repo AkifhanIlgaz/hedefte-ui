@@ -105,14 +105,27 @@ export const subjectSchema = z
 //   }
 // );
 
-export const analysisFormSchema = z.object({
-  date: z.date("Tarih zorunludur"),
-  name: z
-    .string("Deneme adi zorunludur")
-    .min(1, `Lütfen denemenin adını giriniz`),
-  subjects: z.array(subjectSchema),
-  notes: z.string().max(100).optional(),
-});
+export const analysisFormSchema = z
+  .object({
+    date: z.date("Tarih zorunludur"),
+    totalNet: z.number(),
+    name: z
+      .string("Deneme adi zorunludur")
+      .min(1, `Lütfen denemenin adını giriniz`),
+    subjects: z.array(subjectSchema),
+  })
+  .transform((data) => {
+    // Toplam net'i hesapla
+    const totalNet = data.subjects.reduce((sum, subject) => {
+      const net = subject.correct - subject.wrong * 0.25;
+      return sum + net;
+    }, 0);
+
+    return {
+      ...data,
+      totalNet: Math.round(totalNet * 100) / 100, // 2 ondalık basamağa yuvarla
+    };
+  });
 
 export type AnalysisFormRequest = z.infer<typeof analysisFormSchema>;
 export type TopicMistake = z.infer<typeof topicMistakesSchema>;

@@ -6,6 +6,7 @@ import { ProgressIndicator } from "@/app/dashboard/analiz/_components/progress";
 import { Form } from "@/components/ui/form";
 import { text } from "@/lib/constants/text";
 
+import { createClient } from "@/lib/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { use, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -30,8 +31,8 @@ export default function AddAnalysisPage({
     resolver: zodResolver(analysisFormSchema),
     defaultValues: {
       date: new Date(),
+      totalNet: 0,
       name: "",
-      notes: "",
       subjects: subjects
         .map((s) =>
           s.subFields.map((sf) => ({
@@ -51,7 +52,34 @@ export default function AddAnalysisPage({
   const [currentStep, setCurrentStep] = useState(1);
 
   const onSubmit = async (req: AnalysisFormRequest) => {
-    console.log(req);
+    try {
+      // Access token'ı al
+      const {
+        data: { session },
+      } = await createClient().auth.getSession();
+
+      // API'ye POST isteği gönder
+      const response = await fetch("http://localhost:8080/api/analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token}`,
+        },
+        body: JSON.stringify({
+          ...req,
+          examType: examType,
+        }),
+      });
+      console.log(response);
+
+      const result = await response.json();
+
+      console.log("Analysis saved:", result);
+
+      // Form'u sıfırla veya yönlendirme yap
+      // router.push(`/dashboard/analiz/${examType.toLowerCase()}`);
+    } finally {
+    }
   };
 
   const handleNextStep = () => {

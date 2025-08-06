@@ -11,76 +11,13 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import { BookOpen, Trash2 } from "lucide-react";
+import { AnalysisFormRequest } from "../../_schemas/schema";
 
-interface ExamResult {
-  id: string;
-  date: string;
-  examName: string;
-  turkce: number;
-  tarih: number;
-  cografya: number;
-  felsefe: number;
-  din: number;
-  matematik: number;
-  fizik: number;
-  kimya: number;
-  biyoloji: number;
-  total: number;
-}
-
-const mockData: ExamResult[] = [
-  {
-    id: "1",
-    date: "2024-01-15",
-    examName: "1. Deneme",
-    turkce: 35.5,
-    tarih: 8,
-    cografya: 6,
-    felsefe: 4,
-    din: 3,
-    matematik: 25,
-    fizik: 6,
-    kimya: 5,
-    biyoloji: 7,
-    total: 100.5,
-  },
-  {
-    id: "2",
-    date: "2024-01-22",
-    examName: "2. Deneme",
-    turkce: 38,
-    tarih: 7,
-    cografya: 8,
-    felsefe: 5,
-    din: 4,
-    matematik: 22,
-    fizik: 5,
-    kimya: 6,
-    biyoloji: 8,
-    total: 103,
-  },
-  {
-    id: "3",
-    date: "2024-01-29",
-    examName: "3. Deneme",
-    turkce: 32,
-    tarih: 9,
-    cografya: 7,
-    felsefe: 3,
-    din: 5,
-    matematik: 28,
-    fizik: 7,
-    kimya: 4,
-    biyoloji: 6,
-    total: 101,
-  },
-];
-
-export default function AllExamsContent() {
-  const handleEdit = (item: ExamResult) => {
-    // Edit logic here
-  };
-
+export default function AllExamsContent({
+  allExams,
+}: {
+  allExams: AnalysisFormRequest[];
+}) {
   const handleDelete = (id: string) => {
     // Delete logic here
   };
@@ -100,6 +37,7 @@ export default function AllExamsContent() {
                 <TableHead className="w-[100px] text-center">
                   Deneme Adı
                 </TableHead>
+
                 <TableHead className="w-[100px] text-center">Türkçe</TableHead>
                 <TableHead className="w-[100px] text-center">Tarih</TableHead>
                 <TableHead className="w-[100px] text-center">
@@ -120,7 +58,7 @@ export default function AllExamsContent() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockData.length === 0 ? (
+              {allExams?.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={13} className="text-center py-8">
                     <div className="flex flex-col items-center gap-2">
@@ -132,99 +70,40 @@ export default function AllExamsContent() {
                   </TableCell>
                 </TableRow>
               ) : (
-                mockData.map((item) => (
-                  <TableRow key={item.id} className="hover:bg-muted/50 ">
+                allExams?.map((item, index) => (
+                  <TableRow key={index} className="hover:bg-muted/50 ">
                     <TableCell className="font-medium">
                       {new Date(item.date).toLocaleDateString("tr-TR")}
                     </TableCell>
                     <TableCell className="text-center font-semibold">
-                      {item.examName}
+                      {item.name}
                     </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.turkce)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.tarih)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.cografya)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.felsefe)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.din)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.matematik)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.fizik)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.kimya)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-50 text-yellow-700"
-                      >
-                        {formatNumber(item.biyoloji)}
-                      </Badge>
-                    </TableCell>
+                    {item?.subjects.map((s, i) => {
+                      return (
+                        <TableCell key={i} className="text-center">
+                          <Badge
+                            variant="outline"
+                            className="bg-yellow-50 text-yellow-700"
+                          >
+                            {formatNumber(s.correct - s.wrong * 0.25)}
+                          </Badge>
+                        </TableCell>
+                      );
+                    })}
+
                     <TableCell className="text-center">
                       <Badge
                         variant="default"
                         className="bg-amber-600 text-white font-bold"
                       >
-                        {formatNumber(item.total)}
+                        {item.totalNet}
                       </Badge>
                     </TableCell>
                     <TableCell>
                       <Button
                         variant={"ghost"}
                         size={"icon"}
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => handleDelete(item.name)}
                         className="h-8 w-8 text-danger hover:text-danger hover:bg-danger/10"
                       >
                         <Trash2 className="w-4 h-4 " />

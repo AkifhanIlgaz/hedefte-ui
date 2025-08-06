@@ -6,15 +6,49 @@ import { useRouter } from "next/navigation";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { text } from "@/lib/constants/text";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
 import AnalysisCard from "../../_components/cards/analysisCard";
 import { Header } from "../../_components/header";
 import AllExamsContent from "../../_components/tabContents/allExamsContent";
 import DetailedContent from "../../_components/tabContents/detailedContent";
 import GeneralContent from "../../_components/tabContents/generalContent";
+import { AnalysisFormRequest } from "../../_schemas/schema";
 
 export default function Page() {
   const router = useRouter();
+  const [data, setData] = useState<AnalysisFormRequest[]>();
 
+  const getExams = async () => {
+    try {
+      // Access token'ı al
+      const {
+        data: { session },
+      } = await createClient().auth.getSession();
+
+      // API'ye POST isteği gönder
+      const response = await fetch(
+        "http://localhost:8080/api/analysis?exam=TYT",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+        }
+      );
+      console.log(response);
+
+      const result = await response.json();
+
+      setData(result.payload);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    getExams();
+  }, []);
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -51,9 +85,9 @@ export default function Page() {
           <TabsTrigger value="detailed">Detaylı Analiz</TabsTrigger>
           <TabsTrigger value="all">Denemeler</TabsTrigger>
         </TabsList>
-        <GeneralContent />
-        <DetailedContent />
-        <AllExamsContent />
+        <GeneralContent allExams={data || []} />
+        <DetailedContent allExams={data || []} />
+        <AllExamsContent allExams={data || []} />
       </Tabs>
     </div>
   );
