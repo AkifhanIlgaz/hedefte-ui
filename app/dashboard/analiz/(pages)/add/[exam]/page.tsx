@@ -14,7 +14,8 @@ import { SecondStep } from "../../../_components/secondStep";
 import {
   AnalysisFormRequest,
   analysisFormSchema,
-  aytSubjects,
+  EaSubjects,
+  MfSubjects,
   tytSubjects,
 } from "../../../_schemas/schema";
 
@@ -25,7 +26,13 @@ export default function AddAnalysisPage({
 }) {
   const { exam } = use(params);
   const examType = exam.toUpperCase() as "TYT" | "AYT";
-  const subjects = examType === "TYT" ? tytSubjects : aytSubjects;
+  const division = localStorage.getItem(`bolum`);
+  const subjects =
+    examType === "TYT"
+      ? tytSubjects
+      : division === `EA`
+      ? EaSubjects
+      : MfSubjects;
 
   const form = useForm<AnalysisFormRequest>({
     resolver: zodResolver(analysisFormSchema),

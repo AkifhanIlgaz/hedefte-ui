@@ -28,7 +28,7 @@ export default function Page() {
 
       // API'ye POST isteği gönder
       const response = await fetch(
-        "http://localhost:8080/api/analysis?exam=TYT",
+        "http://localhost:8080/api/analysis?exam=AYT",
         {
           method: "GET",
           headers: {
@@ -37,7 +37,6 @@ export default function Page() {
           },
         }
       );
-      console.log(response);
 
       const result = await response.json();
 
@@ -49,6 +48,7 @@ export default function Page() {
   useEffect(() => {
     getExams();
   }, []);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -87,7 +87,7 @@ export default function Page() {
         </TabsList>
         <GeneralContent allExams={data || []} />
         <DetailedContent allExams={data || []} />
-        <AllExamsContent allExams={data || []} />
+        <AllExamsContent allExams={data || []} examType="AYT" />
       </Tabs>
     </div>
   );

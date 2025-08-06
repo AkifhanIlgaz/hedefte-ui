@@ -112,7 +112,10 @@ export default function Page() {
         </TabsList>
         <GeneralContent allExams={transformedData?.rawData || []} />
         <DetailedContent allExams={transformedData?.rawData || []} />
-        <AllExamsContent allExams={transformedData?.rawData || []} />
+        <AllExamsContent
+          allExams={transformedData?.rawData || []}
+          examType="TYT"
+        />
       </Tabs>
     </div>
   );

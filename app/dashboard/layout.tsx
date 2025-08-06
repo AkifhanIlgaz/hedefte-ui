@@ -125,10 +125,10 @@ export default function AuthenticatedLayout({
                         isActive={path === item.href}
                         onClick={() => router.push(item.href!)}
                         tooltip={item.label}
-                        className="cursor-pointer"
+                        className="cursor-pointer "
                       >
-                        <item.icon className="w-4 h-4 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5 text-amber-700 dark:text-amber-300" />
-                        <span>{item.label}</span>
+                        <item.icon className="w-6 h-6 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5 text-amber-700 dark:text-amber-300" />
+                        <span className="">{item.label}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}

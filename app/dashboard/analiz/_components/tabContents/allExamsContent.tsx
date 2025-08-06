@@ -11,12 +11,19 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import { BookOpen, Trash2 } from "lucide-react";
-import { AnalysisFormRequest } from "../../_schemas/schema";
+import {
+  AnalysisFormRequest,
+  EaSubjects,
+  MfSubjects,
+  tytSubjects,
+} from "../../_schemas/schema";
 
 export default function AllExamsContent({
   allExams,
+  examType,
 }: {
   allExams: AnalysisFormRequest[];
+  examType: "TYT" | "AYT";
 }) {
   const handleDelete = (id: string) => {
     // Delete logic here
@@ -25,6 +32,14 @@ export default function AllExamsContent({
   const formatNumber = (value: number): string => {
     return value % 1 === 0 ? value.toString() : value.toFixed(1);
   };
+
+  const division = localStorage.getItem(`bolum`);
+  const subjects =
+    examType === "TYT"
+      ? tytSubjects
+      : division === `EA`
+      ? EaSubjects
+      : MfSubjects;
 
   return (
     <TabsContent value="all" className="space-y-2">
@@ -37,22 +52,18 @@ export default function AllExamsContent({
                 <TableHead className="w-[100px] text-center">
                   Deneme Adı
                 </TableHead>
+                {subjects
+                  .flatMap((s) =>
+                    s.subFields.map((sf) => ({
+                      name: sf.name,
+                    }))
+                  )
+                  .map((s, i) => (
+                    <TableHead key={i} className="w-[100px] text-center">
+                      {s.name}
+                    </TableHead>
+                  ))}
 
-                <TableHead className="w-[100px] text-center">Türkçe</TableHead>
-                <TableHead className="w-[100px] text-center">Tarih</TableHead>
-                <TableHead className="w-[100px] text-center">
-                  Coğrafya
-                </TableHead>
-                <TableHead className="w-[100px] text-center">Felsefe</TableHead>
-                <TableHead className="w-[100px] text-center">Din</TableHead>
-                <TableHead className="w-[100px] text-center">
-                  Matematik
-                </TableHead>
-                <TableHead className="w-[100px] text-center">Fizik</TableHead>
-                <TableHead className="w-[100px] text-center">Kimya</TableHead>
-                <TableHead className="w-[100px] text-center">
-                  Biyoloji
-                </TableHead>
                 <TableHead className="w-[100px] text-center">Toplam</TableHead>
                 <TableHead className="w-[50px]"></TableHead>
               </TableRow>

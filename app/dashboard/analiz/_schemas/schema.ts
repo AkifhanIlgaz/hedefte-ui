@@ -32,6 +32,40 @@ export const tytSubjects = [
   },
 ];
 
+export const EaSubjects = [
+  {
+    name: "Edebiyat ve Sosyal Bilimler",
+    total: 40,
+    subFields: [
+      { id: 0, name: "Türk Dili ve Edebiyatı", total: 24 },
+      { id: 1, name: "Tarih", total: 10 },
+      { id: 2, name: "Coğrafya", total: 6 },
+    ],
+  },
+  {
+    name: "Matematik",
+    total: 40,
+    subFields: [{ id: 3, name: "Matematik", total: 40 }],
+  },
+];
+
+export const MfSubjects = [
+  {
+    name: "Matematik",
+    total: 40,
+    subFields: [{ id: 0, name: "Matematik", total: 40 }],
+  },
+  {
+    name: "Fen Bilimleri",
+    total: 40,
+    subFields: [
+      { id: 1, name: "Fizik", total: 14 },
+      { id: 2, name: "Kimya", total: 14 },
+      { id: 3, name: "Biyoloji", total: 13 },
+    ],
+  },
+];
+
 export const aytSubjects = [
   {
     name: "Edebiyat ve Sosyal Bilimler",

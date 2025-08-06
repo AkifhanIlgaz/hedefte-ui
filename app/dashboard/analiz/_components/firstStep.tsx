@@ -30,7 +30,8 @@ import { tr } from "react-day-picker/locale";
 import { UseFormReturn } from "react-hook-form";
 import {
   AnalysisFormRequest,
-  aytSubjects,
+  EaSubjects,
+  MfSubjects,
   tytSubjects,
 } from "../_schemas/schema";
 
@@ -45,7 +46,13 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
     formState: { errors },
   } = form;
 
-  const subjects = examType === "TYT" ? tytSubjects : aytSubjects;
+  const division = localStorage.getItem(`bolum`);
+  const subjects =
+    examType === "TYT"
+      ? tytSubjects
+      : division === `EA`
+      ? EaSubjects
+      : MfSubjects;
 
   return (
     <>
@@ -124,7 +131,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
         <CardContent className="p-6">
           <div className="flex  gap-6 justify-center">
             {subjects.map((subject) => (
-              <div key={subject.name} className="space-y-4">
+              <div key={subject.name} className="space-y-4 w-full">
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-primary mb-1">
                     {subject.name}
