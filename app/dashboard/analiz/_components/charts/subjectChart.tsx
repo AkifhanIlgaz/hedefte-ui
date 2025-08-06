@@ -6,42 +6,45 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
-  Line,
-  LineChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
 } from "recharts";
 
-interface GeneralContentProps {
-  chartData: Data[];
-}
-
-type Data = {
-  date: string;
-  net: number;
-};
-
-const chartConfig = {
-  net: {
-    label: "Net",
+const subjectConfig = {
+  averageNet: {
+    label: "Ortalama Net",
     color: "#2563eb",
   },
 } satisfies ChartConfig;
 
-export default function NetChart({ chartData }: GeneralContentProps) {
+interface SubjectChartProps {
+  chartData: SubjectData[];
+}
+
+type SubjectData = {
+  subject: string;
+  averageNet: number;
+};
+
+export default function SubjectChart({ chartData }: SubjectChartProps) {
   return (
     <Card>
       <CardHeader className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-medium text-amber-800 dark:text-amber-200">
-          Net İlerleme Grafiği
+          Ders Bazinda Ortalama Net
         </h3>
+        <div className="text-sm text-amber-600 dark:text-amber-400">
+          {chartData.length} deneme
+        </div>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height="100%">
-          <ChartContainer config={chartConfig}>
-            <LineChart
+          <ChartContainer config={subjectConfig}>
+            <BarChart
               accessibilityLayer
               data={chartData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -51,38 +54,35 @@ export default function NetChart({ chartData }: GeneralContentProps) {
                 strokeDasharray="3 3"
                 stroke="#fcd34d"
                 opacity={0.4}
-              ></CartesianGrid>
+              />
               <XAxis
-                dataKey="month"
+                dataKey="subject"
                 tickMargin={8}
                 tick={{ fontSize: 12, fill: "#b45309" }}
                 axisLine={{ stroke: "#d97706" }}
                 tickLine={{ stroke: "#d97706" }}
+                interval={0}
+                angle={-45}
+                textAnchor="end"
+                height={80}
               />
               <YAxis
                 tick={{ fontSize: 12, fill: "#b45309" }}
                 axisLine={{ stroke: "#d97706" }}
                 tickLine={{ stroke: "#d97706" }}
-                domain={["dataMin - 2", "dataMax + 2"]}
               />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Line
-                dataKey="net"
-                stroke="#d97706"
-                strokeWidth={3}
-                dot={{ fill: "#f59e0b", strokeWidth: 2, r: 5 }}
-                activeDot={{
-                  r: 8,
-                  fill: "#92400e",
-                  stroke: "#fff",
-                  strokeWidth: 2,
-                }}
-                connectNulls={false}
+              <Bar
+                dataKey="averageNet"
+                fill="var(--color-amber-500)"
+                radius={[4, 4, 0, 0]}
+                stroke="var(--color-amber-600)"
+                strokeWidth={1}
               />
-            </LineChart>
+            </BarChart>
           </ChartContainer>
         </ResponsiveContainer>
       </CardContent>
