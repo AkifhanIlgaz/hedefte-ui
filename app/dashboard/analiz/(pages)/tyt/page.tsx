@@ -7,44 +7,52 @@ import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { text } from "@/lib/constants/text";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AnalysisCard from "../../_components/cards/analysisCard";
 import { Header } from "../../_components/header";
 import AllExamsContent from "../../_components/tabContents/allExamsContent";
 import DetailedContent from "../../_components/tabContents/detailedContent";
 import GeneralContent from "../../_components/tabContents/generalContent";
 import { AnalysisFormRequest } from "../../_schemas/schema";
+import { transformAnalysisData } from "../../_utils/transform";
 
 export default function Page() {
   const router = useRouter();
   const [data, setData] = useState<AnalysisFormRequest[]>();
 
-  const getExams = async () => {
-    try {
-      // Access token'ı al
-      const {
-        data: { session },
-      } = await createClient().auth.getSession();
+  const getExams = useMemo(() => {
+    return async () => {
+      try {
+        // Access token'ı al
+        const {
+          data: { session },
+        } = await createClient().auth.getSession();
 
-      // API'ye POST isteği gönder
-      const response = await fetch(
-        "http://localhost:8080/api/analysis?exam=TYT",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-        }
-      );
-      console.log(response);
+        // API'ye POST isteği gönder
+        const response = await fetch(
+          "http://localhost:8080/api/analysis?exam=TYT",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session?.access_token}`,
+            },
+          }
+        );
+        console.log(response);
 
-      const result = await response.json();
+        const result = await response.json();
 
-      setData(result.payload);
-    } finally {
-    }
-  };
+        setData(result.payload);
+      } finally {
+      }
+    };
+  }, []);
+
+  const transformedData = useMemo(() => {
+    if (!data || data.length === 0) return null;
+    return transformAnalysisData(data);
+  }, [data]);
 
   useEffect(() => {
     getExams();
@@ -68,15 +76,32 @@ export default function Page() {
       </div>
       {/* Analysis Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <AnalysisCard icon={Target} label={"Son Net"} value={88} />
+        <AnalysisCard
+          icon={Target}
+          label={"Son Net"}
+          value={transformedData?.generalStats.lastNet || 0}
+        />
         <AnalysisCard
           icon={TrendingUp}
           label={"Gelişim"}
-          value={13.7}
-          variant="up"
+          value={transformedData?.generalStats.improvement || 0}
+          variant={
+            transformedData?.generalStats.improvement &&
+            transformedData.generalStats.improvement > 0
+              ? "up"
+              : "down"
+          }
         />
-        <AnalysisCard icon={BarChart3} label={"Ortalama"} value={77.75} />
-        <AnalysisCard icon={Calendar} label={"Toplam Deneme"} value={2} />
+        <AnalysisCard
+          icon={BarChart3}
+          label={"Ortalama"}
+          value={transformedData?.generalStats.average || 0}
+        />
+        <AnalysisCard
+          icon={Calendar}
+          label={"Toplam Deneme"}
+          value={transformedData?.generalStats.totalExams || 0}
+        />
       </div>
       {/* Tabs */}
       <Tabs defaultValue="general" className="space-y-4">

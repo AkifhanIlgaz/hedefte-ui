@@ -48,7 +48,7 @@ export default function DetailedContent({
     Tarih: Globe,
     Coğrafya: Globe,
     Felsefe: Globe,
-    "Din Kültürü": Globe,
+    Din: Globe,
     Fizik: FlaskConical,
     Kimya: FlaskConical,
     Biyoloji: FlaskConical,
@@ -184,7 +184,9 @@ export default function DetailedContent({
                       <CardTitle className="text-lg">
                         {subject.subject}
                       </CardTitle>
-                      {subject.stats.averageNet}
+                      <p className="text-xl font-semibold text-amber-800 dark:text-amber-200">
+                        {subject.stats.averageNet}
+                      </p>
                     </div>
                   </div>
                   <SubjectDetailModal
