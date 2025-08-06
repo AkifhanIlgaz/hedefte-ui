@@ -1,10 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+} from "@/components/ui/chart";
 import { Progress } from "@/components/ui/progress";
 import { TabsContent } from "@/components/ui/tabs";
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
 import {
   BookOpen,
   Calculator,
@@ -18,11 +23,11 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { AnalysisFormRequest } from "../../_schemas/schema";
+import SubjectDetailModal from "../modals/subjectDetailModal";
 
 const chartConfig = {
   totalNet: {
@@ -56,7 +61,7 @@ export default function DetailedContent({
     Tarih: 5,
     Coğrafya: 5,
     Felsefe: 5,
-    "Din Kültürü": 5,
+    Din: 5,
     Fizik: 7,
     Kimya: 7,
     Biyoloji: 6,
@@ -89,6 +94,7 @@ export default function DetailedContent({
               empty: subject.empty,
               examDate: exam.date,
               examName: exam.name,
+              topicMistakes: subject.topicMistakes || [],
             };
           })
           .filter((data) => data !== null)
@@ -106,7 +112,6 @@ export default function DetailedContent({
 
         const totalQuestions = subjectQuestionCounts[subjectName] || 40;
 
-
         // Tutarlılık skoru (standart sapma bazlı)
         const mean = averageNet;
         const variance =
@@ -116,12 +121,16 @@ export default function DetailedContent({
         const consistencyScore = Math.max(0, 100 - stdDev * 10);
 
         // Net chart verisi
-        const netChartData = subjectData.map((exam, index) => ({
-          exam: `D${index + 1}`,
+        const netChartData = subjectData.map((exam) => ({
           net: Math.round(exam!.net * 100) / 100,
-          date: exam!.examDate,
+          date: format(new Date(exam!.examDate), "dd MMM", { locale: tr }),
           name: exam!.examName,
         }));
+
+        // Tüm konu hatalarını topla
+        const allTopicMistakes = subjectData.flatMap(
+          (exam) => exam!.topicMistakes
+        );
 
         return {
           subject: subjectName,
@@ -129,12 +138,11 @@ export default function DetailedContent({
           stats: {
             averageNet: Math.round(averageNet * 100) / 100,
             totalQuestions,
-
             consistencyScore: Math.round(consistencyScore),
           },
-
           examCount: subjectData.length,
           netChartData,
+          topicMistakes: allTopicMistakes,
         };
       })
       .filter((data) => data !== null);
@@ -179,9 +187,10 @@ export default function DetailedContent({
                       {subject.stats.averageNet}
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">
-                    Ayrıntılar
-                  </Button>
+                  <SubjectDetailModal
+                    name={subject.subject}
+                    topicMistakes={subject.topicMistakes}
+                  />
                 </div>
               </CardHeader>
 
@@ -196,7 +205,7 @@ export default function DetailedContent({
                       <LineChart
                         data={subject.netChartData}
                         accessibilityLayer
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                        margin={{ top: 5, right: 30, left: 20, bottom: 0 }}
                       >
                         <CartesianGrid
                           vertical={false}
@@ -205,13 +214,14 @@ export default function DetailedContent({
                           opacity={0.4}
                         />
                         <XAxis
-                          dataKey="exam"
-                          tickMargin={8}
-                          tick={{ fontSize: 12, fill: "#b45309" }}
+                          dataKey="date"
+                          tickMargin={4}
+                          tick={{ fontSize: 10, fill: "#b45309" }}
                           axisLine={{ stroke: "#d97706" }}
                           tickLine={{ stroke: "#d97706" }}
                           angle={-45}
                           textAnchor="end"
+                          height={60}
                         />
                         <YAxis
                           tick={{ fontSize: 10 }}
