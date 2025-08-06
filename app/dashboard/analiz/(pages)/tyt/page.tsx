@@ -110,9 +110,9 @@ export default function Page() {
           <TabsTrigger value="detailed">Detaylı Analiz</TabsTrigger>
           <TabsTrigger value="all">Denemeler</TabsTrigger>
         </TabsList>
-        <GeneralContent allExams={data || []} />
-        <DetailedContent allExams={data || []} />
-        <AllExamsContent allExams={data || []} />
+        <GeneralContent allExams={transformedData?.rawData || []} />
+        <DetailedContent allExams={transformedData?.rawData || []} />
+        <AllExamsContent allExams={transformedData?.rawData || []} />
       </Tabs>
     </div>
   );
