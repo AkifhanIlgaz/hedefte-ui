@@ -22,7 +22,6 @@ import {
   Calendar,
   GraduationCap,
   Home,
-  Target,
   TrendingUp,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -59,13 +58,7 @@ const sidebarGroups = [
         id: "schedule",
         label: "Haftalık Program",
         icon: Calendar,
-        href: routes.dashboard.study.schedule,
-      },
-      {
-        id: "daily-questions",
-        label: "Günlük Sorular",
-        icon: Target,
-        href: routes.dashboard.study.tracker,
+        href: routes.dashboard.schedule,
       },
     ],
   },

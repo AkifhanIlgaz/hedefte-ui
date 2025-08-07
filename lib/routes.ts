@@ -7,12 +7,11 @@ export const routes = {
     study: {
       tyt: "/dashboard/study/tyt",
       ayt: "/dashboard/study/ayt",
-      schedule: "/dashboard/study/schedule",
-      tracker: "/dashboard/study/tracker",
     },
     analysis: {
       tyt: "/dashboard/analiz/tyt",
       ayt: "/dashboard/analiz/ayt",
     },
+    schedule: "/dashboard/schedule",
   },
 };
