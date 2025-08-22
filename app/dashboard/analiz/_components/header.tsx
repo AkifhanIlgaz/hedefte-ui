@@ -11,7 +11,7 @@ export function Header({ title, subtitle }: HeaderProps) {
   const router = useRouter();
 
   return (
-    <div className="flex items-center gap-4 mb-8">
+    <div className="flex items-center  gap-4 mb-8">
       <Button
         variant="ghost"
         size="icon"

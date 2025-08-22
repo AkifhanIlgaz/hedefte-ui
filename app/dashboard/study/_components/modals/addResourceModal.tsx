@@ -1,0 +1,137 @@
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { text } from "@/lib/constants/text";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { Resource, resourceSchema } from "../../_schemas/resource";
+
+interface AddResourceModalProps {
+  subject: string;
+  addResource: (resource: Resource) => void;
+}
+
+export default function AddResourceModal({
+  subject,
+  addResource,
+}: AddResourceModalProps) {
+  const resourceForm = useForm<Resource>({
+    resolver: zodResolver(resourceSchema),
+    defaultValues: {
+      examType: "TYT",
+      name: "",
+      subject: subject,
+    },
+  });
+
+  const {
+    formState: { errors },
+  } = { ...resourceForm };
+
+  const onSubmit = async (req: Resource) => {
+    addResource(req);
+
+    // try {
+    //   // Access token'ı al
+    //   const {
+    //     data: { session },
+    //   } = await createClient().auth.getSession();
+
+    //   // API'ye POST isteği gönder
+    //   const response = await fetch("http://localhost:8080/api/resources", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${session?.access_token}`,
+    //     },
+    //     body: JSON.stringify(req),
+    //   });
+    //   console.log(response);
+
+    //   const result = await response.json();
+
+    //   console.log("Resource added:", result);
+
+    //   // Form'u sıfırla veya yönlendirme yap
+    //   // router.push(`/dashboard/analiz/${examType.toLowerCase()}`);
+    // } finally {
+    // }
+  };
+
+  console.log(errors);
+
+  return (
+    <Dialog>
+      <DialogTrigger className="gap-2" asChild>
+        <Button
+          variant="default"
+          size="sm"
+          className="group-hover:shadow-md transition-all duration-300 bg-orange-600 hover:bg-orange-700 text-white dark:bg-orange-500 dark:hover:bg-orange-600"
+        >
+          <Plus className="w-4 h-4" />
+          Kaynak Ekle
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle className="text-foreground flex items-center gap-2">
+            {subject} için kaynak ekle
+          </DialogTitle>
+        </DialogHeader>
+
+        <Form {...resourceForm}>
+          <form
+            onSubmit={resourceForm.handleSubmit(onSubmit)}
+            className="space-y-3 max-h-96 overflow-y-auto"
+          >
+            <FormField
+              control={resourceForm.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    Kaynak Adı
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="HG Yayınları" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="destructive">
+                  {text.analysis.common.buttons.cancel}
+                </Button>
+              </DialogClose>
+              <Button type="submit" className="gap-2">
+                <Plus className="w-4 h-4" />
+                {text.analysis.common.buttons.save}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}

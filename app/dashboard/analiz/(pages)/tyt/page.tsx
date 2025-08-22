@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { text } from "@/lib/constants/text";
 import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import AnalysisCard from "../../_components/cards/analysisCard";
 import { Header } from "../../_components/header";
@@ -66,13 +67,12 @@ export default function Page() {
           subtitle={text.analysis.tyt.analysis.subtitle}
         />
 
-        <Button
-          onClick={() => router.push("/dashboard/analiz/add/tyt")}
-          className="gap-2 bg-amber-600 hover:bg-amber-700 text-white cursor-pointer"
-        >
-          <Plus className="size-4" />
-          {text.analysis.tyt.analysis.addButton}
-        </Button>
+        <Link href="/dashboard/analiz/add/tyt">
+          <Button className="gap-2 bg-amber-600 hover:bg-amber-700 text-white cursor-pointer">
+            <Plus className="size-4" />
+            {text.analysis.tyt.analysis.addButton}
+          </Button>
+        </Link>
       </div>
       {/* Analysis Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
