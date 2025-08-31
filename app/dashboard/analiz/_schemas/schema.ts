@@ -1,98 +1,5 @@
 import z from "zod";
 
-export const tytSubjects = [
-  {
-    name: "Türkçe",
-    total: 40,
-    subFields: [{ id: 0, name: "Türkçe", total: 40 }],
-  },
-  {
-    name: "Sosyal Bilimler",
-    total: 20,
-    subFields: [
-      { id: 1, name: "Tarih", total: 5 },
-      { id: 2, name: "Coğrafya", total: 5 },
-      { id: 3, name: "Felsefe", total: 5 },
-      { id: 4, name: "Din", total: 5 },
-    ],
-  },
-  {
-    name: "Matematik",
-    total: 40,
-    subFields: [{ id: 5, name: "Matematik", total: 40 }],
-  },
-  {
-    name: "Fen Bilimleri",
-    total: 20,
-    subFields: [
-      { id: 6, name: "Fizik", total: 7 },
-      { id: 7, name: "Kimya", total: 7 },
-      { id: 8, name: "Biyoloji", total: 6 },
-    ],
-  },
-];
-
-export const EaSubjects = [
-  {
-    name: "Edebiyat ve Sosyal Bilimler",
-    total: 40,
-    subFields: [
-      { id: 0, name: "Türk Dili ve Edebiyatı", total: 24 },
-      { id: 1, name: "Tarih", total: 10 },
-      { id: 2, name: "Coğrafya", total: 6 },
-    ],
-  },
-  {
-    name: "Matematik",
-    total: 40,
-    subFields: [{ id: 3, name: "Matematik", total: 40 }],
-  },
-];
-
-export const MfSubjects = [
-  {
-    name: "Matematik",
-    total: 40,
-    subFields: [{ id: 0, name: "Matematik", total: 40 }],
-  },
-  {
-    name: "Fen Bilimleri",
-    total: 40,
-    subFields: [
-      { id: 1, name: "Fizik", total: 14 },
-      { id: 2, name: "Kimya", total: 14 },
-      { id: 3, name: "Biyoloji", total: 13 },
-    ],
-  },
-];
-
-export const aytSubjects = [
-  {
-    name: "Edebiyat ve Sosyal Bilimler",
-    total: 40,
-    subFields: [
-      { id: 0, name: "Türk Dili ve Edebiyatı", total: 24 },
-      { id: 1, name: "Tarih", total: 10 },
-      { id: 2, name: "Coğrafya", total: 6 },
-    ],
-  },
-
-  {
-    name: "Matematik",
-    total: 40,
-    subFields: [{ id: 3, name: "Matematik", total: 40 }],
-  },
-  {
-    name: "Fen Bilimleri",
-    total: 40,
-    subFields: [
-      { id: 4, name: "Fizik", total: 14 },
-      { id: 5, name: "Kimya", total: 14 },
-      { id: 6, name: "Biyoloji", total: 13 },
-    ],
-  },
-];
-
 export const tytQuestionMap = {
   tr: 40,
   tarih: 5,
@@ -106,13 +13,15 @@ export const tytQuestionMap = {
 } as const;
 
 export const topicMistakesSchema = z.object({
-  topic: z.string("Konu seçimi gerekli").min(1, "Konu seçimi gerekli").max(50),
+  id: z.int().nonnegative(),
+  name: z.string().min(2).max(100),
   mistakes: z.int().min(1, "Yanlış sayısı 1 veya üzeri olmalı"),
 });
 
 export const subjectSchema = z
   .object({
     name: z.string(),
+    index: z.int().min(0, "Index 0 veya üzeri olmalı"),
     id: z.int().nonnegative(),
     correct: z.number().min(0, "Doğru sayısı 0 veya üzeri olmalı"),
     wrong: z.number().min(0, "Yanlış sayısı 0 veya üzeri olmalı"),

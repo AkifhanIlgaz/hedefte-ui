@@ -59,7 +59,7 @@ export function Navbar() {
             className="h-8 px-2 gap-2"
           >
             <div className="h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium">
-              {user?.user_metadata.firstName.charAt(0).toUpperCase()}
+              {user?.user_metadata.firstName?.charAt(0).toUpperCase()}
             </div>
             <div className="text-left hidden sm:block">
               <p className="text-sm font-medium leading-none">

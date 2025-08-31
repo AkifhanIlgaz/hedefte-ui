@@ -43,6 +43,8 @@ export default function LoginPage() {
       return;
     }
 
+    router.push(routes.dashboard.home);
+
     console.log("basarili");
   };
 

@@ -10,13 +10,15 @@ import { createClient } from "@/lib/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { use, useState } from "react";
 import { useForm } from "react-hook-form";
+import {
+  EaSubjects,
+  MfSubjects,
+  tytSubjects,
+} from "../../../../../../lib/constants/subjects";
 import { SecondStep } from "../../../_components/secondStep";
 import {
   AnalysisFormRequest,
   analysisFormSchema,
-  EaSubjects,
-  MfSubjects,
-  tytSubjects,
 } from "../../../_schemas/schema";
 
 export default function AddAnalysisPage({
@@ -44,6 +46,7 @@ export default function AddAnalysisPage({
         .map((s) =>
           s.subFields.map((sf) => ({
             name: sf.name,
+            index: sf.index,
             id: sf.id,
             correct: 0,
             wrong: 0,
@@ -59,6 +62,8 @@ export default function AddAnalysisPage({
   const [currentStep, setCurrentStep] = useState(1);
 
   const onSubmit = async (req: AnalysisFormRequest) => {
+    console.log("Submitting form with data:", req);
+
     try {
       // Access token'ı al
       const {

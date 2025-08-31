@@ -83,33 +83,29 @@ export default function AddResourceModal({
         <Button
           variant="default"
           size="sm"
-          className="group-hover:shadow-md transition-all duration-300 bg-orange-600 hover:bg-orange-700 text-white dark:bg-orange-500 dark:hover:bg-orange-600"
+          className="group-hover:shadow-md transition-all duration-300"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="size-4" />
           Kaynak Ekle
         </Button>
       </DialogTrigger>
 
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-foreground flex items-center gap-2">
-            {subject} için kaynak ekle
-          </DialogTitle>
+          <DialogTitle className="">{subject} için kaynak ekle</DialogTitle>
         </DialogHeader>
 
         <Form {...resourceForm}>
           <form
             onSubmit={resourceForm.handleSubmit(onSubmit)}
-            className="space-y-3 max-h-96 overflow-y-auto"
+            className="space-y-4"
           >
             <FormField
               control={resourceForm.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Kaynak Adı
-                  </FormLabel>
+                  <FormLabel className=" ">Kaynak Adı</FormLabel>
                   <FormControl>
                     <Input placeholder="HG Yayınları" {...field} />
                   </FormControl>
@@ -120,7 +116,7 @@ export default function AddResourceModal({
             />
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="destructive">
+                <Button type="button" variant="outline">
                   {text.analysis.common.buttons.cancel}
                 </Button>
               </DialogClose>

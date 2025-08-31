@@ -75,7 +75,7 @@ export default function AddAnalysisPage({
           label: "Kaydet",
           onClick: () => {
             // Burada kaydetme işlemini başlatabilirsin
-            // Örneğin: saveChanges();
+            console.log("Değişiklikler kaydedildi:", changes);
             toast.success("Değişiklikler kaydedildi!");
           },
         },
@@ -88,7 +88,10 @@ export default function AddAnalysisPage({
   return (
     <div className="space-y-8">
       <div className="flex sm:flex-row sm:items-center sm:justify-between">
-        <Header title={`TYT ${subject}`} subtitle={""} />
+        <Header
+          title={`TYT ${subject}`}
+          subtitle={"Konuları ve kaynakları takip et"}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>

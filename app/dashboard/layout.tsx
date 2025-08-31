@@ -96,12 +96,10 @@ export default function AuthenticatedLayout({
           <div className="flex items-center gap-2 px-2">
             <div className="h-8 w-8 items-center justify-center rounded-lg  hidden group-data-[collapsible=icon]:flex">
               <span className="text-sm pacifico-regular">H</span>{" "}
-              {/* HEDEFTE_LOGO */}
             </div>
-            <span className="font-semibold  text-lg text-center pacifico-regular group-data-[collapsible=icon]:hidden">
+            <span className="font-semibold  text-lg text-center  group-data-[collapsible=icon]:hidden">
               Hedefte
             </span>{" "}
-            {/* BRAND_NAME */}
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -147,7 +145,7 @@ export default function AuthenticatedLayout({
           </div>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset className="bg-sidebar">
+      <SidebarInset>
         <Navbar />
         <div className="flex flex-1 flex-col gap-8 p-8 min-h-screen ">
           <div className="flex flex-1 flex-col ">

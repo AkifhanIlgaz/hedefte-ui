@@ -18,7 +18,8 @@ interface SecondStepProps {
 export function SecondStep({ form, handlePreviousStep }: SecondStepProps) {
   const addTopicMistake = (
     subjectIndex: number,
-    topic: string,
+    topicId: number,
+    topicName: string,
     val: number
   ) => {
     const currentSubjects = form.getValues("subjects");
@@ -26,7 +27,7 @@ export function SecondStep({ form, handlePreviousStep }: SecondStepProps) {
     const topicMistakes = updatedSubjects[subjectIndex].topicMistakes || [];
     updatedSubjects[subjectIndex].topicMistakes = [
       ...topicMistakes,
-      { topic, mistakes: val },
+      { id: topicId, name: topicName, mistakes: val },
     ];
     form.setValue("subjects", updatedSubjects);
   };
@@ -117,7 +118,7 @@ export function SecondStep({ form, handlePreviousStep }: SecondStepProps) {
 
                         <div className="flex flex-col w-full gap-2">
                           <AddTopicMistakeModal
-                            subjectIndex={sub.id}
+                            subjectIndex={sub.index}
                             addTopicMistake={addTopicMistake}
                             topics={
                               subjectTopics[
@@ -127,7 +128,7 @@ export function SecondStep({ form, handlePreviousStep }: SecondStepProps) {
                           />
                           <DetailsModal
                             topicMistakes={
-                              form.watch().subjects[sub.id].topicMistakes || []
+                              form.watch().subjects[index].topicMistakes || []
                             }
                             subjectIndex={sub.id}
                             updateTopicMistakes={updateTopicMistakes}

@@ -29,11 +29,11 @@ import {
 import { tr } from "react-day-picker/locale";
 import { UseFormReturn } from "react-hook-form";
 import {
-  AnalysisFormRequest,
   EaSubjects,
   MfSubjects,
   tytSubjects,
-} from "../_schemas/schema";
+} from "../../../../lib/constants/subjects";
+import { AnalysisFormRequest } from "../_schemas/schema";
 
 interface FirstStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
@@ -139,16 +139,18 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                   <Separator className="bg-primary/20" />
                 </div>
 
-                {subject.subFields.map((s) => {
-                  const correct = form.watch(`subjects.${s.id}.correct`) || 0;
-                  const wrong = form.watch(`subjects.${s.id}.wrong`) || 0;
+                {subject.subFields.map((s, index) => {
+                  const correct = form.watch(`subjects.${index}.correct`) || 0;
+                  const wrong = form.watch(`subjects.${index}.wrong`) || 0;
 
                   return (
                     <Card
                       key={s.name}
                       className={cn(
-                        `border border-sidebar-border hover:border-amber-200 dark:hover:border-amber-700/50 transition-all hover:shadow-md bg-background dark:bg-background`,
-                        { "border-amber-900": errors.subjects?.[s.id]?.message }
+                        `border   transition-all hover:shadow-md bg-background dark:bg-background`,
+                        {
+                          "border-amber-900": errors.subjects?.[index]?.message,
+                        }
                       )}
                     >
                       <CardHeader>
@@ -160,7 +162,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                             variant="secondary"
                             className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400"
                           >
-                            Net: {(correct - wrong * 0.25).toFixed(1)}
+                            Net: {(correct - wrong * 0.25).toFixed(2)}
                           </Badge>
                         </div>
                       </CardHeader>
@@ -168,7 +170,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                         <div className="grid grid-cols-3 gap-3">
                           <FormField
                             control={form.control}
-                            name={`subjects.${s.id}.correct`}
+                            name={`subjects.${index}.correct`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -196,7 +198,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                           />
                           <FormField
                             control={form.control}
-                            name={`subjects.${s.id}.wrong`}
+                            name={`subjects.${index}.wrong`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -208,7 +210,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                                 <FormControl>
                                   <Input
                                     type="number"
-                                    className="h-9 text-center text-sm border-sidebar-border focus:border-emerald-400 focus:ring-emerald-400/20 bg-background dark:bg-background dark:text-slate-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                    className="h-9 text-center text-sm border-sidebar-border focus:border-red-500 focus:ring-red-400/20 bg-background dark:bg-background dark:text-slate-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                     value={field.value || 0}
                                     onChange={(e) =>
                                       field.onChange(Number(e.target.value))
@@ -224,7 +226,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                           />
                           <FormField
                             control={form.control}
-                            name={`subjects.${s.id}.empty`}
+                            name={`subjects.${index}.empty`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -236,7 +238,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                                 <FormControl>
                                   <Input
                                     type="number"
-                                    className="h-9 text-center text-sm border-sidebar-border focus:border-emerald-400 focus:ring-emerald-400/20 bg-background dark:bg-background dark:text-slate-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                    className="h-9 text-center text-sm border-sidebar-border focus:border-slate-500 focus:ring-slate-400/20 bg-background dark:bg-background dark:text-slate-100 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                     value={field.value || 0}
                                     onChange={(e) =>
                                       field.onChange(Number(e.target.value))
@@ -251,9 +253,9 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                             )}
                           />
                         </div>
-                        {errors.subjects?.[s.id] && (
+                        {errors.subjects?.[index] && (
                           <p className="text-xs text-destructive bg-destructive/10 p-2 mt-4 rounded-lg">
-                            {errors.subjects[s.id]!.message}
+                            {errors.subjects[index]!.message}
                           </p>
                         )}
                       </CardContent>

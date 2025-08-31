@@ -1,18 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
+@plugin '@tailwindcss/typography';
 
 :root {
-  --font-size: 14px;
+  --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.55 0.22 263);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -20,57 +19,17 @@
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(55.37% 0.22197 27.652);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
-  --input: transparent;
-  --input-background: oklch(0.97 0 0);
-  --switch-background: #cbced4;
-  --font-weight-bold: 700;
-  --font-weight-semibold: 600;
-  --font-weight-medium: 500;
-  --font-weight-normal: 450;
+  --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-
-  /* HeroUI semantic colors */
-  --default-50: #fafafa;
-  --default-100: #f4f4f5;
-  --default-200: #e4e4e7;
-  --default-300: #d4d4d8;
-  --default-400: #a1a1aa;
-  --default-500: #71717a;
-  --default-600: #52525b;
-  --default-700: #3f3f46;
-  --default-800: #27272a;
-  --default-900: #18181b;
-  --default-foreground: #11181c;
-
-  --primary-50: #e6f1fe;
-  --primary-100: #cce3fd;
-  --primary-200: #99c7fb;
-  --primary-300: #66aaf9;
-  --primary-400: #338ef7;
-  --primary-500: #006fee;
-  --primary-600: #005bc4;
-  --primary-700: #004493;
-  --primary-800: #002e62;
-  --primary-900: #001731;
-
-  --success: #17c964;
-  --warning: #f5a524;
-  --danger: #f31260;
-
-  --divider: rgba(17, 25, 28, 0.15);
-
-  /* Sidebar colors - light mode */
-  --sidebar-background: oklch(0.985 0 0);
-  --sidebar-foreground: #757575;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -82,11 +41,11 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
+  --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
+  --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
+  --primary: oklch(0.62 0.19 260);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -94,39 +53,30 @@
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(59.13% 0.22773 27.445);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: rgba(255, 255, 255, 0.05);
-  --ring: oklch(0.439 0 0);
-
-  /* HeroUI semantic colors - dark mode */
-  --default-50: #18181b;
-  --default-100: #27272a;
-  --default-200: #3f3f46;
-  --default-300: #52525b;
-  --default-400: #71717a;
-  --default-500: #a1a1aa;
-  --default-600: #d4d4d8;
-  --default-700: #e4e7eb;
-  --default-800: #f4f4f5;
-  --default-900: #fafafa;
-  --default-foreground: #ecedee;
-
-  --divider: rgba(255, 255, 255, 0.15);
-
-  /* Sidebar colors - dark mode */
-  --sidebar-background: #161a23;
-  --sidebar-foreground: #757575;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -142,53 +92,15 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
-  --color-input-background: var(--input-background);
-  --color-switch-background: var(--switch-background);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-
-  /* HeroUI semantic color mappings */
-  --color-default-50: var(--default-50);
-  --color-default-100: var(--default-100);
-  --color-default-200: var(--default-200);
-  --color-default-300: var(--default-300);
-  --color-default-400: var(--default-400);
-  --color-default-500: var(--default-500);
-  --color-default-600: var(--default-600);
-  --color-default-700: var(--default-700);
-  --color-default-800: var(--default-800);
-  --color-default-900: var(--default-900);
-  --color-default-foreground: var(--default-foreground);
-
-  --color-primary-50: var(--primary-50);
-  --color-primary-100: var(--primary-100);
-  --color-primary-200: var(--primary-200);
-  --color-primary-300: var(--primary-300);
-  --color-primary-400: var(--primary-400);
-  --color-primary-500: var(--primary-500);
-  --color-primary-600: var(--primary-600);
-  --color-primary-700: var(--primary-700);
-  --color-primary-800: var(--primary-800);
-  --color-primary-900: var(--primary-900);
-
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-danger: var(--danger);
-  --color-divider: var(--divider);
-
-  /* Sidebar color mappings */
-  --color-sidebar: var(--sidebar-background);
+  --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -196,262 +108,42 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-
   body {
     @apply bg-background text-foreground;
   }
 }
 
-/**
- * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
- */
-@layer base {
-  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
-    h1 {
-      font-size: 1.875rem;
-      font-weight: var(--font-weight-bold);
-      line-height: 1.4;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: var(--font-weight-semibold);
-      line-height: 1.4;
-    }
-
-    h3 {
-      font-size: 1.25rem;
-      font-weight: var(--font-weight-semibold);
-      line-height: 1.4;
-    }
-
-    h4 {
-      font-size: 1rem;
-      font-weight: var(--font-weight-medium);
-      line-height: 1.4;
-    }
-
-    p {
-      font-size: 1rem;
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
-
-    h5 {
-      font-size: 0.875rem;
-      font-weight: var(--font-weight-semibold);
-      line-height: 1.4;
-    }
-
-    h6 {
-      font-size: 0.75rem;
-      font-weight: var(--font-weight-semibold);
-      line-height: 1.4;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    label {
-      font-size: 0.875rem;
-      font-weight: var(--font-weight-semibold);
-      line-height: 1.4;
-    }
-
-    button {
-      font-size: 0.875rem;
-      font-weight: var(--font-weight-semibold);
-      line-height: 1.4;
-    }
-
-    input {
-      font-size: 0.875rem;
-      font-weight: var(--font-weight-normal);
-      line-height: 1.4;
-    }
-  }
-}
-
-/* HeroUI-inspired utility classes */
-.default-50 {
-  color: var(--color-default-50);
-}
-.default-100 {
-  color: var(--color-default-100);
-}
-.default-200 {
-  color: var(--color-default-200);
-}
-.default-300 {
-  color: var(--color-default-300);
-}
-.default-400 {
-  color: var(--color-default-400);
-}
-.default-500 {
-  color: var(--color-default-500);
-}
-.default-600 {
-  color: var(--color-default-600);
-}
-.default-700 {
-  color: var(--color-default-700);
-}
-.default-800 {
-  color: var(--color-default-800);
-}
-.default-900 {
-  color: var(--color-default-900);
-}
-.default-foreground {
-  color: var(--color-default-foreground);
-}
-
-.bg-default-50 {
-  background-color: var(--color-default-50);
-}
-.bg-default-100 {
-  background-color: var(--color-default-100);
-}
-.bg-default-200 {
-  background-color: var(--color-default-200);
-}
-.bg-default-300 {
-  background-color: var(--color-default-300);
-}
-.bg-default-400 {
-  background-color: var(--color-default-400);
-}
-.bg-default-500 {
-  background-color: var(--color-default-500);
-}
-.bg-default-600 {
-  background-color: var(--color-default-600);
-}
-.bg-default-700 {
-  background-color: var(--color-default-700);
-}
-.bg-default-800 {
-  background-color: var(--color-default-800);
-}
-.bg-default-900 {
-  background-color: var(--color-default-900);
-}
-.bg-default-foreground {
-  background-color: var(--color-default-foreground);
-}
-
-.text-default-50 {
-  color: var(--color-default-50);
-}
-.text-default-100 {
-  color: var(--color-default-100);
-}
-.text-default-200 {
-  color: var(--color-default-200);
-}
-.text-default-300 {
-  color: var(--color-default-300);
-}
-.text-default-400 {
-  color: var(--color-default-400);
-}
-.text-default-500 {
-  color: var(--color-default-500);
-}
-.text-default-600 {
-  color: var(--color-default-600);
-}
-.text-default-700 {
-  color: var(--color-default-700);
-}
-.text-default-800 {
-  color: var(--color-default-800);
-}
-.text-default-900 {
-  color: var(--color-default-900);
-}
-.text-default-foreground {
-  color: var(--color-default-foreground);
-}
-
-.border-default-100 {
-  border-color: var(--color-default-100);
-}
-.border-default-200 {
-  border-color: var(--color-default-200);
-}
-.border-default-300 {
-  border-color: var(--color-default-300);
-}
-.border-default-400 {
-  border-color: var(--color-default-400);
-}
-
-.border-divider {
-  border-color: var(--color-divider);
-}
-
-.text-danger {
-  color: var(--color-danger);
-}
-.border-danger {
-  border-color: var(--color-danger);
-}
-
-/* Sidebar utility classes */
-.bg-sidebar {
-  background-color: var(--color-sidebar);
-}
-.text-sidebar-foreground {
-  color: var(--color-sidebar-foreground);
-}
-.bg-sidebar-accent {
-  background-color: var(--color-sidebar-accent);
-}
-.text-sidebar-accent-foreground {
-  color: var(--color-sidebar-accent-foreground);
-}
-.border-sidebar-border {
-  border-color: var(--color-sidebar-border);
-}
-.ring-sidebar-ring {
-  --tw-ring-color: var(--color-sidebar-ring);
-}
-
-html {
-  font-size: var(--font-size);
-}
-
-/* Memory Game 3D transforms */
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-
-.pacifico-regular {
-  font-family: "Pacifico", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 input[type="number"] {
   -moz-appearance: textfield;
 }

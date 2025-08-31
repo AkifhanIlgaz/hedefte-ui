@@ -33,16 +33,27 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
+type Topic = {
+  id: number;
+  name: string;
+};
+
 const formSchema = z.object({
-  topic: z.string("Konu seçimi gerekli").min(1, "Konu seçimi gerekli").max(50),
+  id: z.int().min(0, "Konu seçimi gerekli"),
+  name: z.string().min(2).max(100, "Konu adı 2-100 karakter arasında olmalı"),
   mistakes: z.int().min(1, "Yanlış sayısı 1 veya üzeri olmalı"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 interface ModalProps {
-  addTopicMistake?: (subjectIndex: number, topic: string, val: number) => void;
-  topics: string[];
+  addTopicMistake?: (
+    subjectIndex: number,
+    topicId: number,
+    topicName: string,
+    val: number
+  ) => void;
+  topics: Topic[];
   subjectIndex: number;
 }
 
@@ -54,7 +65,8 @@ export default function AddTopicMistakeModal({
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      topic: "",
+      id: 0,
+      name: "",
       mistakes: 1,
     },
   });
@@ -63,7 +75,7 @@ export default function AddTopicMistakeModal({
 
   function onSubmit(data: FormValues) {
     console.log(data);
-    addTopicMistake!(subjectIndex, data.topic, data.mistakes);
+    addTopicMistake!(subjectIndex, data.id, data.name, data.mistakes);
     setOpen(false);
     form.reset();
   }
@@ -97,15 +109,23 @@ export default function AddTopicMistakeModal({
           <div className="flex flex-col gap-8">
             <FormField
               control={form.control}
-              name="topic"
+              name="id"
               render={({ field }) => (
                 <FormItem>
                   <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value?.toString()}
+                    onValueChange={(val) => {
+                      const selectedTopic = topics.find(
+                        (t) => t.id === Number(val)
+                      );
+                      field.onChange(Number(val));
+                      if (selectedTopic) {
+                        form.setValue("name", selectedTopic.name);
+                      }
+                    }}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue
                           placeholder={
                             text.analysis.modal.addTopic.selectPlaceholder
@@ -114,9 +134,9 @@ export default function AddTopicMistakeModal({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {topics.map((t: string) => (
-                        <SelectItem key={t} value={t}>
-                          {t}
+                      {topics.map((t: Topic) => (
+                        <SelectItem key={t.id} value={t.id.toString()}>
+                          {t.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -148,7 +168,7 @@ export default function AddTopicMistakeModal({
                       <Input
                         type="number"
                         min={1}
-                        className="max-w-1/12 text-center font-extrabold"
+                        className="max-w-1/6 text-center font-extrabold"
                         {...field}
                       ></Input>
                       <Button

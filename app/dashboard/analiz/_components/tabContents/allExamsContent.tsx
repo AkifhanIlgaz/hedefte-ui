@@ -11,12 +11,8 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import { BookOpen, Trash2 } from "lucide-react";
-import {
-  AnalysisFormRequest,
-  EaSubjects,
-  MfSubjects,
-  tytSubjects,
-} from "../../_schemas/schema";
+import { MfSubjects } from "../../../../../lib/constants/subjects";
+import { AnalysisFormRequest } from "../../_schemas/schema";
 
 export default function AllExamsContent({
   allExams,
@@ -34,12 +30,7 @@ export default function AllExamsContent({
   };
 
   const division = localStorage.getItem(`bolum`);
-  const subjects =
-    examType === "TYT"
-      ? tytSubjects
-      : division === `EA`
-      ? EaSubjects
-      : MfSubjects;
+  const subjects = MfSubjects;
 
   return (
     <TabsContent value="all" className="space-y-2">

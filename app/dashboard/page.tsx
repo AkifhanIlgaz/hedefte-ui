@@ -9,7 +9,5 @@ export default function Page() {
       console.log(value.data.session);
     });
 
-  localStorage.setItem("bolum", "MF");
-
   return <p>Dashboard protected</p>;
 }

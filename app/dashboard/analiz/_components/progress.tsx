@@ -52,13 +52,7 @@ function Step({ stepNumber, currentStep, label, isLast = false }: StepProps) {
         <span className="text-sm font-medium">{label}</span>
       </div>
 
-      {!isLast && (
-        <div
-          className={`w-16 h-0.5 ${
-            currentStep > stepNumber ? "bg-primary" : "bg-muted"
-          }`}
-        />
-      )}
+      {!isLast && <div className={`w-16 h-0.5 bg-accent`} />}
     </>
   );
 }
