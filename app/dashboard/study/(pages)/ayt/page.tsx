@@ -1,16 +1,21 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { Header } from "@/app/dashboard/analiz/_components/header";
+import { MfSubjects } from "@/lib/constants/subjects";
+import { text } from "@/lib/constants/text";
+import { Globe } from "lucide-react";
+import SubjectCard from "../../_components/subjectCard";
 
 export default function Page() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <span>AYT Calisma</span>
-      <Button className="w-1/12">Deneme</Button>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="bg-muted/50 aspect-video rounded-xl" />
-        <div className="bg-muted/50 aspect-video rounded-xl" />
-        <div className="bg-muted/50 aspect-video rounded-xl" />
+    <div className="space-y-8">
+      <Header title={text.study.tyt.title} subtitle={text.study.tyt.subtitle} />
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {MfSubjects.map((s, i) => (
+          <SubjectCard key={i} icon={Globe} label={s.name} />
+        ))}
       </div>
-      <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
     </div>
   );
 }

@@ -130,7 +130,7 @@ export default function AddAnalysisPage({
               handleNextStep={handleNextStep}
             />
           ) : (
-            <SecondStep form={form} handlePreviousStep={handlePreviousStep} />
+            <SecondStep form={form} handlePreviousStep={handlePreviousStep} examType={examType} />
           )}
         </form>
       </Form>

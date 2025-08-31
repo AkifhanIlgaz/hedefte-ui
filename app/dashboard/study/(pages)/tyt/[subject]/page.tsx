@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import AddResourceModal from "../../../_components/modals/addResourceModal";
 import { Resource } from "../../../_schemas/resource";
 import { topics } from "../../../_schemas/topics";
+import { tytSubjectTopics } from "@/lib/constants/topic";
 
 export default function AddAnalysisPage({
   params,
@@ -31,7 +32,7 @@ export default function AddAnalysisPage({
   const { subject: encodedSubject } = use(params);
   const subject = decodeURIComponent(encodedSubject);
 
-  const selectedTopics = topics.tyt[subject as keyof typeof topics.tyt];
+  const selectedTopics = tytSubjectTopics[subject as keyof typeof tytSubjectTopics];
 
   const getResources = useMemo(() => {
     return async () => {
@@ -168,9 +169,9 @@ export default function AddAnalysisPage({
               </TableRow>
             </TableHeader>
             <TableBody className="p-4">
-              {selectedTopics?.map((topic: string, idx: number) => (
+              {selectedTopics?.map((topic: any, idx: number) => (
                 <TableRow key={idx} className="text-lg">
-                  <TableCell>{topic}</TableCell>
+                  <TableCell>{topic.name}</TableCell>
                   <TableCell className="text-center">
                     <Checkbox
                       onCheckedChange={(checked) => {

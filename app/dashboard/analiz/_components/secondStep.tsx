@@ -2,8 +2,8 @@ import { CircularProgress } from "@/components/app/CircularProgress";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { text } from "@/lib/constants/text";
-import { subjectTopics } from "@/lib/constants/topic";
 
+import { aytSubjectTopics, tytSubjectTopics } from "@/lib/constants/topic";
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { AnalysisFormRequest, TopicMistake } from "../_schemas/schema";
@@ -12,10 +12,15 @@ import DetailsModal from "./modals/detailsModal";
 
 interface SecondStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
+  examType?: "TYT" | "AYT";
   handlePreviousStep: () => void;
 }
 
-export function SecondStep({ form, handlePreviousStep }: SecondStepProps) {
+export function SecondStep({
+  form,
+  examType,
+  handlePreviousStep,
+}: SecondStepProps) {
   const addTopicMistake = (
     subjectIndex: number,
     topicId: number,
@@ -121,9 +126,13 @@ export function SecondStep({ form, handlePreviousStep }: SecondStepProps) {
                             subjectIndex={sub.index}
                             addTopicMistake={addTopicMistake}
                             topics={
-                              subjectTopics[
-                                sub.name as keyof typeof subjectTopics
-                              ]
+                              examType === "AYT"
+                                ? aytSubjectTopics[
+                                    sub.name as keyof typeof aytSubjectTopics
+                                  ] || []
+                                : tytSubjectTopics[
+                                    sub.name as keyof typeof tytSubjectTopics
+                                  ] || []
                             }
                           />
                           <DetailsModal
