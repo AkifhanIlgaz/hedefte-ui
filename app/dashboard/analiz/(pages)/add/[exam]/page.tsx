@@ -6,7 +6,7 @@ import { ProgressIndicator } from "@/app/dashboard/analiz/_components/progress";
 import { Form } from "@/components/ui/form";
 import { text } from "@/lib/constants/text";
 
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/src/lib/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { use, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -130,7 +130,11 @@ export default function AddAnalysisPage({
               handleNextStep={handleNextStep}
             />
           ) : (
-            <SecondStep form={form} handlePreviousStep={handlePreviousStep} examType={examType} />
+            <SecondStep
+              form={form}
+              handlePreviousStep={handlePreviousStep}
+              examType={examType}
+            />
           )}
         </form>
       </Form>

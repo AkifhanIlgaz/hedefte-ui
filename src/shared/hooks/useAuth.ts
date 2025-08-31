@@ -1,5 +1,5 @@
 "use client";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/src/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ export function useAuth() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      
+
       setUser(session?.user ?? null);
       setLoading(false);
     };

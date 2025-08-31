@@ -13,14 +13,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { createClient } from "@/lib/supabase/client";
+import { tytSubjectTopics } from "@/lib/constants/topic";
+import { createClient } from "@/src/lib/supabase/client";
 import { FlaskConical } from "lucide-react";
 import { use, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import AddResourceModal from "../../../_components/modals/addResourceModal";
 import { Resource } from "../../../_schemas/resource";
-import { topics } from "../../../_schemas/topics";
-import { tytSubjectTopics } from "@/lib/constants/topic";
 
 export default function AddAnalysisPage({
   params,
@@ -32,7 +31,8 @@ export default function AddAnalysisPage({
   const { subject: encodedSubject } = use(params);
   const subject = decodeURIComponent(encodedSubject);
 
-  const selectedTopics = tytSubjectTopics[subject as keyof typeof tytSubjectTopics];
+  const selectedTopics =
+    tytSubjectTopics[subject as keyof typeof tytSubjectTopics];
 
   const getResources = useMemo(() => {
     return async () => {

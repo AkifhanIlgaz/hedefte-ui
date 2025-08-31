@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { text } from "@/lib/constants/text";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/src/lib/supabase/client";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import AnalysisCard from "../../_components/cards/analysisCard";

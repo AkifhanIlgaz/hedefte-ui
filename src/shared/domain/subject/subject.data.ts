@@ -63,10 +63,3 @@ export const MfSubjects = [
     ],
   },
 ];
-
-export type Subject = {
-  index: number;
-  id: number;
-  name: string;
-  total: number;
-};
