@@ -1,38 +1,34 @@
 "use client";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Toaster } from "@/components/ui/sonner";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { tytSubjectTopics } from "@/lib/constants/topic";
+import { TopicTable } from "@/src/features/study/components";
+import { Resource } from "@/src/features/study/validations/resource.validation";
 import { createClient } from "@/src/lib/supabase/client";
-import { Header } from "@/src/shared/components/dashboardHeader";
+import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
+import {
+  aytSubjectTopics,
+  tytSubjectTopics,
+} from "@/src/shared/domain/topic/topic.data";
 import { FlaskConical } from "lucide-react";
 import { use, useEffect, useMemo, useState } from "react";
-import { toast } from "sonner";
 import AddResourceModal from "../../../../../src/features/study/components/addResourceModal";
-import { Resource } from "../../../_schemas/resource";
 
 export default function AddAnalysisPage({
   params,
 }: {
-  params: Promise<{ subject: string }>;
+  params: Promise<{ exam: string; subject: string }>;
 }) {
-  const [changes, setChanges] = useState<Record<string, boolean>>({});
   const [resources, setResources] = useState<Resource[]>([]);
-  const { subject: encodedSubject } = use(params);
+  const { exam: encodedExam, subject: encodedSubject } = use(params);
+  const exam = encodedExam.toUpperCase() as "TYT" | "AYT";
   const subject = decodeURIComponent(encodedSubject);
 
   const selectedTopics =
-    tytSubjectTopics[subject as keyof typeof tytSubjectTopics];
+    exam === "TYT"
+      ? tytSubjectTopics[subject as keyof typeof tytSubjectTopics] ?? []
+      : aytSubjectTopics[subject as keyof typeof aytSubjectTopics] ?? [];
 
   const getResources = useMemo(() => {
     return async () => {
@@ -67,33 +63,13 @@ export default function AddAnalysisPage({
     getResources();
   }, [getResources]);
 
-  // Sonner ile kaydet uyarısı
-  useEffect(() => {
-    if (Object.keys(changes).length > 0 && toast.getToasts().length === 0) {
-      toast.warning("Değişiklikleriniz var. Kaydetmek için tıklayın.", {
-        position: "bottom-right",
-        action: {
-          label: "Kaydet",
-          onClick: () => {
-            // Burada kaydetme işlemini başlatabilirsin
-            console.log("Değişiklikler kaydedildi:", changes);
-            toast.success("Değişiklikler kaydedildi!");
-          },
-        },
-        closeButton: true,
-        duration: Infinity,
-      });
-    }
-  }, [changes]);
-
   return (
     <div className="space-y-8">
-      <div className="flex sm:flex-row sm:items-center sm:justify-between">
-        <Header
-          title={`TYT ${subject}`}
-          subtitle={"Konuları ve kaynakları takip et"}
-        />
-      </div>
+      <DashboardHeader
+        title={`${exam} ${subject}`}
+        subtitle={"Konuları ve kaynakları takip et"}
+      />
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="text-md flex gap-2">
@@ -152,89 +128,7 @@ export default function AddAnalysisPage({
         </Card>
       </div>
 
-      {/* Tablo Başlangıcı */}
-      <Card>
-        <CardContent className="p-5">
-          <Table>
-            <TableHeader className="font-bold">
-              <TableRow>
-                <TableHead>İsim</TableHead>
-                <TableHead className="text-center">Çalışma</TableHead>
-                <TableHead className="text-center">Tekrar</TableHead>
-                {resources.map((res) => (
-                  <TableHead key={res.name} className=" text-center">
-                    {res.name}
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody className="p-4">
-              {selectedTopics?.map((topic: any, idx: number) => (
-                <TableRow key={idx} className="text-lg">
-                  <TableCell>{topic.name}</TableCell>
-                  <TableCell className="text-center">
-                    <Checkbox
-                      onCheckedChange={(checked) => {
-                        if (changes.hasOwnProperty(topic)) {
-                          setChanges((prev) => {
-                            delete prev[topic];
-                            return { ...prev };
-                          });
-                          return;
-                        }
-
-                        setChanges((prev) => ({
-                          ...prev,
-                          [topic]: checked as boolean,
-                        }));
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Checkbox
-                      onCheckedChange={(checked) => {
-                        if (changes.hasOwnProperty(topic)) {
-                          setChanges((prev) => {
-                            delete prev[topic];
-                            return { ...prev };
-                          });
-                          return;
-                        }
-
-                        setChanges((prev) => ({
-                          ...prev,
-                          [topic]: checked as boolean,
-                        }));
-                      }}
-                    />
-                  </TableCell>
-                  {resources.map((res) => (
-                    <TableCell key={res.name} className="text-center">
-                      <Checkbox
-                        onCheckedChange={(checked) => {
-                          if (changes.hasOwnProperty(res.name)) {
-                            setChanges((prev) => {
-                              delete prev[res.name];
-                              return { ...prev };
-                            });
-                            return;
-                          }
-
-                          setChanges((prev) => ({
-                            ...prev,
-                            [res.name]: checked as boolean,
-                          }));
-                        }}
-                      />
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-      {/* Tablo Sonu */}
+      <TopicTable resources={resources} topics={selectedTopics} />
       <Toaster />
     </div>
   );

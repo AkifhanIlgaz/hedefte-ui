@@ -17,9 +17,7 @@ export default function SubjectGroups({ exam }: SubjectGroupsProps) {
       {subjects.map((s, i) => (
         <div key={s.name} className="flex flex-col  space-y-4 w-full">
           <div className="text-center">
-            <h3 className="text-lg font-semibold mb-1">
-              {s.name}
-            </h3>
+            <h3 className="text-lg font-semibold mb-1">{s.name}</h3>
             <Separator className="bg-primary/20" />
           </div>
 
@@ -27,6 +25,7 @@ export default function SubjectGroups({ exam }: SubjectGroupsProps) {
             <SubjectCard
               key={i}
               icon={sf.icon}
+              exam={exam}
               label={sf.name}
               bgClass={sf.bgClass}
               iconColor={sf.iconColor}

@@ -5,18 +5,20 @@ import Link from "next/link";
 interface SubjectCardProps {
   icon: LucideIcon;
   label: string;
+  exam: "TYT" | "AYT";
   bgClass?: string;
   iconColor?: string;
 }
 
 export default function SubjectCard({
   icon: Icon,
+  exam,
   label,
   bgClass,
   iconColor,
 }: SubjectCardProps) {
   return (
-    <Link href={`http://localhost:3000/dashboard/study/tyt/${label}`}>
+    <Link href={`http://localhost:3000/dashboard/study/${exam}/${label}`}>
       <Card className="transition-transform duration-150 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:scale-[1.03] active:scale-98">
         <CardHeader className="p-0"></CardHeader>
         <CardContent className="flex items-center gap-4">
