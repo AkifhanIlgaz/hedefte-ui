@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
-import { formatNumber } from "./utils";
+import { formatNumber } from "../../utils/utils";
 
 interface AnalysisCardProps {
   icon: LucideIcon;

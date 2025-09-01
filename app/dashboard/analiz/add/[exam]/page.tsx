@@ -1,25 +1,28 @@
 "use client";
 
-import { FirstStep } from "@/app/dashboard/analiz/_components/firstStep";
-import { Header } from "@/app/dashboard/analiz/_components/header";
-import { ProgressIndicator } from "@/app/dashboard/analiz/_components/progress";
 import { Form } from "@/components/ui/form";
-import { text } from "@/lib/constants/text";
 
 import { createClient } from "@/src/lib/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { use, useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { analysisText } from "@/src/features/analysis/analysis.text";
+import {
+  AddProgressIndicator,
+  FirstStep,
+  SecondStep,
+} from "@/src/features/analysis/components";
+import {
+  AnalysisFormRequest,
+  analysisFormSchema,
+} from "@/src/features/analysis/validations/analysis.validation";
+import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
 import {
   EaSubjects,
   MfSubjects,
   tytSubjects,
-} from "../../../../../../lib/constants/subjects";
-import { SecondStep } from "../../../_components/secondStep";
-import {
-  AnalysisFormRequest,
-  analysisFormSchema,
-} from "../../../_schemas/schema";
+} from "@/src/shared/domain/subject/subject.data";
 
 export default function AddAnalysisPage({
   params,
@@ -106,14 +109,14 @@ export default function AddAnalysisPage({
 
   return (
     <div className="space-y-8">
-      <Header
+      <DashboardHeader
         title={
-          examType === "TYT" ? text.analysis.tyt.title : text.analysis.ayt.title
+          examType === "TYT" ? analysisText.tyt.title : analysisText.ayt.title
         }
         subtitle={
           currentStep === 1
-            ? text.analysis.firstStep.subtitle
-            : text.analysis.secondStep.subtitle
+            ? analysisText.firstStep.subtitle
+            : analysisText.secondStep.subtitle
         }
       />
       <Form {...form}>
@@ -121,7 +124,7 @@ export default function AddAnalysisPage({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 flex flex-col items-center justify-center "
         >
-          <ProgressIndicator currentStep={currentStep} />
+          <AddProgressIndicator currentStep={currentStep} />
 
           {currentStep === 1 ? (
             <FirstStep

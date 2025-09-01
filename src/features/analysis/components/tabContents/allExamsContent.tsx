@@ -10,9 +10,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
+import { MfSubjects } from "@/src/shared/domain/subject/subject.data";
 import { BookOpen, Trash2 } from "lucide-react";
-import { MfSubjects } from "../../../../../lib/constants/subjects";
-import { AnalysisFormRequest } from "../../_schemas/schema";
+import { AnalysisFormRequest } from "../../validations/analysis.validation";
 
 export default function AllExamsContent({
   allExams,

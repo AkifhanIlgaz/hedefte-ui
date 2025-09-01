@@ -33,20 +33,6 @@ export const subjectSchema = z
     message: "Toplam cevap sayısı soru sayısını geçemez",
     path: [],
   });
-// .refine(
-//   (data) => {
-//     const totalMistakes = data.empty + data.wrong;
-//     const completedMistakes =
-//       data.topicMistakes?.reduce((prev, curr) => prev + curr.mistakes, 0) ||
-//       0;
-
-//     return totalMistakes == completedMistakes;
-//   },
-//   {
-//     message: `Lütfen tüm soruların konularını girin.`,
-//     path: [],
-//   }
-// );
 
 export const analysisFormSchema = z
   .object({

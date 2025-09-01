@@ -12,7 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { AnalysisFormRequest } from "../../_schemas/schema";
+import { AnalysisFormRequest } from "../../validations/analysis.validation";
 
 const subjectConfig = {
   successRate: {

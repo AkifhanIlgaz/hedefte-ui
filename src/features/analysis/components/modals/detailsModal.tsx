@@ -14,7 +14,7 @@ import {
 import { text } from "@/lib/constants/text";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { TopicMistake } from "../../_schemas/schema";
+import { TopicMistake } from "../../validations/analysis.validation";
 
 interface DetailsProps {
   subjectIndex: number;

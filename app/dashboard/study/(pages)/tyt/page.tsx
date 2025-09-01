@@ -1,7 +1,7 @@
 "use client";
 
-import { Header } from "@/app/dashboard/analiz/_components/header";
 import { text } from "@/lib/constants/text";
+import { Header } from "@/src/shared/components/dashboardHeader";
 import { Globe } from "lucide-react";
 import SubjectCard from "../../_components/subjectCard";
 import { tytSubjects } from "../../_schemas/subjects";

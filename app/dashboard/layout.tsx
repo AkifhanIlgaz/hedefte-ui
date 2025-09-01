@@ -1,6 +1,4 @@
 "use client";
-import { Navbar } from "@/components/app/Navbar";
-import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -15,7 +13,8 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
-import { routes } from "@/lib/routes";
+import { routes } from "@/src/config/routes";
+import { Navbar } from "@/src/shared/components/navbar";
 import {
   BarChart,
   BookOpen,
@@ -67,13 +66,13 @@ const sidebarGroups = [
     items: [
       {
         id: "tyt-analysis",
-        label: "TYT Analizi",
+        label: "TYT Deneme Analizi",
         icon: BarChart,
         href: routes.dashboard.analysis.tyt,
       },
       {
         id: "ayt-analysis",
-        label: "AYT Analizi",
+        label: "AYT Deneme Analizi",
         icon: TrendingUp,
         href: routes.dashboard.analysis.ayt,
       },
@@ -114,7 +113,13 @@ export default function AuthenticatedLayout({
                     <SidebarMenuItem key={item.id}>
                       <SidebarMenuButton
                         isActive={path === item.href}
-                        onClick={() => router.push(item.href!)}
+                        onClick={() =>
+                          router.push(
+                            typeof item.href === "string"
+                              ? item.href
+                              : item.href.base
+                          )
+                        }
                         tooltip={item.label}
                         className="cursor-pointer "
                       >
@@ -128,22 +133,7 @@ export default function AuthenticatedLayout({
             </SidebarGroup>
           ))}
         </SidebarContent>
-        <SidebarFooter>
-          <div className="rounded-lg bg-default-100 p-3 group-data-[collapsible=icon]:hidden">
-            <h4 className="font-medium text-sm">Yardıma mı ihtiyacın var?</h4>{" "}
-            {/* NEED_HELP_TITLE */}
-            <p className="text-xs text-default-500 mt-1">
-              Rehberler ve eğitimler için dökümantasyonu kontrol et.
-            </p>{" "}
-            {/* HELP_DESCRIPTION */}
-            <Button
-              variant="link"
-              className="h-auto p-0 mt-2 text-primary text-xs"
-            >
-              Dökümanlara Bak → {/* VIEW_DOCS_BUTTON */}
-            </Button>
-          </div>
-        </SidebarFooter>
+        <SidebarFooter></SidebarFooter>
       </Sidebar>
       <SidebarInset>
         <Navbar />

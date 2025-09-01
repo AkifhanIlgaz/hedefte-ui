@@ -1,4 +1,7 @@
-import { AnalysisFormRequest, TopicMistake } from "../_schemas/schema";
+import {
+  AnalysisFormRequest,
+  TopicMistake,
+} from "../validations/analysis.validation";
 
 // Transform sonuçları için type'lar
 export interface TransformedNetChart {

@@ -2,22 +2,30 @@
 
 import { Button } from "@/components/ui/button";
 import { BarChart3, Calendar, Plus, Target, TrendingUp } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { text } from "@/lib/constants/text";
+import {
+  AllExamsContent,
+  AnalysisCard,
+  DetailedContent,
+  GeneralContent,
+} from "@/src/features/analysis/components";
+import { AnalysisFormRequest } from "@/src/features/analysis/validations/analysis.validation";
 import { createClient } from "@/src/lib/supabase/client";
+import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import AnalysisCard from "../../_components/cards/analysisCard";
-import { Header } from "../../_components/header";
-import AllExamsContent from "../../_components/tabContents/allExamsContent";
-import DetailedContent from "../../_components/tabContents/detailedContent";
-import GeneralContent from "../../_components/tabContents/generalContent";
-import { AnalysisFormRequest } from "../../_schemas/schema";
+import { use, useEffect, useState } from "react";
+import { analysisText } from "@/src/features/analysis/analysis.text";
 
-export default function Page() {
-  const router = useRouter();
+export default function Page({
+  params,
+}: {
+  params: Promise<{ exam: string }>;
+}) {
+  const { exam } = use(params);
+  const examType = exam.toUpperCase() as "TYT" | "AYT";
+  const text = examType === "TYT" ? analysisText.tyt : analysisText.ayt;
   const [data, setData] = useState<AnalysisFormRequest[]>();
 
   const getExams = async () => {
@@ -29,7 +37,7 @@ export default function Page() {
 
       // API'ye POST isteği gönder
       const response = await fetch(
-        "http://localhost:8080/api/analysis?exam=AYT",
+        `http://localhost:8080/api/analysis?exam=${examType}`,
         {
           method: "GET",
           headers: {
@@ -54,15 +62,15 @@ export default function Page() {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex sm:flex-row sm:items-center sm:justify-between">
-        <Header
-          title={text.analysis.ayt.analysis.title}
-          subtitle={text.analysis.ayt.analysis.subtitle}
+        <DashboardHeader
+          title={text.analysis.title}
+          subtitle={text.analysis.subtitle}
         />
 
         <Link href="/dashboard/analiz/add/ayt">
           <Button className="gap-2 bg-amber-600 hover:bg-amber-700 text-white cursor-pointer">
             <Plus className="size-4" />
-            {text.analysis.ayt.analysis.addButton}
+            {text.analysis.addButton}
           </Button>
         </Link>
       </div>
@@ -87,7 +95,7 @@ export default function Page() {
         </TabsList>
         <GeneralContent allExams={data || []} />
         <DetailedContent allExams={data || []} />
-        <AllExamsContent allExams={data || []} examType="AYT" />
+        <AllExamsContent allExams={data || []} examType={examType} />
       </Tabs>
     </div>
   );

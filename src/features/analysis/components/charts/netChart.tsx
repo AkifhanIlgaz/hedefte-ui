@@ -14,7 +14,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { AnalysisFormRequest } from "../../_schemas/schema";
+import { AnalysisFormRequest } from "../../validations/analysis.validation";
 
 interface GeneralContentProps {
   chartData: AnalysisFormRequest[];

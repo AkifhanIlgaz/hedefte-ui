@@ -3,12 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { text } from "@/lib/constants/text";
 
-import { aytSubjectTopics, tytSubjectTopics } from "@/lib/constants/topic";
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
-import { AnalysisFormRequest, TopicMistake } from "../_schemas/schema";
-import AddTopicMistakeModal from "./modals/addTopicMistakeModal";
-import DetailsModal from "./modals/detailsModal";
+
+import {
+  aytSubjectTopics,
+  tytSubjectTopics,
+} from "@/src/shared/domain/topic/topic.data";
+import {
+  AnalysisFormRequest,
+  TopicMistake,
+} from "../../validations/analysis.validation";
+import AddTopicMistakeModal from "../modals/addTopicMistakeModal";
+import DetailsModal from "../modals/detailsModal";
 
 interface SecondStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
@@ -16,7 +23,7 @@ interface SecondStepProps {
   handlePreviousStep: () => void;
 }
 
-export function SecondStep({
+export default function SecondStep({
   form,
   examType,
   handlePreviousStep,

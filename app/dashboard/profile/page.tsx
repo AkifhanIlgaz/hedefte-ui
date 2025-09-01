@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Header } from "../analiz/_components/header";
+import { Header } from "../../../src/shared/components/dashboardHeader";
 
 export default function ProfilePage() {
   return (

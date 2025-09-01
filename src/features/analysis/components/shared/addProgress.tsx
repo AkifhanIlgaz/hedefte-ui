@@ -57,7 +57,7 @@ function Step({ stepNumber, currentStep, label, isLast = false }: StepProps) {
   );
 }
 
-export function ProgressIndicator({ currentStep }: Props) {
+export default function AddProgressIndicator({ currentStep }: Props) {
   return (
     <div className="flex items-center justify-center gap-8 py-4">
       <div className="flex items-center gap-3">

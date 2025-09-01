@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Eye, Info } from "lucide-react";
-import { TopicMistake } from "../../_schemas/schema";
+import { TopicMistake } from "../../validations/analysis.validation";
 
 export default function SubjectDetailModal({
   name,

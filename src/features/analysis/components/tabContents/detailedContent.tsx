@@ -26,8 +26,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { AnalysisFormRequest } from "../../_schemas/schema";
 import SubjectDetailModal from "../modals/subjectDetailModal";
+import { AnalysisFormRequest } from "../../validations/analysis.validation";
 
 const chartConfig = {
   totalNet: {

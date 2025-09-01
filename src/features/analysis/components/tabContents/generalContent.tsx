@@ -1,5 +1,5 @@
 import { TabsContent } from "@/components/ui/tabs";
-import { AnalysisFormRequest } from "../../_schemas/schema";
+import { AnalysisFormRequest } from "../../validations/analysis.validation";
 import NetChart from "../charts/netChart";
 import SubjectChart from "../charts/subjectChart";
 

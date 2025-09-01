@@ -1,6 +1,5 @@
 "use client";
 
-import { Header } from "@/app/dashboard/analiz/_components/header";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/table";
 import { tytSubjectTopics } from "@/lib/constants/topic";
 import { createClient } from "@/src/lib/supabase/client";
+import { Header } from "@/src/shared/components/dashboardHeader";
 import { FlaskConical } from "lucide-react";
 import { use, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";

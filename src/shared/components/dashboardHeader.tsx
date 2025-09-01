@@ -7,7 +7,7 @@ interface HeaderProps {
   subtitle: string;
 }
 
-export function Header({ title, subtitle }: HeaderProps) {
+export function DashboardHeader({ title, subtitle }: HeaderProps) {
   const router = useRouter();
 
   return (

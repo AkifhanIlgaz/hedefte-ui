@@ -16,7 +16,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
 
 import { format } from "date-fns";
 import {
@@ -28,12 +27,14 @@ import {
 } from "lucide-react";
 import { tr } from "react-day-picker/locale";
 import { UseFormReturn } from "react-hook-form";
+
+import { cn } from "@/components/ui/utils";
 import {
   EaSubjects,
   MfSubjects,
   tytSubjects,
-} from "../../../../lib/constants/subjects";
-import { AnalysisFormRequest } from "../_schemas/schema";
+} from "@/src/shared/domain/subject/subject.data";
+import { AnalysisFormRequest } from "../../validations/analysis.validation";
 
 interface FirstStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
@@ -41,7 +42,7 @@ interface FirstStepProps {
   handleNextStep: () => void;
 }
 
-export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
+export default function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
   const {
     formState: { errors },
   } = form;
@@ -147,7 +148,7 @@ export function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
                     <Card
                       key={s.name}
                       className={cn(
-                        `border   transition-all hover:shadow-md bg-background dark:bg-background`,
+                        `border transition-all hover:shadow-md bg-background dark:bg-background`,
                         {
                           "border-amber-900": errors.subjects?.[index]?.message,
                         }

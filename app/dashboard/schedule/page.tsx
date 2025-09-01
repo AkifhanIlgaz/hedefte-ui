@@ -31,7 +31,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar, Edit2, MoreHorizontal, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Header } from "../analiz/_components/header";
+import { Header } from "../../../src/shared/components/dashboardHeader";
 
 interface StudySession {
   id: string;
