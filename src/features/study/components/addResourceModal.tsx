@@ -21,7 +21,7 @@ import { text } from "@/lib/constants/text";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Resource, resourceSchema } from "../../_schemas/resource";
+import { Resource, resourceSchema } from "../validations/resource.validation";
 
 interface AddResourceModalProps {
   subject: string;

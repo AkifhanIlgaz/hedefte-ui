@@ -18,7 +18,7 @@ import { Header } from "@/src/shared/components/dashboardHeader";
 import { FlaskConical } from "lucide-react";
 import { use, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import AddResourceModal from "../../../_components/modals/addResourceModal";
+import AddResourceModal from "../../../../../src/features/study/components/addResourceModal";
 import { Resource } from "../../../_schemas/resource";
 
 export default function AddAnalysisPage({
