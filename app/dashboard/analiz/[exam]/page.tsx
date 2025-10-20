@@ -28,35 +28,34 @@ export default function Page({
   const text = examType === "TYT" ? analysisText.tyt : analysisText.ayt;
   const [data, setData] = useState<AnalysisFormRequest[]>();
 
-  const getExams = async () => {
-    try {
-      // Access token'ı al
-      const {
-        data: { session },
-      } = await createClient().auth.getSession();
-
-      // API'ye POST isteği gönder
-      const response = await fetch(
-        `http://localhost:8080/api/analysis?exam=${examType}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-        }
-      );
-
-      const result = await response.json();
-
-      setData(result.payload);
-    } finally {
-    }
-  };
-
   useEffect(() => {
+    const getExams = async () => {
+      try {
+        // Access token'ı al
+        const {
+          data: { session },
+        } = await createClient().auth.getSession();
+
+        // API'ye POST isteği gönder
+        const response = await fetch(
+          `http://localhost:8080/api/analysis?exam=${examType}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session?.access_token}`,
+            },
+          }
+        );
+
+        const result = await response.json();
+
+        setData(result.payload);
+      } finally {
+      }
+    };
     getExams();
-  }, []);
+  }, [examType]);
 
   return (
     <div className="space-y-8">
