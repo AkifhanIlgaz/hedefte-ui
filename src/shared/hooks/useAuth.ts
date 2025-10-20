@@ -28,8 +28,11 @@ export function useAuth() {
       setUser(session?.user ?? null);
       setLoading(false);
 
-      // Route refresh için
-      if (event === "SIGNED_IN" || event === "SIGNED_OUT") {
+      // Çıkış yapıldığında anasayfaya yönlendir
+      if (event === "SIGNED_OUT") {
+        router.push("/");
+        router.refresh();
+      } else if (event === "SIGNED_IN") {
         router.refresh();
       }
     });
@@ -38,9 +41,12 @@ export function useAuth() {
   }, [supabase.auth, router]);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/login");
-    router.refresh();
+    try {
+      await supabase.auth.signOut();
+      // onAuthStateChange içinde yönlendirme yapılacak
+    } catch (error) {
+      console.error("Sign out error:", error);
+    }
   };
 
   return { user, loading, signOut };
