@@ -1,1 +1,35 @@
-export const profileText = {};
+export const profileText = {
+  title: "Profil Bilgileri",
+  subtitle: "Profil bilgilerinizi buradan güncelleyebilirsiniz.",
+  pageTitle: "Profilim",
+  pageSubtitle: "Kişisel bilgilerinizi ve hedeflerinizi yönetin",
+  updateButton: "Profilimi Güncelle",
+  personalInfo: {
+    title: "Kişisel Bilgilerim",
+    firstName: "Ad",
+    lastName: "Soyad",
+    email: "E-posta",
+    phone: "Telefon",
+  },
+  goals: {
+    title: "Hedeflerim",
+    university: "Üniversite",
+    universityPlaceholder: "Üniversite seçin",
+    universityNotFound: "Üniversite bulunamadı.",
+    department: "Bölüm",
+    departmentPlaceholder: "Bölüm seçin",
+    departmentNotFound: "Bölüm bulunamadı.",
+    field: "Alan",
+    searchPlaceholder: "Ara...",
+  },
+  universityGroups: {
+    state: "Devlet Üniversiteleri",
+    foundation: "Vakıf Üniversiteleri",
+    kktc: "KKTC Üniversiteleri",
+    international: "Yurtdışı Üniversiteleri",
+  },
+  departmentGroups: {
+    undergraduate: "Lisans Bölümleri",
+    associate: "Önlisans Bölümleri",
+  },
+};
