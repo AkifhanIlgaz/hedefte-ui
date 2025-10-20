@@ -40,7 +40,6 @@ interface GoalInfoProps {
 }
 
 export default function GoalInfo({
-  user,
   valueUni,
   setValueUni,
   valueDepartment,
