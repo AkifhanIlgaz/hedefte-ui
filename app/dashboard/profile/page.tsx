@@ -3,20 +3,20 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Header } from "../../../src/shared/components/dashboardHeader";
+import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
 
 export default function ProfilePage() {
   return (
     <div className="space-y-8">
-      <Header
-        title={`Ayarlar`}
-        subtitle={"Hesap ve uygulama ayarlarını yönetin"}
+      <DashboardHeader
+        title={`Profilim`}
+        subtitle={"Kişisel bilgilerinizi ve hedeflerinizi yönetin"}
       />
 
       <div className="flex gap-4">
         <Card>
           <CardHeader>
-            <h2 className="text-lg font-medium">Profil Bilgileri</h2>
+            <h2 className="text-lg font-medium">Kişisel Bilgilerim</h2>
           </CardHeader>
           <CardContent className="space-y-4">
             <ProfileField label="Ad" value="Enayi" />
@@ -27,7 +27,7 @@ export default function ProfilePage() {
         </Card>
         <Card>
           <CardHeader>
-            <h2 className="text-lg font-medium">Hedefleriniz</h2>
+            <h2 className="text-lg font-medium">Hedeflerim</h2>
           </CardHeader>
           <CardContent className="space-y-4">
             <ProfileField
