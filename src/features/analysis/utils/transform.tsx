@@ -8,7 +8,7 @@ export interface TransformedNetChart {
   formattedDate: string;
   fullDate: string;
   totalNet: number;
-  date: string;
+  date: Date;
   name: string;
 }
 
@@ -96,7 +96,6 @@ export const transformAnalysisData = (
 
   // 1. Net Chart Data - tek döngüde hesapla
   const netChart: TransformedNetChart[] = data.map((exam) => ({
-    ...exam,
     formattedDate: new Date(exam.date).toLocaleDateString("tr-TR", {
       day: "2-digit",
       month: "short",
@@ -106,6 +105,9 @@ export const transformAnalysisData = (
       month: "long",
       year: "numeric",
     }),
+    totalNet: exam.totalNet,
+    date: exam.date,
+    name: exam.name,
   }));
 
   // 2. General Stats - tek döngüde hesapla
