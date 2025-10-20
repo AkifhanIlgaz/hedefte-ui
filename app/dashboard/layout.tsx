@@ -1,4 +1,13 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +24,7 @@ import {
 } from "@/components/ui/sidebar";
 import { routes } from "@/src/config/routes";
 import { Navbar } from "@/src/shared/components/navbar";
+import { useAuth } from "@/src/shared/hooks/useAuth";
 import {
   BarChart,
   BookOpen,
@@ -24,7 +34,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 const sidebarGroups = [
   {
@@ -62,7 +72,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Analiz & Raporlar", // ANALYSIS_REPORTS_GROUP
+    title: "Analiz & Raporlar",
     items: [
       {
         id: "tyt-analysis",
@@ -87,9 +97,57 @@ export default function AuthenticatedLayout({
 }) {
   const router = useRouter();
   const path = usePathname();
+  const { user } = useAuth();
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
+  useEffect(() => {
+    if (user && path !== routes.dashboard.profile.base) {
+      const meta = user.user_metadata || {};
+
+      // name varsa firstName ve lastName çıkar
+      let firstName = meta.firstName || "";
+      let lastName = meta.lastName || "";
+
+      if (meta.name && !firstName && !lastName) {
+        const nameParts = meta.name.trim().split(" ");
+        if (nameParts.length > 1) {
+          lastName = nameParts.pop() || "";
+          firstName = nameParts.join(" ");
+        } else {
+          firstName = meta.name;
+        }
+      }
+
+      const isProfileIncomplete =
+        !firstName || !lastName || !meta.uni || !meta.department || !meta.field;
+
+      setShowProfileModal(isProfileIncomplete);
+    }
+  }, [user, path]);
+
+  const handleGoToProfile = () => {
+    router.push(routes.dashboard.profile.base);
+    setShowProfileModal(false);
+  };
 
   return (
     <SidebarProvider>
+      <Dialog open={showProfileModal} onOpenChange={setShowProfileModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Profil Bilgilerinizi Tamamlayın</DialogTitle>
+            <DialogDescription>
+              Hedefte{"'"}yi kullanmaya başlamadan önce profil bilgilerinizi
+              tamamlamanız gerekmektedir. Lütfen ad, soyad, üniversite, bölüm ve
+              alan bilgilerinizi ekleyin.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={handleGoToProfile}>Profile Git</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Sidebar collapsible="icon" className="">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2">

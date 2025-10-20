@@ -1,28 +1,31 @@
+"use client";
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { User } from "@supabase/supabase-js";
 import { profileText } from "../profile.text";
-import ProfileField from "./field";
 
 interface PersonalInfoProps {
   user: User | null;
+  firstName: string;
+  setFirstName: (value: string) => void;
+  lastName: string;
+  setLastName: (value: string) => void;
+  phone: string;
+  setPhone: (value: string) => void;
 }
 
-export default function PersonalInfo({ user }: PersonalInfoProps) {
-  let firstName = user?.user_metadata?.firstName || "";
-  let lastName = user?.user_metadata?.lastName || "";
-
-  if (user?.user_metadata?.name && !firstName && !lastName) {
-    const nameParts = user.user_metadata.name.trim().split(" ");
-    if (nameParts.length > 1) {
-      lastName = nameParts.pop() || "";
-      firstName = nameParts.join(" ");
-    } else {
-      firstName = user.user_metadata.name;
-    }
-  }
-
+export default function PersonalInfo({
+  user,
+  firstName,
+  setFirstName,
+  lastName,
+  setLastName,
+  phone,
+  setPhone,
+}: PersonalInfoProps) {
   const email = user?.email || user?.user_metadata?.email || "";
-  const phone = user?.user_metadata?.phone || "";
 
   return (
     <Card>
@@ -32,16 +35,42 @@ export default function PersonalInfo({ user }: PersonalInfoProps) {
         </h2>
       </CardHeader>
       <CardContent className="space-y-4">
-        <ProfileField
-          label={profileText.personalInfo.firstName}
-          value={firstName}
-        />
-        <ProfileField
-          label={profileText.personalInfo.lastName}
-          value={lastName}
-        />
-        <ProfileField label={profileText.personalInfo.email} value={email} />
-        <ProfileField label={profileText.personalInfo.phone} value={phone} />
+        <div className="space-y-2">
+          <Label>{profileText.personalInfo.firstName}</Label>
+          <Input
+            placeholder={profileText.personalInfo.firstName}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{profileText.personalInfo.lastName}</Label>
+          <Input
+            placeholder={profileText.personalInfo.lastName}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{profileText.personalInfo.email}</Label>
+          <Input
+            placeholder={profileText.personalInfo.email}
+            value={email}
+            disabled
+            className="disabled:opacity-100"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{profileText.personalInfo.phone}</Label>
+          <Input
+            placeholder={profileText.personalInfo.phone}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
       </CardContent>
     </Card>
   );

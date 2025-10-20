@@ -31,7 +31,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar, Edit2, MoreHorizontal, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Header } from "../../../src/shared/components/dashboardHeader";
+import { DashboardHeader } from "../../../src/shared/components/dashboardHeader";
 
 interface StudySession {
   id: string;
@@ -231,7 +231,7 @@ export default function SchedulePage() {
 
   return (
     <div className="space-y-8">
-      <Header
+      <DashboardHeader
         title={`Haftalık Çalışma Programı`}
         subtitle={"Haftalık çalışma programınızı yönetin"}
       />
