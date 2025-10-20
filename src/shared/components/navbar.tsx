@@ -1,4 +1,5 @@
 "use client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -58,14 +59,12 @@ export function Navbar() {
             onClick={() => setShowUserMenu(!showUserMenu)}
             className="h-8 px-2 gap-2"
           >
-            <div className="h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-medium">
-              {user?.user_metadata.firstName?.charAt(0).toUpperCase()}
-            </div>
-            <div className="text-left hidden sm:block">
-              <p className="text-sm font-medium leading-none">
-                {user?.user_metadata.firstName}
-              </p>
-            </div>
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={user?.user_metadata.picture} />
+              <AvatarFallback>
+                <User className="h-4 w-4 bg-transparent" />
+              </AvatarFallback>
+            </Avatar>
           </Button>
 
           {showUserMenu && (

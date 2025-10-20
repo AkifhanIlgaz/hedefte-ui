@@ -11,6 +11,9 @@ export default function SignInWithGoogle() {
       onClick={() => {
         createClient().auth.signInWithOAuth({
           provider: "google",
+          options: {
+            redirectTo: `${window.location.origin}/auth/callback`,
+          },
         });
       }}
     >
