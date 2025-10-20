@@ -23,7 +23,6 @@ export default function RootLayout({
         <Providers
           attribute="class"
           defaultTheme="system"
-          enableSystem
           disableTransitionOnChange
         >
           {children}
