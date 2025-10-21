@@ -36,8 +36,8 @@ export default function AddAnalysisPage({
     examType === "TYT"
       ? tytSubjects
       : division === `EA`
-      ? EaSubjects
-      : MfSubjects;
+        ? EaSubjects
+        : MfSubjects;
 
   const form = useForm<AnalysisFormRequest>({
     resolver: zodResolver(analysisFormSchema),
@@ -56,7 +56,7 @@ export default function AddAnalysisPage({
             empty: 0,
             total: sf.total,
             topicMistakes: [],
-          }))
+          })),
         )
         .flat(),
     },

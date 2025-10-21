@@ -10,7 +10,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
-import { MfSubjects } from "@/src/shared/domain/subject/subject.data";
+import {
+  MfSubjects,
+  tytSubjects,
+} from "@/src/shared/domain/subject/subject.data";
 import { BookOpen, Trash2 } from "lucide-react";
 import { AnalysisFormRequest } from "../../validations/analysis.validation";
 
@@ -29,8 +32,7 @@ export default function AllExamsContent({
     return value % 1 === 0 ? value.toString() : value.toFixed(1);
   };
 
-  const division = localStorage.getItem(`bolum`);
-  const subjects = MfSubjects;
+  const subjects = tytSubjects;
 
   return (
     <TabsContent value="all" className="space-y-2">
@@ -47,7 +49,7 @@ export default function AllExamsContent({
                   .flatMap((s) =>
                     s.subFields.map((sf) => ({
                       name: sf.name,
-                    }))
+                    })),
                   )
                   .map((s, i) => (
                     <TableHead key={i} className="w-[100px] text-center">

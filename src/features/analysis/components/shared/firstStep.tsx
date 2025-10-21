@@ -42,7 +42,11 @@ interface FirstStepProps {
   handleNextStep: () => void;
 }
 
-export default function FirstStep({ form, examType, handleNextStep }: FirstStepProps) {
+export default function FirstStep({
+  form,
+  examType,
+  handleNextStep,
+}: FirstStepProps) {
   const {
     formState: { errors },
   } = form;
@@ -52,8 +56,8 @@ export default function FirstStep({ form, examType, handleNextStep }: FirstStepP
     examType === "TYT"
       ? tytSubjects
       : division === `EA`
-      ? EaSubjects
-      : MfSubjects;
+        ? EaSubjects
+        : MfSubjects;
 
   return (
     <>
@@ -141,8 +145,9 @@ export default function FirstStep({ form, examType, handleNextStep }: FirstStepP
                 </div>
 
                 {subject.subFields.map((s, index) => {
-                  const correct = form.watch(`subjects.${index}.correct`) || 0;
-                  const wrong = form.watch(`subjects.${index}.wrong`) || 0;
+                  const correct =
+                    form.watch(`subjects.${s.index}.correct`) || 0;
+                  const wrong = form.watch(`subjects.${s.index}.wrong`) || 0;
 
                   return (
                     <Card
@@ -150,8 +155,9 @@ export default function FirstStep({ form, examType, handleNextStep }: FirstStepP
                       className={cn(
                         `border transition-all hover:shadow-md bg-background dark:bg-background`,
                         {
-                          "border-amber-900": errors.subjects?.[index]?.message,
-                        }
+                          "border-amber-900":
+                            errors.subjects?.[s.index]?.message,
+                        },
                       )}
                     >
                       <CardHeader>
@@ -171,7 +177,7 @@ export default function FirstStep({ form, examType, handleNextStep }: FirstStepP
                         <div className="grid grid-cols-3 gap-3">
                           <FormField
                             control={form.control}
-                            name={`subjects.${index}.correct`}
+                            name={`subjects.${s.index}.correct`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -199,7 +205,7 @@ export default function FirstStep({ form, examType, handleNextStep }: FirstStepP
                           />
                           <FormField
                             control={form.control}
-                            name={`subjects.${index}.wrong`}
+                            name={`subjects.${s.index}.wrong`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -227,7 +233,7 @@ export default function FirstStep({ form, examType, handleNextStep }: FirstStepP
                           />
                           <FormField
                             control={form.control}
-                            name={`subjects.${index}.empty`}
+                            name={`subjects.${s.index}.empty`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -254,9 +260,9 @@ export default function FirstStep({ form, examType, handleNextStep }: FirstStepP
                             )}
                           />
                         </div>
-                        {errors.subjects?.[index] && (
+                        {errors.subjects?.[s.index] && (
                           <p className="text-xs text-destructive bg-destructive/10 p-2 mt-4 rounded-lg">
-                            {errors.subjects[index]!.message}
+                            {errors.subjects[s.index]!.message}
                           </p>
                         )}
                       </CardContent>

@@ -28,6 +28,8 @@ export default function Page({
   const text = examType === "TYT" ? analysisText.tyt : analysisText.ayt;
   const [data, setData] = useState<AnalysisFormRequest[]>();
 
+  console.log(data);
+
   useEffect(() => {
     const getExams = async () => {
       try {
@@ -45,11 +47,10 @@ export default function Page({
               "Content-Type": "application/json",
               Authorization: `Bearer ${session?.access_token}`,
             },
-          }
+          },
         );
 
         const result = await response.json();
-
         setData(result.payload);
       } finally {
       }
@@ -66,7 +67,7 @@ export default function Page({
           subtitle={text.analysis.subtitle}
         />
 
-        <Link href="/dashboard/analiz/add/ayt">
+        <Link href={`/dashboard/analiz/add/${examType}`}>
           <Button className="gap-2 bg-amber-600 hover:bg-amber-700 text-white cursor-pointer">
             <Plus className="size-4" />
             {text.analysis.addButton}
