@@ -14,7 +14,7 @@ export const tytQuestionMap = {
 
 export const topicAnalysisSchema = z.object({
   topicId: z.string(),
-  name: z.string(),
+  topicName: z.string(),
   mistakes: z.int().min(1, "Yanlış sayısı 1 veya üzeri olmalı"),
 });
 
@@ -22,7 +22,7 @@ export const lessonAnalysisSchema = z
   .object({
     index: z.int().min(0, "Index 0 veya üzeri olmalı"),
     lessonId: z.string(),
-    name: z.string(),
+    lessonName: z.string(),
     correct: z.number().min(0, "Doğru sayısı 0 veya üzeri olmalı"),
     wrong: z.number().min(0, "Yanlış sayısı 0 veya üzeri olmalı"),
     empty: z.number().min(0, "Boş sayısı 0 veya üzeri olmalı"),

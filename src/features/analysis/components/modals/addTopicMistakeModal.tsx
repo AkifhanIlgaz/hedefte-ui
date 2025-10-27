@@ -63,7 +63,7 @@ export default function AddTopicMistakeModal({
     resolver: zodResolver(topicAnalysisSchema),
     defaultValues: {
       topicId: "",
-      name: "",
+      topicName: "",
       mistakes: 1,
     },
   });
@@ -72,7 +72,7 @@ export default function AddTopicMistakeModal({
 
   function onSubmit(data: TopicAnalysis) {
     console.log(data);
-    addTopicMistake!(subjectIndex, data.topicId, data.mistakes, data.name);
+    addTopicMistake!(subjectIndex, data.topicId, data.mistakes, data.topicName);
     setOpen(false);
     form.reset();
   }

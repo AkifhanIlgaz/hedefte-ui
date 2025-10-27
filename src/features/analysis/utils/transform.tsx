@@ -132,7 +132,7 @@ export const transformAnalysisData = (
   const subjectNames = Array.from(
     new Set(
       data.flatMap((exam) =>
-        exam.lessonAnalysis.map((subject) => subject.name),
+        exam.lessonAnalysis.map((subject) => subject.lessonName),
       ),
     ),
   );
@@ -144,7 +144,9 @@ export const transformAnalysisData = (
     // Bu ders için tüm denemelerden verileri topla
     const subjectData = data
       .map((exam) => {
-        const subject = exam.lessonAnalysis.find((s) => s.name === subjectName);
+        const subject = exam.lessonAnalysis.find(
+          (s) => s.lessonName === subjectName,
+        );
         if (!subject) return null;
 
         const net = calculateNet(subject.correct, subject.wrong);

@@ -39,6 +39,8 @@ const subjectQuestionCounts: { [key: string]: number } = {
 };
 
 export default function SubjectChart({ chartData }: SubjectChartProps) {
+  console.log(chartData);
+
   // Her ders için ortalama başarı yüzdesi hesapla
   const calculateSubjectAverages = () => {
     if (!chartData || chartData.length === 0) return [];
@@ -47,7 +49,7 @@ export default function SubjectChart({ chartData }: SubjectChartProps) {
     const subjectNames = Array.from(
       new Set(
         chartData.flatMap((exam) =>
-          exam.lessonAnalysis.map((subject) => subject.name),
+          exam.lessonAnalysis.map((subject) => subject.lessonName),
         ),
       ),
     );
@@ -57,7 +59,7 @@ export default function SubjectChart({ chartData }: SubjectChartProps) {
       const subjectScores = chartData
         .map((exam) => {
           const subject = exam.lessonAnalysis.find(
-            (s) => s.name === subjectName,
+            (s) => s.lessonName === subjectName,
           );
           if (!subject) return null;
 

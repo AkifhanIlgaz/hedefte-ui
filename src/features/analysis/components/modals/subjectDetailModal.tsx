@@ -64,7 +64,7 @@ export default function SubjectDetailModal({
                 className="flex justify-between items-center p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg transition-colors hover:bg-amber-100 dark:hover:bg-amber-900/20"
               >
                 <span className="text-sm font-medium text-amber-900 dark:text-amber-100">
-                  {topic.name}
+                  {topic.topicName}
                 </span>
                 <div className="flex items-center gap-2">
                   <span className="text-xs px-2 py-1 bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded-full font-semibold">

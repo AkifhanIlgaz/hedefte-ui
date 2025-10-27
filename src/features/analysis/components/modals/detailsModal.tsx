@@ -76,7 +76,7 @@ export default function DetailsModal({
             >
               <div>
                 <div className="font-medium text-amber-800 dark:text-amber-200 text-sm">
-                  {tm.name}
+                  {tm.topicName}
                 </div>
               </div>
               <div className="flex items-center gap-2">

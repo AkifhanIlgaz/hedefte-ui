@@ -36,7 +36,7 @@ export default function SecondStep({
     const topicAnalysis = updatedSubjects[subjectIndex].topicAnalysis || [];
     updatedSubjects[subjectIndex].topicAnalysis = [
       ...topicAnalysis,
-      { topicId: topicId, mistakes: val, name: name },
+      { topicId: topicId, mistakes: val, topicName: name },
     ];
     form.setValue("lessonAnalysis", updatedSubjects);
   };
@@ -86,7 +86,7 @@ export default function SecondStep({
                       <div className="flex flex-col items-center space-y-4">
                         <div className="text-center">
                           <h3 className="font-semibold text-lg text-foreground mb-1">
-                            {sub.name}
+                            {sub.lessonName}
                           </h3>
                           <div className="w-12 h-0.5 bg-primary/60 mx-auto rounded-full"></div>
                         </div>
@@ -132,10 +132,10 @@ export default function SecondStep({
                             topics={
                               examType === "AYT"
                                 ? aytTopics[
-                                    sub.name as keyof typeof aytTopics
+                                    sub.lessonName as keyof typeof aytTopics
                                   ] || []
                                 : tytTopics[
-                                    sub.name as keyof typeof tytTopics
+                                    sub.lessonName as keyof typeof tytTopics
                                   ] || []
                             }
                           />

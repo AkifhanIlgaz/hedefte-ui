@@ -75,7 +75,7 @@ export default function DetailedContent({
     const uniqueSubjects = Array.from(
       new Set(
         allExams.flatMap((exam) =>
-          exam.lessonAnalysis.map((subject) => subject.name),
+          exam.lessonAnalysis.map((subject) => subject.lessonName),
         ),
       ),
     );
@@ -86,7 +86,7 @@ export default function DetailedContent({
         const subjectData = allExams
           .map((exam) => {
             const subject = exam.lessonAnalysis.find(
-              (s) => s.name === subjectName,
+              (s) => s.lessonName === subjectName,
             );
             if (!subject) return null;
 
