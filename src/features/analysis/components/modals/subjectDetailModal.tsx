@@ -8,15 +8,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { TopicAnalysis } from "@/src/shared/domain/topic/topic.type";
 import { Eye, Info } from "lucide-react";
-import { TopicAnalysis } from "../../validations/analysis.validation";
+import { TopicAnalysisRequest } from "../../validations/analysis.validation";
 
 export default function SubjectDetailModal({
   name,
   topicMistakes,
 }: {
   name: string;
-  topicMistakes: TopicAnalysis[];
+  topicMistakes: TopicAnalysisRequest[];
 }) {
   // Aynı konuları grupla ve mistake sayılarını topla
   const groupedTopics = topicMistakes
@@ -28,7 +29,7 @@ export default function SubjectDetailModal({
         acc.push({ ...topic });
       }
       return acc;
-    }, [] as TopicAnalysis[])
+    }, [] as TopicAnalysisRequest[])
     .sort((a, b) => b.mistakes - a.mistakes);
 
   return (
@@ -64,7 +65,7 @@ export default function SubjectDetailModal({
                 className="flex justify-between items-center p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg transition-colors hover:bg-amber-100 dark:hover:bg-amber-900/20"
               >
                 <span className="text-sm font-medium text-amber-900 dark:text-amber-100">
-                  {topic.topicName}
+                  {topic.name}
                 </span>
                 <div className="flex items-center gap-2">
                   <span className="text-xs px-2 py-1 bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded-full font-semibold">

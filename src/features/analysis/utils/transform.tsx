@@ -1,6 +1,6 @@
 import {
-  AnalysisFormRequest,
-  TopicAnalysis,
+  AddExamRequest,
+  TopicAnalysisRequest,
 } from "../validations/analysis.validation";
 
 // Transform sonuçları için type'lar
@@ -33,7 +33,7 @@ export interface TransformedDetailedAnalysis {
     date: string;
     name: string;
   }>;
-  topicMistakes: TopicAnalysis[];
+  topicMistakes: TopicAnalysisRequest[];
 }
 
 export interface TransformedAnalysisData {
@@ -46,7 +46,7 @@ export interface TransformedAnalysisData {
     average: number;
     totalExams: number;
   };
-  rawData: AnalysisFormRequest[];
+  rawData: AddExamRequest[];
 }
 
 // Ders bazında soru sayıları
@@ -77,7 +77,7 @@ export const calculateSuccessRate = (
 
 // Ana transform fonksiyonu - tüm verileri tek seferde transform eder
 export const transformAnalysisData = (
-  data: AnalysisFormRequest[],
+  data: AddExamRequest[],
 ): TransformedAnalysisData => {
   if (!data || data.length === 0) {
     return {
@@ -151,7 +151,7 @@ export const transformAnalysisData = (
 
         const net = calculateNet(subject.correct, subject.wrong);
         const totalQuestions =
-          subjectQuestionCounts[subjectName] || subject.net || 40;
+          subjectQuestionCounts[subjectName] || subject.totalNet || 40;
         const successRate = calculateSuccessRate(net, totalQuestions);
 
         return {
