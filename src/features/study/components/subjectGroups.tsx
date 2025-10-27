@@ -1,16 +1,17 @@
 import { Separator } from "@/components/ui/separator";
-import {
-  MfSubjects,
-  tytSubjects,
-} from "@/src/shared/domain/subject/subject.data";
+
 import SubjectCard from "./subjectCard";
+import {
+  mfLessons,
+  tytLessons,
+} from "@/src/shared/domain/subject/subject.data";
 
 interface SubjectGroupsProps {
   exam: "TYT" | "AYT";
 }
 
 export default function SubjectGroups({ exam }: SubjectGroupsProps) {
-  const subjects = exam === "TYT" ? tytSubjects : MfSubjects;
+  const subjects = exam === "TYT" ? tytLessons : mfLessons;
 
   return (
     <div className="flex gap-6 justify-center">

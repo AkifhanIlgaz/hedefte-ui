@@ -7,13 +7,11 @@ import { TopicTable } from "@/src/features/study/components";
 import { Resource } from "@/src/features/study/validations/resource.validation";
 import { createClient } from "@/src/lib/supabase/client";
 import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
-import {
-  aytSubjectTopics,
-  tytSubjectTopics,
-} from "@/src/shared/domain/topic/topic.data";
+
 import { FlaskConical } from "lucide-react";
 import { use, useEffect, useMemo, useState } from "react";
 import AddResourceModal from "../../../../../src/features/study/components/addResourceModal";
+import { aytTopics, tytTopics } from "@/src/shared/domain/topic/topic.data";
 
 export default function AddAnalysisPage({
   params,
@@ -27,8 +25,8 @@ export default function AddAnalysisPage({
 
   const selectedTopics =
     exam === "TYT"
-      ? tytSubjectTopics[subject as keyof typeof tytSubjectTopics] ?? []
-      : aytSubjectTopics[subject as keyof typeof aytSubjectTopics] ?? [];
+      ? (tytTopics[subject as keyof typeof tytTopics] ?? [])
+      : (aytTopics[subject as keyof typeof aytTopics] ?? []);
 
   const getResources = useMemo(() => {
     return async () => {
@@ -47,7 +45,7 @@ export default function AddAnalysisPage({
               "Content-Type": "application/json",
               Authorization: `Bearer ${session?.access_token}`,
             },
-          }
+          },
         );
         console.log(response);
 

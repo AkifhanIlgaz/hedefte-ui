@@ -1,4 +1,5 @@
 export type Topic = {
-  id: number;
+  topicId: string;
+  lessonId: string;
   name: string;
 };

@@ -1,6 +1,6 @@
 import {
   AnalysisFormRequest,
-  TopicMistake,
+  TopicAnalysis,
 } from "../validations/analysis.validation";
 
 // Transform sonuçları için type'lar
@@ -33,7 +33,7 @@ export interface TransformedDetailedAnalysis {
     date: string;
     name: string;
   }>;
-  topicMistakes: TopicMistake[];
+  topicMistakes: TopicAnalysis[];
 }
 
 export interface TransformedAnalysisData {
@@ -70,14 +70,14 @@ export const calculateNet = (correct: number, wrong: number): number => {
 // Başarı oranı hesaplama fonksiyonu
 export const calculateSuccessRate = (
   net: number,
-  totalQuestions: number
+  totalQuestions: number,
 ): number => {
   return Math.max(0, (net / totalQuestions) * 100);
 };
 
 // Ana transform fonksiyonu - tüm verileri tek seferde transform eder
 export const transformAnalysisData = (
-  data: AnalysisFormRequest[]
+  data: AnalysisFormRequest[],
 ): TransformedAnalysisData => {
   if (!data || data.length === 0) {
     return {
@@ -131,8 +131,10 @@ export const transformAnalysisData = (
   // 3. Subject bazlı analizler - tek döngüde hem subject chart hem detailed analysis
   const subjectNames = Array.from(
     new Set(
-      data.flatMap((exam) => exam.subjects.map((subject) => subject.name))
-    )
+      data.flatMap((exam) =>
+        exam.lessonAnalysis.map((subject) => subject.name),
+      ),
+    ),
   );
 
   const subjectChart: TransformedSubjectChart[] = [];
@@ -142,12 +144,12 @@ export const transformAnalysisData = (
     // Bu ders için tüm denemelerden verileri topla
     const subjectData = data
       .map((exam) => {
-        const subject = exam.subjects.find((s) => s.name === subjectName);
+        const subject = exam.lessonAnalysis.find((s) => s.name === subjectName);
         if (!subject) return null;
 
         const net = calculateNet(subject.correct, subject.wrong);
         const totalQuestions =
-          subjectQuestionCounts[subjectName] || subject.total || 40;
+          subjectQuestionCounts[subjectName] || subject.totalNet || 40;
         const successRate = calculateSuccessRate(net, totalQuestions);
 
         return {
@@ -159,13 +161,13 @@ export const transformAnalysisData = (
           empty: subject.empty,
           examDate: exam.date,
           examName: exam.name,
-          topicMistakes: subject.topicMistakes || [],
+          topicMistakes: subject.topicAnalysis || [],
         };
       })
       .filter((data) => data !== null)
       .sort(
         (a, b) =>
-          new Date(a!.examDate).getTime() - new Date(b!.examDate).getTime()
+          new Date(a!.examDate).getTime() - new Date(b!.examDate).getTime(),
       );
 
     if (subjectData.length === 0) return;

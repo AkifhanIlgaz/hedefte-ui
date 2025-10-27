@@ -28,8 +28,6 @@ export default function Page({
   const text = examType === "TYT" ? analysisText.tyt : analysisText.ayt;
   const [data, setData] = useState<AnalysisFormRequest[]>();
 
-  console.log(data);
-
   useEffect(() => {
     const getExams = async () => {
       try {
