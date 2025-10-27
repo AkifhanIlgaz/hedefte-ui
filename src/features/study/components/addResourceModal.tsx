@@ -24,20 +24,20 @@ import { useForm } from "react-hook-form";
 import { Resource, resourceSchema } from "../validations/resource.validation";
 
 interface AddResourceModalProps {
-  subject: string;
+  lessonId: string;
   addResource: (resource: Resource) => void;
 }
 
 export default function AddResourceModal({
-  subject,
+  lessonId,
   addResource,
 }: AddResourceModalProps) {
   const resourceForm = useForm<Resource>({
     resolver: zodResolver(resourceSchema),
     defaultValues: {
-      examType: "TYT",
+      lessonId: "",
+      userId: "",
       name: "",
-      subject: subject,
     },
   });
 
@@ -92,7 +92,7 @@ export default function AddResourceModal({
 
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="">{subject} için kaynak ekle</DialogTitle>
+          <DialogTitle className="">{lessonId} için kaynak ekle</DialogTitle>
         </DialogHeader>
 
         <Form {...resourceForm}>

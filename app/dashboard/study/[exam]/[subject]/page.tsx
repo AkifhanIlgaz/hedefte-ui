@@ -12,16 +12,24 @@ import { FlaskConical } from "lucide-react";
 import { use, useEffect, useMemo, useState } from "react";
 import AddResourceModal from "../../../../../src/features/study/components/addResourceModal";
 import { aytTopics, tytTopics } from "@/src/shared/domain/topic/topic.data";
+import { getLessonId, lessons } from "@/src/shared/domain/subject/subject.data";
 
 export default function AddAnalysisPage({
   params,
 }: {
-  params: Promise<{ exam: string; subject: string }>;
+  params: Promise<{
+    exam: keyof typeof lessons;
+    subject: string;
+  }>;
 }) {
   const [resources, setResources] = useState<Resource[]>([]);
   const { exam: encodedExam, subject: encodedSubject } = use(params);
   const exam = encodedExam.toUpperCase() as "TYT" | "AYT";
-  const subject = decodeURIComponent(encodedSubject);
+  const subject = decodeURIComponent(encodedSubject) as
+    | keyof (typeof lessons)["ayt"]
+    | keyof (typeof lessons)["tyt"];
+
+  const lessonId = getLessonId(encodedExam, subject);
 
   const selectedTopics =
     exam === "TYT"
@@ -38,7 +46,7 @@ export default function AddAnalysisPage({
 
         // API'ye POST isteği gönder
         const response = await fetch(
-          "http://localhost:8080/api/resources?exam=TYT",
+          `http://localhost:8080/api/study-materials?lessonId=${getLessonId(encodedExam, subject)}`,
           {
             method: "GET",
             headers: {
@@ -55,7 +63,9 @@ export default function AddAnalysisPage({
       } finally {
       }
     };
-  }, []);
+  }, [encodedExam, subject]);
+
+  const addStudyMaterial = async () => {};
 
   useEffect(() => {
     getResources();
@@ -102,7 +112,7 @@ export default function AddAnalysisPage({
             </div>
 
             <AddResourceModal
-              subject={subject}
+              lessonId={lessonId}
               addResource={(resource) =>
                 setResources((prev) => [...prev, resource])
               }

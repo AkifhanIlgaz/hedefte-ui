@@ -18,7 +18,7 @@ export default function SubjectCard({
   iconColor,
 }: SubjectCardProps) {
   return (
-    <Link href={`http://localhost:3000/dashboard/study/${exam}/${label}`}>
+    <Link href={`${window.origin}/dashboard/study/${exam}/${label}`}>
       <Card className="transition-transform duration-150 cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:scale-[1.03] active:scale-98">
         <CardHeader className="p-0"></CardHeader>
         <CardContent className="flex items-center gap-4">
