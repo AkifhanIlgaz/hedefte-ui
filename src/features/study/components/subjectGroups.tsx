@@ -1,10 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 
 import SubjectCard from "./subjectCard";
-import {
-  mfLessons,
-  tytLessons,
-} from "@/src/shared/domain/subject/subject.data";
+import { mfLessons, tytLessons } from "@/src/shared/domain/lesson/lesson.data";
 
 interface SubjectGroupsProps {
   exam: "TYT" | "AYT";

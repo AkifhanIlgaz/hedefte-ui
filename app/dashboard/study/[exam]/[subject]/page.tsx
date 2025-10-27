@@ -12,7 +12,10 @@ import { FlaskConical } from "lucide-react";
 import { use, useEffect, useMemo, useState } from "react";
 import AddResourceModal from "../../../../../src/features/study/components/addResourceModal";
 import { aytTopics, tytTopics } from "@/src/shared/domain/topic/topic.data";
-import { getLessonId, lessons } from "@/src/shared/domain/subject/subject.data";
+import {
+  getLessonByName,
+  lessons,
+} from "@/src/shared/domain/lesson/lesson.data";
 
 export default function AddAnalysisPage({
   params,
@@ -29,7 +32,7 @@ export default function AddAnalysisPage({
     | keyof (typeof lessons)["ayt"]
     | keyof (typeof lessons)["tyt"];
 
-  const lessonId = getLessonId(encodedExam, subject);
+  const lesson = getLessonByName(encodedExam, subject);
 
   const selectedTopics =
     exam === "TYT"
@@ -46,7 +49,7 @@ export default function AddAnalysisPage({
 
         // API'ye POST isteği gönder
         const response = await fetch(
-          `http://localhost:8080/api/study-materials?lessonId=${getLessonId(encodedExam, subject)}`,
+          `http://localhost:8080/api/study-materials?lessonId=${getLessonByName(encodedExam, subject).lessonId}`,
           {
             method: "GET",
             headers: {
@@ -112,7 +115,7 @@ export default function AddAnalysisPage({
             </div>
 
             <AddResourceModal
-              lessonId={lessonId}
+              lesson={lesson}
               addResource={(resource) =>
                 setResources((prev) => [...prev, resource])
               }

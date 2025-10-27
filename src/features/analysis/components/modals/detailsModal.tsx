@@ -12,25 +12,26 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { text } from "@/lib/constants/text";
+import { TopicAnalysis } from "@/src/shared/domain/topic/topic.type";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { TopicAnalysis } from "../../validations/analysis.validation";
+import { TopicAnalysisRequest } from "../../validations/analysis.validation";
 
 interface DetailsProps {
-  subjectIndex: number;
-  topicMistakes: TopicAnalysis[];
-  updateTopicMistakes?: (
-    subjectIndex: number,
-    topicMistakes: TopicAnalysis[],
+  lessonIndex: number;
+  topicAnalysis: TopicAnalysisRequest[];
+  updateTopicAnalysis?: (
+    lessonIndex: number,
+    topicAnalysis: TopicAnalysisRequest[],
   ) => void;
 }
 
 export default function DetailsModal({
-  topicMistakes,
-  subjectIndex,
-  updateTopicMistakes,
+  topicAnalysis,
+  lessonIndex,
+  updateTopicAnalysis,
 }: DetailsProps) {
-  const [allMistakes, setMistakes] = useState(topicMistakes);
+  const [allMistakes, setMistakes] = useState(topicAnalysis);
 
   const update = (idx: number, val: number) => {
     const updatedMistakes = [...allMistakes];
@@ -45,8 +46,8 @@ export default function DetailsModal({
   };
 
   useEffect(() => {
-    setMistakes(topicMistakes);
-  }, [topicMistakes]);
+    setMistakes(topicAnalysis);
+  }, [topicAnalysis]);
 
   return (
     <Dialog>
@@ -69,14 +70,14 @@ export default function DetailsModal({
         </DialogHeader>
 
         <div className="flex flex-col gap-8">
-          {(allMistakes || []).map((tm: TopicAnalysis, idx: number) => (
+          {(allMistakes || []).map((tm: TopicAnalysisRequest, idx: number) => (
             <div
               key={idx}
               className="flex items-center justify-between p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg"
             >
               <div>
                 <div className="font-medium text-amber-800 dark:text-amber-200 text-sm">
-                  {tm.topicName}
+                  {tm.name}
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -126,7 +127,7 @@ export default function DetailsModal({
           <DialogClose asChild>
             <Button
               className="bg-primary text-primary-foreground"
-              onClick={() => updateTopicMistakes!(subjectIndex, allMistakes)}
+              onClick={() => updateTopicAnalysis!(lessonIndex, allMistakes)}
             >
               {text.analysis.common.buttons.save}
             </Button>

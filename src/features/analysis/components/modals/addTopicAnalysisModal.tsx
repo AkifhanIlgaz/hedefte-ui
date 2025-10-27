@@ -31,48 +31,41 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod";
 import {
-  TopicAnalysis,
+  TopicAnalysisRequest,
   topicAnalysisSchema,
 } from "../../validations/analysis.validation";
-
-type Topic = {
-  topicId: string;
-  name: string;
-  lessonId: string;
-};
+import { Topic, TopicAnalysis } from "@/src/shared/domain/topic/topic.type";
 
 interface ModalProps {
-  addTopicMistake?: (
-    subjectIndex: number,
+  addTopicAnalysis: (
+    lessonIndex: number,
     topicId: string,
     val: number,
     name: string,
   ) => void;
   topics: Topic[];
-  subjectIndex: number;
+  lessonIndex: number;
 }
 
-export default function AddTopicMistakeModal({
-  addTopicMistake,
+export default function AddTopicAnalysisModal({
+  addTopicAnalysis,
   topics,
-  subjectIndex,
+  lessonIndex,
 }: ModalProps) {
-  const form = useForm<TopicAnalysis>({
+  const form = useForm<TopicAnalysisRequest>({
     resolver: zodResolver(topicAnalysisSchema),
     defaultValues: {
       topicId: "",
-      topicName: "",
+      name: "",
       mistakes: 1,
     },
   });
 
   const [open, setOpen] = useState(false);
 
-  function onSubmit(data: TopicAnalysis) {
-    console.log(data);
-    addTopicMistake!(subjectIndex, data.topicId, data.mistakes, data.topicName);
+  function onSubmit(data: TopicAnalysisRequest) {
+    addTopicAnalysis(lessonIndex, data.topicId, data.mistakes, data.name);
     setOpen(false);
     form.reset();
   }
@@ -118,6 +111,7 @@ export default function AddTopicMistakeModal({
                       field.onChange(selectedTopic?.name);
                       if (selectedTopic) {
                         form.setValue("topicId", selectedTopic.topicId);
+                        form.setValue("name", selectedTopic.name);
                       }
                     }}
                   >

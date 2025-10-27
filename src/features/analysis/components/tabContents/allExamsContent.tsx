@@ -12,20 +12,21 @@ import {
 import { TabsContent } from "@/components/ui/tabs";
 
 import { BookOpen, Trash2 } from "lucide-react";
-import { AnalysisFormRequest } from "../../validations/analysis.validation";
 import {
   eaLessons,
   mfLessons,
   tytLessons,
-} from "@/src/shared/domain/subject/subject.data";
+} from "@/src/shared/domain/lesson/lesson.data";
 import { useAuth } from "@/src/shared/hooks/useAuth";
+import { ExamType } from "@/src/shared/domain/types";
+import { AddExamRequest } from "../../validations/analysis.validation";
 
 export default function AllExamsContent({
   allExams,
-  examType,
+  exam,
 }: {
-  allExams: AnalysisFormRequest[];
-  examType: "TYT" | "AYT";
+  allExams: AddExamRequest[];
+  exam: ExamType;
 }) {
   const { user } = useAuth();
 
@@ -38,7 +39,7 @@ export default function AllExamsContent({
   };
 
   const lessons =
-    examType === "TYT"
+    exam === "tyt"
       ? tytLessons
       : user?.user_metadata?.field === `Eşit Ağırlık`
         ? eaLessons

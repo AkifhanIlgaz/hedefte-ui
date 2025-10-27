@@ -1,7 +1,7 @@
-export { default as NetChart } from "./charts/netChart";
-export { default as SubjectChart } from "./charts/subjectChart";
+export { default as TotalNetChart } from "./charts/totalNetChart";
+export { default as LessonNetChart } from "./charts/lessonNetChart";
 
-export { default as AddTopicMistakeModal } from "./modals/addTopicMistakeModal";
+export { default as AddTopicMistakeModal } from "./modals/addTopicAnalysisModal";
 export { default as DetailsModal } from "./modals/detailsModal";
 export { default as SubjectDetailModal } from "./modals/subjectDetailModal";
 

@@ -30,41 +30,33 @@ import { UseFormReturn } from "react-hook-form";
 
 import { cn } from "@/components/ui/utils";
 
-import { AnalysisFormRequest } from "../../validations/analysis.validation";
 import {
-  eaLessons,
-  mfLessons,
-  tytLessons,
-} from "@/src/shared/domain/subject/subject.data";
+  getAllLessons,
+  getAllLessonsByGroup,
+} from "@/src/shared/domain/lesson/lesson.data";
 import { useAuth } from "@/src/shared/hooks/useAuth";
+import { ExamType } from "@/src/shared/domain/types";
+import { AddExamRequest } from "../../validations/analysis.validation";
 
 interface FirstStepProps {
-  form: UseFormReturn<AnalysisFormRequest>;
-  examType: "TYT" | "AYT";
+  form: UseFormReturn<AddExamRequest>;
+  exam: ExamType;
   handleNextStep: () => void;
 }
 
 export default function FirstStep({
   form,
-  examType,
+  exam,
   handleNextStep,
 }: FirstStepProps) {
   const {
     formState: { errors },
   } = form;
-
   const { user } = useAuth();
-
-  const lessons =
-    examType === "TYT"
-      ? tytLessons
-      : user?.user_metadata?.field === `Eşit Ağırlık`
-        ? eaLessons
-        : mfLessons;
+  const lessons = getAllLessonsByGroup(exam, user?.user_metadata?.field);
 
   return (
     <>
-      {/* Exam Info */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2  ">
@@ -264,6 +256,7 @@ export default function FirstStep({
                             )}
                           />
                         </div>
+
                         {errors.lessonAnalysis?.[s.index] && (
                           <p className="text-xs text-destructive bg-destructive/10 p-2 mt-4 rounded-lg">
                             {errors.lessonAnalysis[s.index]!.message}

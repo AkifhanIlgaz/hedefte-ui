@@ -151,7 +151,7 @@ export const transformAnalysisData = (
 
         const net = calculateNet(subject.correct, subject.wrong);
         const totalQuestions =
-          subjectQuestionCounts[subjectName] || subject.totalNet || 40;
+          subjectQuestionCounts[subjectName] || subject.net || 40;
         const successRate = calculateSuccessRate(net, totalQuestions);
 
         return {

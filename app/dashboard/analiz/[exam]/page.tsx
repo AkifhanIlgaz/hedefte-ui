@@ -11,22 +11,22 @@ import {
   DetailedContent,
   GeneralContent,
 } from "@/src/features/analysis/components";
-import { AnalysisFormRequest } from "@/src/features/analysis/validations/analysis.validation";
 import { createClient } from "@/src/lib/supabase/client";
 import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import { analysisText } from "@/src/features/analysis/analysis.text";
+import { ExamType } from "@/src/shared/domain/types";
+import { AddExamRequest } from "@/src/features/analysis/validations/analysis.validation";
 
 export default function Page({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ exam: ExamType }>;
 }) {
   const { exam } = use(params);
-  const examType = exam.toUpperCase() as "TYT" | "AYT";
-  const text = examType === "TYT" ? analysisText.tyt : analysisText.ayt;
-  const [data, setData] = useState<AnalysisFormRequest[]>();
+  const text = exam === "tyt" ? analysisText.tyt : analysisText.ayt;
+  const [data, setData] = useState<AddExamRequest[]>();
 
   useEffect(() => {
     const getExams = async () => {
@@ -38,7 +38,7 @@ export default function Page({
 
         // API'ye POST isteği gönder
         const response = await fetch(
-          `http://localhost:8080/api/${examType.toLowerCase()}/analysis`,
+          `http://localhost:8080/api/${exam}/analysis`,
           {
             method: "GET",
             headers: {
@@ -54,7 +54,7 @@ export default function Page({
       }
     };
     getExams();
-  }, [examType]);
+  }, [exam]);
 
   return (
     <div className="space-y-8">
@@ -65,7 +65,7 @@ export default function Page({
           subtitle={text.analysis.subtitle}
         />
 
-        <Link href={`/dashboard/analiz/add/${examType}`}>
+        <Link href={`/dashboard/analiz/add/${exam}`}>
           <Button className="gap-2 bg-amber-600 hover:bg-amber-700 text-white cursor-pointer">
             <Plus className="size-4" />
             {text.analysis.addButton}
@@ -91,9 +91,9 @@ export default function Page({
           <TabsTrigger value="detailed">Detaylı Analiz</TabsTrigger>
           <TabsTrigger value="all">Denemeler</TabsTrigger>
         </TabsList>
-        <GeneralContent allExams={data || []} />
-        <DetailedContent allExams={data || []} />
-        <AllExamsContent allExams={data || []} examType={examType} />
+        <GeneralContent allExams={data || []} exam={exam} />
+        <DetailedContent allExams={data || []} exam={exam} />
+        <AllExamsContent allExams={data || []} exam={exam} />
       </Tabs>
     </div>
   );

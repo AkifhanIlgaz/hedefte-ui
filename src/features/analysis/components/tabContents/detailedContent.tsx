@@ -27,7 +27,12 @@ import {
   YAxis,
 } from "recharts";
 import SubjectDetailModal from "../modals/subjectDetailModal";
-import { AnalysisFormRequest } from "../../validations/analysis.validation";
+import { AddExamRequest } from "../../validations/analysis.validation";
+import { getAllLessons } from "@/src/shared/domain/lesson/lesson.data";
+import { Field } from "@/src/features/profile/data";
+import { ExamType } from "@/src/shared/domain/types";
+import { useAnimate } from "framer-motion";
+import { useAuth } from "@/src/shared/hooks/useAuth";
 
 const chartConfig = {
   totalNet: {
@@ -36,57 +41,31 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+interface DetailedContentProps {
+  allExams: AddExamRequest[];
+  exam: ExamType;
+}
+
 export default function DetailedContent({
   allExams,
-}: {
-  allExams: AnalysisFormRequest[];
-}) {
-  // Ders iconları mapping
-  const subjectIcons: { [key: string]: LucideIcon } = {
-    Türkçe: BookOpen,
-    Matematik: Calculator,
-    Tarih: Globe,
-    Coğrafya: Globe,
-    Felsefe: Globe,
-    Din: Globe,
-    Fizik: FlaskConical,
-    Kimya: FlaskConical,
-    Biyoloji: FlaskConical,
-  };
-
-  // Ders bazında soru sayıları
-  const subjectQuestionCounts: { [key: string]: number } = {
-    Türkçe: 40,
-    Matematik: 40,
-    Tarih: 5,
-    Coğrafya: 5,
-    Felsefe: 5,
-    Din: 5,
-    Fizik: 7,
-    Kimya: 7,
-    Biyoloji: 6,
-  };
+  exam,
+}: DetailedContentProps) {
+  const { user } = useAuth();
 
   // allExams verisini transform et
   const transformData = () => {
     if (!allExams || allExams.length === 0) return [];
 
     // Tüm benzersiz ders isimlerini al
-    const uniqueSubjects = Array.from(
-      new Set(
-        allExams.flatMap((exam) =>
-          exam.lessonAnalysis.map((subject) => subject.lessonName),
-        ),
-      ),
-    );
-
-    return uniqueSubjects
-      .map((subjectName) => {
+    const lessons = getAllLessons(exam, user?.user_metadata?.field);
+    console.log(lessons);
+    return lessons
+      .map((lesson) => {
         // Bu ders için tüm denemelerden verileri topla
         const subjectData = allExams
           .map((exam) => {
             const subject = exam.lessonAnalysis.find(
-              (s) => s.lessonName === subjectName,
+              (s) => s.lessonName === lesson.name,
             );
             if (!subject) return null;
 
@@ -114,8 +93,6 @@ export default function DetailedContent({
         const averageNet =
           nets.reduce((sum, net) => sum + net, 0) / nets.length;
 
-        const totalQuestions = subjectQuestionCounts[subjectName] || 40;
-
         // Tutarlılık skoru (standart sapma bazlı)
         const mean = averageNet;
         const variance =
@@ -137,11 +114,11 @@ export default function DetailedContent({
         );
 
         return {
-          subject: subjectName,
-          icon: subjectIcons[subjectName] || BookOpen,
+          name: lesson.name,
+          icon: lesson.icon,
           stats: {
             averageNet: Math.round(averageNet * 100) / 100,
-            totalQuestions,
+            totalQuestions: lesson.totalQuestions,
             consistencyScore: Math.round(consistencyScore),
           },
           examCount: subjectData.length,
@@ -152,7 +129,7 @@ export default function DetailedContent({
       .filter((data) => data !== null);
   };
 
-  const subjectPerformanceData = transformData();
+  const lessonPerformanceData = transformData();
 
   if (!allExams || allExams.length === 0) {
     return (
@@ -170,8 +147,8 @@ export default function DetailedContent({
   return (
     <TabsContent value="detailed" className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {subjectPerformanceData.map((subject, index) => {
-          const IconComponent = subject.icon;
+        {lessonPerformanceData.map((lesson, index) => {
+          const IconComponent = lesson.icon;
 
           return (
             <Card
@@ -185,31 +162,29 @@ export default function DetailedContent({
                       <IconComponent className="w-6 h-6 text-amber-700 dark:text-amber-300" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg">
-                        {subject.subject}
-                      </CardTitle>
+                      <CardTitle className="text-lg">{lesson.name}</CardTitle>
                       <p className="text-xl font-semibold text-amber-800 dark:text-amber-200">
-                        {subject.stats.averageNet}
+                        {lesson.stats.averageNet}
                       </p>
                     </div>
                   </div>
                   <SubjectDetailModal
-                    name={subject.subject}
-                    topicMistakes={subject.topicMistakes}
+                    name={lesson.name}
+                    topicMistakes={lesson.topicMistakes}
                   />
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-6 ">
                 {/* Net Gelişim Grafiği */}
-                {subject.netChartData.length > 1 && (
+                {lesson.netChartData.length > 1 && (
                   <ResponsiveContainer width="100%" height={200}>
                     <ChartContainer
                       config={chartConfig}
                       className="h-full w-full"
                     >
                       <LineChart
-                        data={subject.netChartData}
+                        data={lesson.netChartData}
                         accessibilityLayer
                         margin={{ top: 5, right: 30, left: 20, bottom: 0 }}
                       >
@@ -242,7 +217,7 @@ export default function DetailedContent({
                               fill: "#b45309",
                             },
                           }}
-                          domain={[0, subject.stats.totalQuestions]}
+                          domain={[0, lesson.stats.totalQuestions]}
                         />
                         <ChartTooltip
                           cursor={false}
@@ -292,18 +267,18 @@ export default function DetailedContent({
                       Tutarlılık
                     </span>
                     <span className="text-sm font-semibold">
-                      {subject.stats.consistencyScore}%
+                      {lesson.stats.consistencyScore}%
                     </span>
                   </div>
                   <Progress
-                    value={subject.stats.consistencyScore}
+                    value={lesson.stats.consistencyScore}
                     className="h-2"
                   />
                 </div>
 
                 {/* İstatistik Özeti */}
                 <div className="text-xs text-muted-foreground text-center">
-                  {subject.examCount} denemeden hesaplandı
+                  {lesson.examCount} denemeden hesaplandı
                 </div>
               </CardContent>
             </Card>

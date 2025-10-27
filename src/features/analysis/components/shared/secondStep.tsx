@@ -6,50 +6,52 @@ import { text } from "@/lib/constants/text";
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 
-import {
-  AnalysisFormRequest,
-  TopicAnalysis,
-} from "../../validations/analysis.validation";
-import AddTopicMistakeModal from "../modals/addTopicMistakeModal";
 import DetailsModal from "../modals/detailsModal";
 import { aytTopics, tytTopics } from "@/src/shared/domain/topic/topic.data";
+import { ExamType } from "@/src/shared/domain/types";
+import {
+  AddExamRequest,
+  TopicAnalysisRequest,
+} from "../../validations/analysis.validation";
+import AddTopicAnalysisModal from "../modals/addTopicAnalysisModal";
 
 interface SecondStepProps {
-  form: UseFormReturn<AnalysisFormRequest>;
-  examType?: "TYT" | "AYT";
+  form: UseFormReturn<AddExamRequest>;
+  exam: ExamType;
   handlePreviousStep: () => void;
 }
 
 export default function SecondStep({
   form,
-  examType,
+  exam,
   handlePreviousStep,
 }: SecondStepProps) {
-  const addTopicMistake = (
-    subjectIndex: number,
+  const addTopicAnalysis = (
+    lessonIndex: number,
     topicId: string,
     val: number,
     name: string,
   ) => {
-    const currentSubjects = form.getValues("lessonAnalysis");
-    const updatedSubjects = [...currentSubjects];
-    const topicAnalysis = updatedSubjects[subjectIndex].topicAnalysis || [];
-    updatedSubjects[subjectIndex].topicAnalysis = [
+    const currentLessonAnalysis = form.getValues("lessonAnalysis");
+    const updatedLessonAnalysis = [...currentLessonAnalysis];
+    const topicAnalysis =
+      updatedLessonAnalysis[lessonIndex].topicAnalysis || [];
+    updatedLessonAnalysis[lessonIndex].topicAnalysis = [
       ...topicAnalysis,
-      { topicId: topicId, mistakes: val, topicName: name },
+      { topicId: topicId, mistakes: val, name: name },
     ];
-    form.setValue("lessonAnalysis", updatedSubjects);
+    form.setValue("lessonAnalysis", updatedLessonAnalysis);
   };
 
-  const updateTopicMistakes = (
-    subjectIndex: number,
-    topicMistakes: TopicAnalysis[],
+  const updateTopicAnalysis = (
+    lessonIndex: number,
+    topicAnalysis: TopicAnalysisRequest[],
   ) => {
-    const currentSubjects = form.getValues("lessonAnalysis");
-    const updatedSubjects = [...currentSubjects];
+    const currentLessonAnalysis = form.getValues("lessonAnalysis");
+    const updatedLessonAnalysis = [...currentLessonAnalysis];
 
-    updatedSubjects[subjectIndex].topicAnalysis = topicMistakes;
-    form.setValue("lessonAnalysis", updatedSubjects);
+    updatedLessonAnalysis[lessonIndex].topicAnalysis = topicAnalysis;
+    form.setValue("lessonAnalysis", updatedLessonAnalysis);
   };
 
   return (
@@ -69,10 +71,10 @@ export default function SecondStep({
             {form
               .watch("lessonAnalysis")
               .filter((s) => s.empty + s.wrong > 0)
-              .map((sub, index) => {
-                const totalMistakes = sub.empty + sub.wrong;
+              .map((lesson, index) => {
+                const totalMistakes = lesson.empty + lesson.wrong;
                 const completedMistakes =
-                  sub.topicAnalysis?.reduce(
+                  lesson.topicAnalysis?.reduce(
                     (prev, curr) => prev + curr.mistakes,
                     0,
                   ) || 0;
@@ -86,7 +88,7 @@ export default function SecondStep({
                       <div className="flex flex-col items-center space-y-4">
                         <div className="text-center">
                           <h3 className="font-semibold text-lg text-foreground mb-1">
-                            {sub.lessonName}
+                            {lesson.lessonName}
                           </h3>
                           <div className="w-12 h-0.5 bg-primary/60 mx-auto rounded-full"></div>
                         </div>
@@ -104,7 +106,7 @@ export default function SecondStep({
                               {text.analysis.common.stats.wrong}:
                             </span>
                             <span className="font-medium text-red-600">
-                              {sub.wrong}
+                              {lesson.wrong}
                             </span>
                           </div>
                           <div className="flex justify-between items-center text-sm">
@@ -112,7 +114,7 @@ export default function SecondStep({
                               {text.analysis.common.stats.empty}:
                             </span>
                             <span className="font-medium text-gray-600">
-                              {sub.empty}
+                              {lesson.empty}
                             </span>
                           </div>
                           <div className="flex justify-between items-center text-sm">
@@ -126,26 +128,26 @@ export default function SecondStep({
                         </div>
 
                         <div className="flex flex-col w-full gap-2">
-                          <AddTopicMistakeModal
-                            subjectIndex={sub.index}
-                            addTopicMistake={addTopicMistake}
+                          <AddTopicAnalysisModal
+                            lessonIndex={lesson.index}
+                            addTopicAnalysis={addTopicAnalysis}
                             topics={
-                              examType === "AYT"
+                              exam === "ayt"
                                 ? aytTopics[
-                                    sub.lessonName as keyof typeof aytTopics
+                                    lesson.lessonName as keyof typeof aytTopics
                                   ] || []
                                 : tytTopics[
-                                    sub.lessonName as keyof typeof tytTopics
+                                    lesson.lessonName as keyof typeof tytTopics
                                   ] || []
                             }
                           />
                           <DetailsModal
-                            topicMistakes={
+                            topicAnalysis={
                               form.watch().lessonAnalysis[index]
                                 .topicAnalysis || []
                             }
-                            subjectIndex={sub.index}
-                            updateTopicMistakes={updateTopicMistakes}
+                            lessonIndex={lesson.index}
+                            updateTopicAnalysis={updateTopicAnalysis}
                           />
                         </div>
                       </div>

@@ -3,3 +3,8 @@ export type Topic = {
   lessonId: string;
   name: string;
 };
+
+export type TopicAnalysis = {
+  topicName: string;
+  mistakes: number;
+};

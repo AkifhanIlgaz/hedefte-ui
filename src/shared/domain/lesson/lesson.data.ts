@@ -9,6 +9,9 @@ import {
   Swords,
   Trees,
 } from "lucide-react";
+import { Lesson } from "./lesson.type";
+import { ExamType } from "../types";
+import { Field } from "@/src/features/profile/data";
 
 export const lessons = {
   tyt: {
@@ -356,16 +359,34 @@ export const mfLessons = [
   },
 ];
 
-export function getLessonId(
-  exam: "tyt" | "ayt",
+export function getLessonByName(
+  exam: ExamType,
   name: keyof (typeof lessons)["ayt"] | keyof (typeof lessons)["tyt"],
-): string;
-export function getLessonId(exam: string, name: string): string {
+): Lesson {
   if (exam === "tyt") {
     const key = name as keyof (typeof lessons)["tyt"];
-    return lessons.tyt[key].lessonId;
+    return lessons.tyt[key];
   } else {
     const key = name as keyof (typeof lessons)["ayt"];
-    return lessons.ayt[key].lessonId;
+    return lessons.ayt[key];
   }
+}
+
+export function getAllLessons(exam: ExamType, field: Field) {
+  const lessons =
+    exam === "tyt"
+      ? tytLessons
+      : field === `Eşit Ağırlık`
+        ? eaLessons
+        : mfLessons;
+
+  return lessons.flatMap((group) => group.subFields);
+}
+
+export function getAllLessonsByGroup(exam: ExamType, field: Field) {
+  return exam === "tyt"
+    ? tytLessons
+    : field === `Eşit Ağırlık`
+      ? eaLessons
+      : mfLessons;
 }

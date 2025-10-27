@@ -22,20 +22,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Resource, resourceSchema } from "../validations/resource.validation";
+import { Lesson } from "@/src/shared/domain/lesson/lesson.type";
 
 interface AddResourceModalProps {
-  lessonId: string;
+  lesson: Lesson;
   addResource: (resource: Resource) => void;
 }
 
 export default function AddResourceModal({
-  lessonId,
+  lesson,
   addResource,
 }: AddResourceModalProps) {
   const resourceForm = useForm<Resource>({
     resolver: zodResolver(resourceSchema),
     defaultValues: {
-      lessonId: "",
+      lessonId: lesson.lessonId,
       userId: "",
       name: "",
     },
@@ -92,7 +93,7 @@ export default function AddResourceModal({
 
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="">{lessonId} için kaynak ekle</DialogTitle>
+          <DialogTitle className="">{lesson.name} için kaynak ekle</DialogTitle>
         </DialogHeader>
 
         <Form {...resourceForm}>

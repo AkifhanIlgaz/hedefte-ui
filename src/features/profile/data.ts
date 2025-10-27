@@ -1209,4 +1209,12 @@ export const onLisansDepartments = [
   "ZEYTİNCİLİK VE ZEYTİN İŞLEME TEKNOLOJİSİ",
 ];
 
-export const fields = ["Sayısal", "Eşit Ağırlık", "Sözel", "Dil", "Ön Lisans"];
+export const fields: Field[] = [
+  "Sayısal",
+  "Eşit Ağırlık",
+  "Sözel",
+  "Dil",
+  "Ön Lisans",
+];
+
+export type Field = "Sayısal" | "Eşit Ağırlık" | "Sözel" | "Dil" | "Ön Lisans";

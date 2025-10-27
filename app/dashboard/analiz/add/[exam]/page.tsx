@@ -13,63 +13,56 @@ import {
   FirstStep,
   SecondStep,
 } from "@/src/features/analysis/components";
-import {
-  AnalysisFormRequest,
-  analysisFormSchema,
-} from "@/src/features/analysis/validations/analysis.validation";
+
 import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
 import {
   eaLessons,
+  getAllLessons,
   mfLessons,
   tytLessons,
-} from "@/src/shared/domain/subject/subject.data";
+} from "@/src/shared/domain/lesson/lesson.data";
 import { useAuth } from "@/src/shared/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import {
+  AddExamRequest,
+  addExamSchema,
+} from "@/src/features/analysis/validations/analysis.validation";
+import { ExamType } from "@/src/shared/domain/types";
 
 export default function AddAnalysisPage({
   params,
 }: {
-  params: Promise<{ exam: string }>;
+  params: Promise<{ exam: ExamType }>;
 }) {
   const { exam } = use(params);
   const { user } = useAuth();
   const router = useRouter();
-  const examType = exam.toUpperCase() as "TYT" | "AYT";
 
-  const lessons =
-    examType === "TYT"
-      ? tytLessons
-      : user?.user_metadata?.field === `Eşit Ağırlık`
-        ? eaLessons
-        : mfLessons;
+  const lessons = getAllLessons(exam, user?.user_metadata?.field);
 
-  const form = useForm<AnalysisFormRequest>({
-    resolver: zodResolver(analysisFormSchema),
+  const form = useForm<AddExamRequest>({
+    resolver: zodResolver(addExamSchema),
     defaultValues: {
       date: new Date(),
       totalNet: 0,
       name: "",
-      lessonAnalysis: lessons
-        .map((s) =>
-          s.subFields.map((sf) => ({
-            lessonId: sf.lessonId,
-            index: sf.index,
-            name: sf.name,
-            correct: 0,
-            wrong: 0,
-            empty: 0,
-            totalNet: sf.totalQuestions,
-            time: 0,
-            topicAnalysis: [],
-          })),
-        )
-        .flat(),
+      lessonAnalysis: lessons.map((s) => ({
+        lessonId: s.lessonId,
+        index: s.index,
+        lessonName: s.name,
+        correct: 0,
+        wrong: 0,
+        empty: 0,
+        totalNet: 0,
+        time: 0,
+        topicAnalysis: [],
+      })),
     },
   });
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  const onSubmit = async (req: AnalysisFormRequest) => {
+  const onSubmit = async (req: AddExamRequest) => {
     console.log("Submitting form with data:", req);
 
     try {
@@ -80,17 +73,14 @@ export default function AddAnalysisPage({
 
       // API'ye POST isteği gönder
       const response = await fetch(
-        `http://localhost:8080/api/${exam.toLowerCase()}/analysis`,
+        `http://localhost:8080/api/${exam}/analysis`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${session?.access_token}`,
           },
-          body: JSON.stringify({
-            ...req,
-            examType: examType,
-          }),
+          body: JSON.stringify(req),
         },
       );
       console.log(response);
@@ -99,7 +89,7 @@ export default function AddAnalysisPage({
 
       console.log("Analysis saved:", result);
 
-      router.push(`/dashboard/analiz/${examType.toLowerCase()}`);
+      router.push(`/dashboard/analiz/${exam}`);
     } finally {
     }
   };
@@ -117,9 +107,7 @@ export default function AddAnalysisPage({
   return (
     <div className="space-y-8">
       <DashboardHeader
-        title={
-          examType === "TYT" ? analysisText.tyt.title : analysisText.ayt.title
-        }
+        title={exam === "tyt" ? analysisText.tyt.title : analysisText.ayt.title}
         subtitle={
           currentStep === 1
             ? analysisText.firstStep.subtitle
@@ -135,7 +123,7 @@ export default function AddAnalysisPage({
 
           {currentStep === 1 ? (
             <FirstStep
-              examType={examType}
+              exam={exam}
               form={form}
               handleNextStep={handleNextStep}
             />
@@ -143,7 +131,7 @@ export default function AddAnalysisPage({
             <SecondStep
               form={form}
               handlePreviousStep={handlePreviousStep}
-              examType={examType}
+              exam={exam}
             />
           )}
         </form>

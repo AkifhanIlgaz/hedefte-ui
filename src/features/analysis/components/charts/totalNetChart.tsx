@@ -14,10 +14,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { AnalysisFormRequest } from "../../validations/analysis.validation";
+import { AddExamRequest } from "../../validations/analysis.validation";
 
-interface GeneralContentProps {
-  chartData: AnalysisFormRequest[];
+interface TotalNetChartProps {
+  chartData: AddExamRequest[];
 }
 
 const chartConfig = {
@@ -27,7 +27,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function NetChart({ chartData }: GeneralContentProps) {
+export default function TotalNetChart({ chartData }: TotalNetChartProps) {
   // Date'leri formatla
   const formattedData = chartData.map((item) => ({
     ...item,
