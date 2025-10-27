@@ -12,24 +12,25 @@ export const tytQuestionMap = {
   biyoloji: 6,
 } as const;
 
-export const topicMistakesSchema = z.object({
-  id: z.int().nonnegative(),
-  name: z.string().min(2).max(100),
+export const topicAnalysisSchema = z.object({
+  topicId: z.string(),
+  name: z.string(),
   mistakes: z.int().min(1, "Yanlış sayısı 1 veya üzeri olmalı"),
 });
 
-export const subjectSchema = z
+export const lessonAnalysisSchema = z
   .object({
-    name: z.string(),
     index: z.int().min(0, "Index 0 veya üzeri olmalı"),
-    id: z.int().nonnegative(),
+    lessonId: z.string(),
+    name: z.string(),
     correct: z.number().min(0, "Doğru sayısı 0 veya üzeri olmalı"),
     wrong: z.number().min(0, "Yanlış sayısı 0 veya üzeri olmalı"),
     empty: z.number().min(0, "Boş sayısı 0 veya üzeri olmalı"),
-    total: z.number(),
-    topicMistakes: z.array(topicMistakesSchema).optional(),
+    totalNet: z.number(),
+    time: z.number().min(0, "Süre 0 veya üzeri olmalı"),
+    topicAnalysis: z.array(topicAnalysisSchema).optional(),
   })
-  .refine((data) => data.correct + data.wrong + data.empty <= data.total, {
+  .refine((data) => data.correct + data.wrong + data.empty <= data.totalNet, {
     message: "Toplam cevap sayısı soru sayısını geçemez",
     path: [],
   });
@@ -41,11 +42,11 @@ export const analysisFormSchema = z
     name: z
       .string("Deneme adi zorunludur")
       .min(1, `Lütfen denemenin adını giriniz`),
-    subjects: z.array(subjectSchema),
+    lessonAnalysis: z.array(lessonAnalysisSchema),
   })
   .transform((data) => {
     // Toplam net'i hesapla
-    const totalNet = data.subjects.reduce((sum, subject) => {
+    const totalNet = data.lessonAnalysis.reduce((sum, subject) => {
       const net = subject.correct - subject.wrong * 0.25;
       return sum + net;
     }, 0);
@@ -57,4 +58,4 @@ export const analysisFormSchema = z
   });
 
 export type AnalysisFormRequest = z.infer<typeof analysisFormSchema>;
-export type TopicMistake = z.infer<typeof topicMistakesSchema>;
+export type TopicAnalysis = z.infer<typeof topicAnalysisSchema>;

@@ -29,12 +29,14 @@ import { tr } from "react-day-picker/locale";
 import { UseFormReturn } from "react-hook-form";
 
 import { cn } from "@/components/ui/utils";
-import {
-  EaSubjects,
-  MfSubjects,
-  tytSubjects,
-} from "@/src/shared/domain/subject/subject.data";
+
 import { AnalysisFormRequest } from "../../validations/analysis.validation";
+import {
+  eaLessons,
+  mfLessons,
+  tytLessons,
+} from "@/src/shared/domain/subject/subject.data";
+import { useAuth } from "@/src/shared/hooks/useAuth";
 
 interface FirstStepProps {
   form: UseFormReturn<AnalysisFormRequest>;
@@ -51,13 +53,14 @@ export default function FirstStep({
     formState: { errors },
   } = form;
 
-  const division = localStorage.getItem(`bolum`);
-  const subjects =
+  const { user } = useAuth();
+
+  const lessons =
     examType === "TYT"
-      ? tytSubjects
-      : division === `EA`
-        ? EaSubjects
-        : MfSubjects;
+      ? tytLessons
+      : user?.user_metadata?.field === `Eşit Ağırlık`
+        ? eaLessons
+        : mfLessons;
 
   return (
     <>
@@ -135,19 +138,20 @@ export default function FirstStep({
       <Card>
         <CardContent className="p-6">
           <div className="flex  gap-6 justify-center">
-            {subjects.map((subject) => (
-              <div key={subject.name} className="space-y-4 w-full">
+            {lessons.map((lesson) => (
+              <div key={lesson.name} className="space-y-4 w-full">
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-primary mb-1">
-                    {subject.name}
+                    {lesson.name}
                   </h3>
                   <Separator className="bg-primary/20" />
                 </div>
 
-                {subject.subFields.map((s, index) => {
+                {lesson.subFields.map((s, index) => {
                   const correct =
-                    form.watch(`subjects.${s.index}.correct`) || 0;
-                  const wrong = form.watch(`subjects.${s.index}.wrong`) || 0;
+                    form.watch(`lessonAnalysis.${s.index}.correct`) || 0;
+                  const wrong =
+                    form.watch(`lessonAnalysis.${s.index}.wrong`) || 0;
 
                   return (
                     <Card
@@ -156,7 +160,7 @@ export default function FirstStep({
                         `border transition-all hover:shadow-md bg-background dark:bg-background`,
                         {
                           "border-amber-900":
-                            errors.subjects?.[s.index]?.message,
+                            errors.lessonAnalysis?.[s.index]?.message,
                         },
                       )}
                     >
@@ -177,7 +181,7 @@ export default function FirstStep({
                         <div className="grid grid-cols-3 gap-3">
                           <FormField
                             control={form.control}
-                            name={`subjects.${s.index}.correct`}
+                            name={`lessonAnalysis.${s.index}.correct`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -205,7 +209,7 @@ export default function FirstStep({
                           />
                           <FormField
                             control={form.control}
-                            name={`subjects.${s.index}.wrong`}
+                            name={`lessonAnalysis.${s.index}.wrong`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -233,7 +237,7 @@ export default function FirstStep({
                           />
                           <FormField
                             control={form.control}
-                            name={`subjects.${s.index}.empty`}
+                            name={`lessonAnalysis.${s.index}.empty`}
                             render={({ field }) => (
                               <FormItem className="text-center">
                                 <div className="flex items-center justify-center gap-1 mb-2">
@@ -260,9 +264,9 @@ export default function FirstStep({
                             )}
                           />
                         </div>
-                        {errors.subjects?.[s.index] && (
+                        {errors.lessonAnalysis?.[s.index] && (
                           <p className="text-xs text-destructive bg-destructive/10 p-2 mt-4 rounded-lg">
-                            {errors.subjects[s.index]!.message}
+                            {errors.lessonAnalysis[s.index]!.message}
                           </p>
                         )}
                       </CardContent>

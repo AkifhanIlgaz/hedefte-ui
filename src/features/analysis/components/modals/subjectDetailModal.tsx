@@ -9,26 +9,26 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Eye, Info } from "lucide-react";
-import { TopicMistake } from "../../validations/analysis.validation";
+import { TopicAnalysis } from "../../validations/analysis.validation";
 
 export default function SubjectDetailModal({
   name,
   topicMistakes,
 }: {
   name: string;
-  topicMistakes: TopicMistake[];
+  topicMistakes: TopicAnalysis[];
 }) {
   // Aynı konuları grupla ve mistake sayılarını topla
   const groupedTopics = topicMistakes
     .reduce((acc, topic) => {
-      const existing = acc.find((item) => item.id === topic.id);
+      const existing = acc.find((item) => item.topicId === topic.topicId);
       if (existing) {
         existing.mistakes += topic.mistakes;
       } else {
         acc.push({ ...topic });
       }
       return acc;
-    }, [] as TopicMistake[])
+    }, [] as TopicAnalysis[])
     .sort((a, b) => b.mistakes - a.mistakes);
 
   return (

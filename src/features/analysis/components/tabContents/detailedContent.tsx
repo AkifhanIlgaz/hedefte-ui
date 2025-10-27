@@ -74,8 +74,10 @@ export default function DetailedContent({
     // Tüm benzersiz ders isimlerini al
     const uniqueSubjects = Array.from(
       new Set(
-        allExams.flatMap((exam) => exam.subjects.map((subject) => subject.name))
-      )
+        allExams.flatMap((exam) =>
+          exam.lessonAnalysis.map((subject) => subject.name),
+        ),
+      ),
     );
 
     return uniqueSubjects
@@ -83,7 +85,9 @@ export default function DetailedContent({
         // Bu ders için tüm denemelerden verileri topla
         const subjectData = allExams
           .map((exam) => {
-            const subject = exam.subjects.find((s) => s.name === subjectName);
+            const subject = exam.lessonAnalysis.find(
+              (s) => s.name === subjectName,
+            );
             if (!subject) return null;
 
             const net = subject.correct - subject.wrong * 0.25;
@@ -94,13 +98,13 @@ export default function DetailedContent({
               empty: subject.empty,
               examDate: exam.date,
               examName: exam.name,
-              topicMistakes: subject.topicMistakes || [],
+              topicAnalysis: subject.topicAnalysis || [],
             };
           })
           .filter((data) => data !== null)
           .sort(
             (a, b) =>
-              new Date(a!.examDate).getTime() - new Date(b!.examDate).getTime()
+              new Date(a!.examDate).getTime() - new Date(b!.examDate).getTime(),
           );
 
         if (subjectData.length === 0) return null;
@@ -129,7 +133,7 @@ export default function DetailedContent({
 
         // Tüm konu hatalarını topla
         const allTopicMistakes = subjectData.flatMap(
-          (exam) => exam!.topicMistakes
+          (exam) => exam!.topicAnalysis,
         );
 
         return {

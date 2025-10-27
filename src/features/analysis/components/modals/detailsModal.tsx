@@ -14,14 +14,14 @@ import {
 import { text } from "@/lib/constants/text";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { TopicMistake } from "../../validations/analysis.validation";
+import { TopicAnalysis } from "../../validations/analysis.validation";
 
 interface DetailsProps {
   subjectIndex: number;
-  topicMistakes: TopicMistake[];
+  topicMistakes: TopicAnalysis[];
   updateTopicMistakes?: (
     subjectIndex: number,
-    topicMistakes: TopicMistake[]
+    topicMistakes: TopicAnalysis[],
   ) => void;
 }
 
@@ -69,7 +69,7 @@ export default function DetailsModal({
         </DialogHeader>
 
         <div className="flex flex-col gap-8">
-          {(allMistakes || []).map((tm: TopicMistake, idx: number) => (
+          {(allMistakes || []).map((tm: TopicAnalysis, idx: number) => (
             <div
               key={idx}
               className="flex items-center justify-between p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg"

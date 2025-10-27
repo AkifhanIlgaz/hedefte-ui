@@ -10,12 +10,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
-import {
-  MfSubjects,
-  tytSubjects,
-} from "@/src/shared/domain/subject/subject.data";
+
 import { BookOpen, Trash2 } from "lucide-react";
 import { AnalysisFormRequest } from "../../validations/analysis.validation";
+import {
+  eaLessons,
+  mfLessons,
+  tytLessons,
+} from "@/src/shared/domain/subject/subject.data";
+import { useAuth } from "@/src/shared/hooks/useAuth";
 
 export default function AllExamsContent({
   allExams,
@@ -24,6 +27,8 @@ export default function AllExamsContent({
   allExams: AnalysisFormRequest[];
   examType: "TYT" | "AYT";
 }) {
+  const { user } = useAuth();
+
   const handleDelete = (id: string) => {
     // Delete logic here
   };
@@ -32,7 +37,12 @@ export default function AllExamsContent({
     return value % 1 === 0 ? value.toString() : value.toFixed(1);
   };
 
-  const subjects = tytSubjects;
+  const lessons =
+    examType === "TYT"
+      ? tytLessons
+      : user?.user_metadata?.field === `Eşit Ağırlık`
+        ? eaLessons
+        : mfLessons;
 
   return (
     <TabsContent value="all" className="space-y-2">
@@ -45,7 +55,7 @@ export default function AllExamsContent({
                 <TableHead className="w-[100px] text-center">
                   Deneme Adı
                 </TableHead>
-                {subjects
+                {lessons
                   .flatMap((s) =>
                     s.subFields.map((sf) => ({
                       name: sf.name,
@@ -82,7 +92,7 @@ export default function AllExamsContent({
                     <TableCell className="text-center font-semibold">
                       {item.name}
                     </TableCell>
-                    {item?.subjects.map((s, i) => {
+                    {item?.lessonAnalysis.map((s, i) => {
                       return (
                         <TableCell key={i} className="text-center">
                           <Badge

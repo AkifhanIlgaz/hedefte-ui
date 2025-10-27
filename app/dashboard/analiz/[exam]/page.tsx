@@ -40,7 +40,7 @@ export default function Page({
 
         // API'ye POST isteği gönder
         const response = await fetch(
-          `http://localhost:8080/api/analysis?exam=${examType}`,
+          `http://localhost:8080/api/${examType.toLowerCase()}/analysis`,
           {
             method: "GET",
             headers: {

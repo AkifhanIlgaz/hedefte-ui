@@ -32,26 +32,23 @@ import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import {
+  TopicAnalysis,
+  topicAnalysisSchema,
+} from "../../validations/analysis.validation";
 
 type Topic = {
-  id: number;
+  topicId: string;
   name: string;
+  lessonId: string;
 };
-
-const formSchema = z.object({
-  id: z.int().min(0, "Konu seçimi gerekli"),
-  name: z.string().min(2).max(100, "Konu adı 2-100 karakter arasında olmalı"),
-  mistakes: z.int().min(1, "Yanlış sayısı 1 veya üzeri olmalı"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
 
 interface ModalProps {
   addTopicMistake?: (
     subjectIndex: number,
-    topicId: number,
-    topicName: string,
-    val: number
+    topicId: string,
+    val: number,
+    name: string,
   ) => void;
   topics: Topic[];
   subjectIndex: number;
@@ -62,10 +59,10 @@ export default function AddTopicMistakeModal({
   topics,
   subjectIndex,
 }: ModalProps) {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TopicAnalysis>({
+    resolver: zodResolver(topicAnalysisSchema),
     defaultValues: {
-      id: 0,
+      topicId: "",
       name: "",
       mistakes: 1,
     },
@@ -73,9 +70,9 @@ export default function AddTopicMistakeModal({
 
   const [open, setOpen] = useState(false);
 
-  function onSubmit(data: FormValues) {
+  function onSubmit(data: TopicAnalysis) {
     console.log(data);
-    addTopicMistake!(subjectIndex, data.id, data.name, data.mistakes);
+    addTopicMistake!(subjectIndex, data.topicId, data.mistakes, data.name);
     setOpen(false);
     form.reset();
   }
@@ -109,18 +106,18 @@ export default function AddTopicMistakeModal({
           <div className="flex flex-col gap-8">
             <FormField
               control={form.control}
-              name="id"
+              name="topicId"
               render={({ field }) => (
                 <FormItem>
                   <Select
-                    value={field.value?.toString()}
+                    value={field.value}
                     onValueChange={(val) => {
                       const selectedTopic = topics.find(
-                        (t) => t.id === Number(val)
+                        (t) => t.topicId === val,
                       );
-                      field.onChange(Number(val));
+                      field.onChange(selectedTopic?.name);
                       if (selectedTopic) {
-                        form.setValue("name", selectedTopic.name);
+                        form.setValue("topicId", selectedTopic.topicId);
                       }
                     }}
                   >
@@ -135,7 +132,7 @@ export default function AddTopicMistakeModal({
                     </FormControl>
                     <SelectContent>
                       {topics.map((t: Topic) => (
-                        <SelectItem key={t.id} value={t.id.toString()}>
+                        <SelectItem key={t.topicId} value={t.topicId}>
                           {t.name}
                         </SelectItem>
                       ))}
@@ -159,7 +156,7 @@ export default function AddTopicMistakeModal({
                         onClick={() =>
                           form.setValue(
                             `mistakes`,
-                            form.getValues().mistakes - 1
+                            form.getValues().mistakes - 1,
                           )
                         }
                       >
@@ -177,7 +174,7 @@ export default function AddTopicMistakeModal({
                         onClick={() =>
                           form.setValue(
                             `mistakes`,
-                            form.getValues().mistakes + 1
+                            form.getValues().mistakes + 1,
                           )
                         }
                       >

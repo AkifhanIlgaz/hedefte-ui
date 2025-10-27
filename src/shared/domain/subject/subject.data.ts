@@ -10,16 +10,16 @@ import {
   Trees,
 } from "lucide-react";
 
-export const tytSubjects = [
+export const tytLessons = [
   {
     name: "Türkçe",
     total: 40,
     subFields: [
       {
         index: 0,
-        id: 1,
+        lessonId: "68f9db855c0ab474416cdc70",
         name: "Türkçe",
-        total: 40,
+        totalQuestions: 40,
         icon: BookOpen,
         bgClass: "bg-amber-100 dark:bg-amber-900/20",
         iconColor: "text-amber-700 dark:text-amber-300",
@@ -32,36 +32,36 @@ export const tytSubjects = [
     subFields: [
       {
         index: 1,
-        id: 2,
+        lessonId: "68f9db8c5c0ab474416cdc8e",
         name: "Tarih",
-        total: 5,
+        totalQuestions: 5,
         icon: Swords,
         bgClass: "bg-rose-100 dark:bg-rose-900/20",
         iconColor: "text-rose-700 dark:text-rose-300",
       },
       {
         index: 2,
-        id: 3,
+        lessonId: "68f9db915c0ab474416cdca5",
         name: "Coğrafya",
-        total: 5,
+        totalQuestions: 5,
         icon: Earth,
         bgClass: "bg-sky-100 dark:bg-sky-900/20",
         iconColor: "text-sky-700 dark:text-sky-300",
       },
       {
         index: 3,
-        id: 4,
+        lessonId: "68f9db955c0ab474416cdcb9",
         name: "Felsefe",
-        total: 5,
+        totalQuestions: 5,
         icon: Lightbulb,
         bgClass: "bg-violet-100 dark:bg-violet-900/20",
         iconColor: "text-violet-700 dark:text-violet-300",
       },
       {
         index: 4,
-        id: 5,
+        lessonId: "68f9db985c0ab474416cdcc7",
         name: "Din Kültürü",
-        total: 5,
+        totalQuestions: 5,
         icon: Brain,
         bgClass: "bg-emerald-100 dark:bg-emerald-900/20",
         iconColor: "text-emerald-700 dark:text-emerald-300",
@@ -74,9 +74,9 @@ export const tytSubjects = [
     subFields: [
       {
         index: 5,
-        id: 6,
+        lessonId: "68f9db9b5c0ab474416cdcd2",
         name: "Matematik",
-        total: 40,
+        totalQuestions: 40,
         icon: Infinity,
         bgClass: "bg-indigo-100 dark:bg-indigo-900/20",
         iconColor: "text-indigo-700 dark:text-indigo-300",
@@ -89,27 +89,27 @@ export const tytSubjects = [
     subFields: [
       {
         index: 6,
-        id: 7,
+        lessonId: "68f9dbaa5c0ab474416cdd18",
         name: "Fizik",
-        total: 7,
+        totalQuestions: 7,
         icon: Atom,
         bgClass: "bg-teal-100 dark:bg-teal-900/20",
         iconColor: "text-teal-700 dark:text-teal-300",
       },
       {
         index: 7,
-        id: 8,
+        lessonId: "68f9dbad5c0ab474416cdd25",
         name: "Kimya",
-        total: 7,
+        totalQuestions: 7,
         icon: FlaskConical,
         bgClass: "bg-lime-100 dark:bg-lime-900/20",
         iconColor: "text-lime-700 dark:text-lime-300",
       },
       {
         index: 8,
-        id: 9,
+        lessonId: "68f9dbb05c0ab474416cdd30",
         name: "Biyoloji",
-        total: 6,
+        totalQuestions: 6,
         icon: Trees,
         bgClass: "bg-fuchsia-100 dark:bg-fuchsia-900/20",
         iconColor: "text-fuchsia-700 dark:text-fuchsia-300",
@@ -118,34 +118,34 @@ export const tytSubjects = [
   },
 ];
 
-export const EaSubjects = [
+export const eaLessons = [
   {
     name: "Edebiyat ve Sosyal Bilimler",
     total: 40,
     subFields: [
       {
         index: 0,
-        id: 10,
-        name: "Türk Dili ve Edebiyatı",
-        total: 24,
+        lessonId: "68f9dbb25c0ab474416cdd3b",
+        name: "Edebiyat",
+        totalQuestions: 24,
         icon: BookOpen,
         bgClass: "bg-amber-100 dark:bg-amber-900/20",
         iconColor: "text-amber-700 dark:text-amber-300",
       },
       {
         index: 1,
-        id: 11,
+        lessonId: "68f9dbb65c0ab474416cdd4d",
         name: "Tarih",
-        total: 10,
+        totalQuestions: 10,
         icon: Swords,
         bgClass: "bg-rose-100 dark:bg-rose-900/20",
         iconColor: "text-rose-700 dark:text-rose-300",
       },
       {
         index: 2,
-        id: 12,
+        lessonId: "68f9dbbc5c0ab474416cdd69",
         name: "Coğrafya",
-        total: 6,
+        totalQuestions: 6,
         icon: Earth,
         bgClass: "bg-sky-100 dark:bg-sky-900/20",
         iconColor: "text-sky-700 dark:text-sky-300",
@@ -158,9 +158,9 @@ export const EaSubjects = [
     subFields: [
       {
         index: 3,
-        id: 13,
+        lessonId: "68f9dbc55c0ab474416cdd91",
         name: "Matematik",
-        total: 40,
+        totalQuestions: 40,
         icon: Infinity,
         bgClass: "bg-indigo-100 dark:bg-indigo-900/20",
         iconColor: "text-indigo-700 dark:text-indigo-300",
@@ -169,16 +169,16 @@ export const EaSubjects = [
   },
 ];
 
-export const MfSubjects = [
+export const mfLessons = [
   {
     name: "Matematik",
     total: 40,
     subFields: [
       {
         index: 0,
-        id: 13,
+        lessonId: "68f9dbc55c0ab474416cdd91",
         name: "Matematik",
-        total: 40,
+        totalQuestions: 40,
         icon: Infinity,
         bgClass: "bg-indigo-100 dark:bg-indigo-900/20",
         iconColor: "text-indigo-700 dark:text-indigo-300",
@@ -191,27 +191,27 @@ export const MfSubjects = [
     subFields: [
       {
         index: 1,
-        id: 14,
+        lessonId: "68f9dbd95c0ab474416cddea",
         name: "Fizik",
-        total: 14,
+        totalQuestions: 14,
         icon: Atom,
         bgClass: "bg-teal-100 dark:bg-teal-900/20",
         iconColor: "text-teal-700 dark:text-teal-300",
       },
       {
         index: 2,
-        id: 15,
+        lessonId: "68f9dbdf5c0ab474416cde04",
         name: "Kimya",
-        total: 14,
+        totalQuestions: 13,
         icon: FlaskConical,
         bgClass: "bg-lime-100 dark:bg-lime-900/20",
         iconColor: "text-lime-700 dark:text-lime-300",
       },
       {
         index: 3,
-        id: 16,
+        lessonId: "68f9dbe45c0ab474416cde1b",
         name: "Biyoloji",
-        total: 13,
+        totalQuestions: 13,
         icon: Trees,
         bgClass: "bg-fuchsia-100 dark:bg-fuchsia-900/20",
         iconColor: "text-fuchsia-700 dark:text-fuchsia-300",

@@ -47,22 +47,24 @@ export default function SubjectChart({ chartData }: SubjectChartProps) {
     const subjectNames = Array.from(
       new Set(
         chartData.flatMap((exam) =>
-          exam.subjects.map((subject) => subject.name)
-        )
-      )
+          exam.lessonAnalysis.map((subject) => subject.name),
+        ),
+      ),
     );
 
     // Her ders için ortalama hesapla
     return subjectNames.map((subjectName) => {
       const subjectScores = chartData
         .map((exam) => {
-          const subject = exam.subjects.find((s) => s.name === subjectName);
+          const subject = exam.lessonAnalysis.find(
+            (s) => s.name === subjectName,
+          );
           if (!subject) return null;
 
           // Net hesapla: doğru - (yanlış * 0.25)
           const net = subject.correct - subject.wrong * 0.25;
           const totalQuestions =
-            subjectQuestionCounts[subjectName] || subject.total || 40;
+            subjectQuestionCounts[subjectName] || subject.totalNet || 40;
 
           // Başarı yüzdesi hesapla
           const successRate = (net / totalQuestions) * 100;

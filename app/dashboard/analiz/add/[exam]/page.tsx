@@ -19,10 +19,12 @@ import {
 } from "@/src/features/analysis/validations/analysis.validation";
 import { DashboardHeader } from "@/src/shared/components/dashboardHeader";
 import {
-  EaSubjects,
-  MfSubjects,
-  tytSubjects,
+  eaLessons,
+  mfLessons,
+  tytLessons,
 } from "@/src/shared/domain/subject/subject.data";
+import { useAuth } from "@/src/shared/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function AddAnalysisPage({
   params,
@@ -30,14 +32,16 @@ export default function AddAnalysisPage({
   params: Promise<{ exam: string }>;
 }) {
   const { exam } = use(params);
+  const { user } = useAuth();
+  const router = useRouter();
   const examType = exam.toUpperCase() as "TYT" | "AYT";
-  const division = localStorage.getItem(`bolum`);
-  const subjects =
+
+  const lessons =
     examType === "TYT"
-      ? tytSubjects
-      : division === `EA`
-        ? EaSubjects
-        : MfSubjects;
+      ? tytLessons
+      : user?.user_metadata?.field === `Eşit Ağırlık`
+        ? eaLessons
+        : mfLessons;
 
   const form = useForm<AnalysisFormRequest>({
     resolver: zodResolver(analysisFormSchema),
@@ -45,17 +49,18 @@ export default function AddAnalysisPage({
       date: new Date(),
       totalNet: 0,
       name: "",
-      subjects: subjects
+      lessonAnalysis: lessons
         .map((s) =>
           s.subFields.map((sf) => ({
-            name: sf.name,
+            lessonId: sf.lessonId,
             index: sf.index,
-            id: sf.id,
+            name: sf.name,
             correct: 0,
             wrong: 0,
             empty: 0,
-            total: sf.total,
-            topicMistakes: [],
+            totalNet: sf.totalQuestions,
+            time: 0,
+            topicAnalysis: [],
           })),
         )
         .flat(),
@@ -74,25 +79,27 @@ export default function AddAnalysisPage({
       } = await createClient().auth.getSession();
 
       // API'ye POST isteği gönder
-      const response = await fetch("http://localhost:8080/api/analysis", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.access_token}`,
+      const response = await fetch(
+        `http://localhost:8080/api/${exam.toLowerCase()}/analysis`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+          body: JSON.stringify({
+            ...req,
+            examType: examType,
+          }),
         },
-        body: JSON.stringify({
-          ...req,
-          examType: examType,
-        }),
-      });
+      );
       console.log(response);
 
       const result = await response.json();
 
       console.log("Analysis saved:", result);
 
-      // Form'u sıfırla veya yönlendirme yap
-      // router.push(`/dashboard/analiz/${examType.toLowerCase()}`);
+      router.push(`/dashboard/analiz/${examType.toLowerCase()}`);
     } finally {
     }
   };
